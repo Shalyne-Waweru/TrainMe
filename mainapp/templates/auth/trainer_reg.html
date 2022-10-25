@@ -1,0 +1,16 @@
+{% extends 'auth/base.html' %}{% load static %}{% block content%}
+<div class="container-fluid">
+  <div class="row">
+    <div class="form">
+      <h4 class="head text-center">Dog Trainer Sign Up</h4>
+
+      <form action="" method="post">
+        {% csrf_token %} {{form.as_p}}
+        <button class="btn" type="submit">Register</button>
+      </form>
+      <p>Have an Account?<a href="/login">Sign In Here!</a></p>
+    </div>
+  </div>
+</div>
+
+{%endblock%}
