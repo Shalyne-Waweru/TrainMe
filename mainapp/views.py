@@ -7,6 +7,8 @@ from accounts.models import Owner, Trainer, User
 from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
 
+from mainapp.forms import DogForm, PostForm, ReviewForm
+
 # Create your views here.
 
 def index(request):
@@ -50,3 +52,51 @@ def loginView(request):
             return HttpResponse("Form is not Valid")
     
     return render(request,'auth/login.html',locals())
+
+
+def dog(request, id):
+    user=User.objects.filter(id=id).first()
+    owner = Owner.objects.get(user=id)
+    if request.method == 'POST':
+        form = DogForm(request.POST, request.FILES)
+        if form.is_valid():
+            owner= form.save(commit=False)
+            owner.user= request.user
+            owner.save()
+            return redirect(index)
+    else:
+        form=DogForm()
+            
+    return render(request,'dogform.html',locals())
+
+def post(request, id):
+    user=User.objects.filter(id=id).first()
+    trainer = Trainer.objects.get(user=id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            trainer= form.save(commit=False)
+            trainer.user= request.user
+            trainer.save()
+            return redirect(index)
+    else:
+        form=PostForm()
+            
+    return render(request,'postform.html',locals())
+
+def review(request, trainer_id):
+    current_user = request.user
+    current_trainer = Trainer.objects.get(id=trainer_id)
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save(commit=False) 
+            form.user=current_user 
+            form.image=current_trainer
+            form.save()
+            
+            return redirect(index)
+    else:
+        form=ReviewForm()
+            
+    return render(request,'reviewform.html',locals())
