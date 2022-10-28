@@ -3,7 +3,7 @@ from django.db import models
 
 from cloudinary.models import CloudinaryField
 
-from accounts.models import Owner, User, gender
+from accounts.models import Owner, Trainer, User, gender
 
 # Create your models here.
 class Dog(models.Model):
@@ -19,7 +19,8 @@ class Dog(models.Model):
 class Review(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    reviewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviewer')
+    reviewed =models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='reviewed')
     
     def __str__(self):
         return self.reviewer + ' ' + self.title
