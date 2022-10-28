@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Owner, Trainer, User, places
+from .models import Owner, Trainer, User, places, gender
 from cloudinary.forms import CloudinaryFileField
 
 # Create your forms here.
@@ -29,12 +29,13 @@ class OwnerForm(UserCreationForm):
    
 class TrainerForm(UserCreationForm):
     location = forms.ChoiceField(choices=places)
+    gender = forms.ChoiceField(choices=gender)
     image= CloudinaryFileField()
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput, required=True)
     password2 = forms.CharField(label='Password Confirm', widget=forms.PasswordInput, required=True)
     class Meta:
         model = User
-        fields =('username','first_name','last_name','email','phone','image','location')
+        fields =('username','first_name','last_name','email','gender','phone','image','location')
         extra_kwargs = {'password1':{'write_only':True,'min_length':6}}
 
     def create(self,validated_data):
