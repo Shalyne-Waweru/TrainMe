@@ -10,9 +10,29 @@ class User(AbstractUser):
     is_owner = models.BooleanField('Dog_Owner', default=False)
     phone= models.CharField(max_length=10)
     
+places=(
+    ('Nairobi-CBD', 'Nairobi-CBD'),
+    ('Nairobi-Ngong Road', 'Nairobi-Ngong Road'),
+    ('Nairobi-Thika Road', 'Nairobi-Thika Road'),
+    ('Nairobi-Waiyaki Way', 'Nairobi-Waiyaki Way'),
+    ('Nairobi-Outering Road', 'Nairobi-Outering Road'),
+    ('Nairobi-Jogoo Road', 'Nairobi-Jogoo Road'),
+    ('Nairobi-Kiambu Road', 'Nairobi-Kiambu Road'),
+    ('Nairobi-Westlands', 'Nairobi-Westlands'),
+    ('Kiambu', 'Kiambu'),
+    ('Kisii', 'Kisii'),
+    ('Kikuyu', 'Kikuyu'),
+    ('Nakuru', 'Nakuru'),
+    ('Eldoret', 'Eldoret'),
+    ('Kakamega', 'Kakamega'),
+    ('Kisumu', 'Kisumu'),
+    ('Mombasa', 'Mombasa'),      
+)
+
 class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Trainer")
     image = CloudinaryField('image')
+    location= models.CharField(max_length=40, choices = places)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -24,18 +44,13 @@ class Trainer(models.Model):
             if created:
                 Trainer.objects.get_or_create(user = instance)
 
-    @receiver(post_save, sender=User)
-    def save_admin(sender, instance, **kwargs):
-        if instance.is_trainer:
-            instance.trainer.save()
-
     def save_profile(self):
         self.save()
 
 
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Owner")
-    image = CloudinaryField('image')
+    location= models.CharField(max_length=40, choices = places)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -47,11 +62,5 @@ class Owner(models.Model):
             if created:
                 Owner.objects.get_or_create(user = instance)
 
-    @receiver(post_save, sender=User)
-    def save_admin(sender, instance, **kwargs):
-        if instance.is_owner:
-            instance.owner.save()
-
     def save_profile(self):
         self.save()
- 
