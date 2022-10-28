@@ -49,6 +49,7 @@ class TrainerForm(UserCreationForm):
         trainer = Trainer.objects.get(user=user)
         trainer.location= self.cleaned_data.get('location')
         trainer.image= self.cleaned_data.get('image')
+        trainer.gender= self.cleaned_data.get('gender')
         trainer.save()
         return user
     
