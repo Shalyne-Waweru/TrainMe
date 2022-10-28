@@ -15,6 +15,9 @@ import os
 import django_heroku
 # import dj_database_url
 # from decouple import config,Csv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -149,3 +152,9 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # REGISTER_REDIRECT_URL=''
 # LOGIN_REDIRECT_URL='core:home'
+
+cloudinary.config( 
+cloud_name = "ddtmsdlip", 
+api_key = "356757256393764", 
+api_secret = "V-68rzwrl7fFATIiLhanN9z8zts" 
+)
