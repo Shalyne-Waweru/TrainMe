@@ -54,7 +54,11 @@ class TrainerForm(UserCreationForm):
         return user
     
         
-class LoginForm(forms.Form):
+class OwnerLoginForm(forms.Form):
+    username = forms.CharField()
+    password=forms.CharField(max_length=20, widget=forms.PasswordInput)
+   
+class TrainerLoginForm(forms.Form):
     username = forms.CharField()
     password=forms.CharField(max_length=20, widget=forms.PasswordInput)
    
