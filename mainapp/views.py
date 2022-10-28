@@ -71,6 +71,10 @@ def trainerloginView(request):
     
     return render(request,'auth/trainer_login.html',locals())
 
+def logout_user(request):
+    logout(request)
+    return redirect(index)
+
 
 def dog(request, id):
     user=User.objects.filter(id=id).first()
