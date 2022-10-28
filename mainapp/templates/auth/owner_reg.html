@@ -6,9 +6,17 @@
 
       <form action="" method="post">
         {% csrf_token %} {{form.as_p}}
-        <button class="btn btn-primary" type="submit">Register</button>
+
+        <p>
+          <span
+            >Are you a dog trainer?
+            <a href="accounts/signup/trainer/">Click Here</a></span
+          ><span
+            >Already Registered?<a href="accounts/login/owner/">Login</a></span
+          >
+        </p>
+        <button class="btn btn-primary" type="submit">Sign Up</button>
       </form>
-      <p>Have an Account?<a href="/login">Sign In Here!</a></p>
     </div>
   </div>
 </div>

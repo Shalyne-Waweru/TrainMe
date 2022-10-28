@@ -6,9 +6,19 @@
 
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %} {{form.as_p}}
+
+        <p>
+          <span
+            >Are you a dog owner?
+            <a href="accounts/login/owner/">Click Here</a></span
+          ><span
+            >Already Registered?<a href="accounts/login/trainer/"
+              >Login</a
+            ></span
+          >
+        </p>
         <button class="btn btn-primary" type="submit">Register</button>
       </form>
-      <p>Have an Account?<a href="/login">Sign In Here!</a></p>
     </div>
   </div>
 </div>

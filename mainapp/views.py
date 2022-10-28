@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import CreateView
 
-from accounts.forms import LoginForm, TrainerForm, OwnerForm
+from accounts.forms import OwnerLoginForm, TrainerForm, OwnerForm, TrainerLoginForm
 from accounts.models import Owner, Trainer, User
 
 from django.contrib.auth import login,authenticate, logout
@@ -35,10 +35,10 @@ class OwnerSignUpView(CreateView):
         return super().get_context_data(**kwargs)
 
 
-def loginView(request):
-    form=LoginForm()
+def ownerloginView(request):
+    form=OwnerLoginForm()
     if request.method=='POST':
-        form=LoginForm(request.POST)
+        form=OwnerLoginForm(request.POST)
         if form.is_valid():
             username=form.cleaned_data['username']
             password=form.cleaned_data['password']
@@ -51,7 +51,25 @@ def loginView(request):
         else:
             return HttpResponse("Form is not Valid")
     
-    return render(request,'auth/login.html',locals())
+    return render(request,'auth/owner_login.html',locals())
+
+def trainerloginView(request):
+    form=TrainerLoginForm
+    if request.method=='POST':
+        form=TrainerLoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+            user=authenticate(request,username=username,password=password)
+            if user is not None:
+                login(request,user)
+                return redirect(index)
+            else:
+                return HttpResponse('Such a user does not exist')
+        else:
+            return HttpResponse("Form is not Valid")
+    
+    return render(request,'auth/trainer_login.html',locals())
 
 
 def dog(request, id):
@@ -67,7 +85,7 @@ def dog(request, id):
     else:
         form=DogForm()
             
-    return render(request,'dogform.html',locals())
+    return render(request,'dog_form.html',locals())
 
 def post(request, id):
     user=User.objects.filter(id=id).first()
@@ -82,7 +100,7 @@ def post(request, id):
     else:
         form=PostForm()
             
-    return render(request,'postform.html',locals())
+    return render(request,'post_form.html',locals())
 
 def review(request, trainer_id):
     current_user = request.user
@@ -99,4 +117,4 @@ def review(request, trainer_id):
     else:
         form=ReviewForm()
             
-    return render(request,'reviewform.html',locals())
+    return render(request,'review_form.html',locals())
