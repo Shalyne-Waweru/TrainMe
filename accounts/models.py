@@ -28,10 +28,24 @@ places=(
     ('Kisumu', 'Kisumu'),
     ('Mombasa', 'Mombasa'),      
 )
+gender=(
+    ('male', 'male'),
+    ('female', 'female'),
+)
+services=(
+    ('Obedience Training', 'Obedience Training'),
+    ('Trick Skill Training', 'Trick Skill Training'),
+    ('Behavior Modification', 'Behavior Modification'),
+    ('Puppy Training', 'Puppy Training'),
+    ('Security Program', 'Security Program'),
+    ('Separation Anxiety', 'Separation Anxiety')
+)
 
 class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Trainer")
     image = CloudinaryField('image')
+    gender = models.CharField(max_length=10, choices= gender)
+    services =models.CharField(max_length=255, choices=services)
     location= models.CharField(max_length=40, choices = places)
     date = models.DateTimeField(auto_now_add=True)
 
