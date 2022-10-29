@@ -26,10 +26,10 @@ class Review(models.Model):
         return self.reviewer + ' ' + self.title
     
 class Post(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    video_title = models.CharField(max_length=100)
+    video_caption = models.TextField()
     video = CloudinaryField(resource_type='video', blank=True)
     user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     
     def __str__(self):
-        return self.user.username + ' ' + self.title
+        return self.user.username + ' ' + self.video_title
