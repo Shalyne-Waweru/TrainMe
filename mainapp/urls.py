@@ -3,10 +3,13 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/signup/', views.index, name='signup'),
+    path('accounts/signup/', views.signup, name='signup'),
     path('accounts/signup/trainer/', views.TrainerSignUpView.as_view(), name='trainer_signup'),
     path('accounts/signup/owner/', views.OwnerSignUpView.as_view(), name='owner_signup'),
+    path('login/', views.loginView, name='login'),
     path('accounts/login/trainer', views.trainerloginView),
     path('accounts/login/owner', views.ownerloginView),
     path('logout/', views.logout_user),
