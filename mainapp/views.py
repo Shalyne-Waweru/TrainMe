@@ -81,6 +81,11 @@ def logout_user(request):
     logout(request)
     return redirect(index)
 
+def owner_profile(request, id):
+    return render(request,'profile/owner_profile.html',locals())
+
+def trainer_profile(request, id):
+    return render(request,'profile/trainer_profile.html',locals())
 
 def dog(request, id):
     user=User.objects.filter(id=id).first()

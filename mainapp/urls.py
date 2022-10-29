@@ -14,6 +14,9 @@ urlpatterns = [
     path('accounts/login/owner', views.ownerloginView),
     path('logout/', views.logout_user),
     
+    path('profile/trainer/<id>', views.trainer_profile, name='trainer_profile'),
+    path('profile/owner/<id>', views.owner_profile, name='owner_profile'),
+    
     path('dogadd/<id>', views.dog, name='dog_form'),
     path('addpost/<id>', views.post, name='post_form'),
     path('addreview/<id>', views.review, name='review_form'),
