@@ -11,7 +11,7 @@ class DogForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model= Post
-        fields=['title', 'description','video']
+        fields=['video_title', 'video_caption','video']
 
 class ReviewForm(forms.ModelForm):
     class Meta:
