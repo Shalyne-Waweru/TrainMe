@@ -10,9 +10,15 @@ from django.urls import reverse_lazy
 from mainapp.forms import DogForm, PostForm, ReviewForm
 
 # Create your views here.
-
 def index(request):
-    return render(request, 'auth/index.html',locals())
+    trainers= Trainer.objects.all()
+    return render(request, 'landing.html',locals())
+
+def signup(request):
+    return render(request, 'auth/signup.html',locals())
+
+def loginView(request):
+    return render(request, 'auth/login.html',locals())
 
 class TrainerSignUpView(CreateView):
     model = User
