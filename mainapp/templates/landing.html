@@ -1,0 +1,96 @@
+{% load static %}{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Hood</title>
+    <!-- CSS only -->
+    {%block styles%} {%bootstrap_css%}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akronim&family=Creepster&family=Diplomata+SC&family=Roboto:wght@300;400;500;700;900&family=Rubik+Moonrocks&display=swap"
+      rel="stylesheet"
+    />
+    {%endblock%}
+  </head>
+  <body class="body">
+    <div class="container-fluid main">
+      <div class="row navbars">
+        <nav class="navbar navbar-inverse" id="navbar">
+          <div class="navbar-header">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <span
+                  style="font-size: 30px; cursor: pointer; color: #fff"
+                  onclick="openNav()"
+                  >&#9776; Home</span
+                >
+                <div id="mySidenav" class="sidenav">
+                  <a
+                    href="javascript:void(0)"
+                    class="closebtn"
+                    onclick="closeNav()"
+                    >&times;</a
+                  >
+                  <a class="tag1" href="#">&#9776;Home</a>
+                  <a class="tag2" href="#about">About</a>
+                  <a class="tag3" href="#services">Services</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="navbar-end">
+            <ul class="list-inline">
+              {% if user.is_authenticated %}
+              <li class="list-inline-item">
+                <div class="dropdown">
+                  <a href="/home" class="navbar-brand text-white">DashBoard</a>
+                  <a
+                    class="navbar-brand text-white dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    href=""
+                    >{{user.username | title}}
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="/profile/{{user.profile.user.id}}"
+                        >My Profile</a
+                      >
+                    </li>
+
+                    <li>
+                      <a class="dropdown-item" href="/logout">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              {% else %}
+              <li class="list-inline-item">
+                <a class="navbar-brand text-white" href="/logs"
+                  >Admin Register</a
+                >
+                <a class="navbar-brand text-white" href="/member"
+                  >Member Register</a
+                >
+                <a class="navbar-brand text-white" href="/login">Login</a>
+              </li>
+
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="row">Landing Page</div>
+    </div>
+  </body>
+</html>
