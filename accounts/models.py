@@ -44,6 +44,8 @@ services=(
 class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Trainer")
     image = CloudinaryField('image')
+    clinic_name = models.CharField(max_length=50)
+    bio = models.TextField()
     gender = models.CharField(max_length=10, choices= gender)
     services =models.CharField(max_length=255, choices=services)
     location= models.CharField(max_length=40, choices = places)
