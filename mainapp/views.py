@@ -12,7 +12,7 @@ from mainapp.forms import DogForm, PostForm, ReviewForm
 # Create your views here.
 
 def index(request):
-    return render(request, 'auth/index.html',locals())
+    return render(request, 'index.html',locals())
 
 class TrainerSignUpView(CreateView):
     model = User
