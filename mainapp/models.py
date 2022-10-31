@@ -101,3 +101,8 @@ class Booking(models.Model):
     
     def __str__(self):
         return self.user.user.username + ' ' + self.trainer.user.username
+    
+    @classmethod
+    def filter_by_trainer(cls, id):
+        bookings = Booking.objects.filter(trainer__pk=id)
+        return bookings
