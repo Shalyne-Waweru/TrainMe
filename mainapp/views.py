@@ -1,13 +1,15 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView
 
-from accounts.forms import OwnerLoginForm, TrainerForm, OwnerForm, TrainerLoginForm
+from accounts.forms import OwnerLoginForm, TrainerForm, OwnerForm, TrainerLoginForm, TrainerProfileForm
 from accounts.models import Owner, Trainer, User
 
 from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
-from mainapp.forms import DogForm, PostForm, ReviewForm
+from mainapp.forms import BookForm, ClinicForm, DogForm, HoursForm, PostForm, ReviewForm
+from mainapp.models import Booking, BusinessHours, Clinic, Post, Review
 
 # Create your views here.
 def index(request):
@@ -82,9 +84,48 @@ def logout_user(request):
     return redirect(index)
 
 def owner_profile(request, id):
+    user=User.objects.filter(id=id).first()
+    owner = Owner.objects.get(user=id)
     return render(request,'profile/owner_profile.html',locals())
 
 def trainer_profile(request, id):
+    user=User.objects.filter(id=id).first()
+    trainer = Trainer.objects.get(user=id)
+    posts=Post.filter_by_user(user=trainer.id)
+    reviews=Review.get_trainer_reviews(id=trainer.id)
+    clinics=Clinic.filter_by_user(user=trainer.id)
+    hours=BusinessHours.filter_by_user(user=trainer.id)
+    bookings=Booking.filter_by_trainer(id=trainer.id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+        pform = TrainerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+        cform=ClinicForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+        hform=HoursForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+        if form.is_valid():
+            t= form.save(commit=False)
+            t.user= request.user
+            t.save()
+            return HttpResponseRedirect(request.path_info)
+        elif pform.is_valid():
+            p= pform.save(commit=False)
+            p.user= request.user
+            p.save()
+            return HttpResponseRedirect(request.path_info)
+        elif cform.is_valid():
+            c= cform.save(commit=False)
+            c.user= request.user
+            c.save()
+            return HttpResponseRedirect(request.path_info)
+        elif hform.is_valid():
+            h= hform.save(commit=False)
+            h.user= request.user
+            h.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form=PostForm()
+        pform = TrainerProfileForm()
+        cform=ClinicForm()
+        hform=HoursForm()
     return render(request,'profile/trainer_profile.html',locals())
 
 def dog(request, id):
@@ -102,21 +143,22 @@ def dog(request, id):
             
     return render(request,'dog_form.html',locals())
 
-def post(request, id):
-    user=User.objects.filter(id=id).first()
-    trainer = Trainer.objects.get(user=id)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            trainer= form.save(commit=False)
-            trainer.user= request.user
-            trainer.save()
-            return redirect(index)
-    else:
-        form=PostForm()
+# def post(request, id):
+#     # user=User.objects.filter(id=id).first()
+#     # trainer = Trainer.objects.get(user=id)
+#     current_user = request.user
+#     if request.method == 'POST':
+#         form = HoursForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+#         if form.is_valid():
+#             lan =form.save(commit=False)
+#             lan.user = current_user
+#             lan.save()
+#     else:
+#         form= HoursForm()
             
-    return render(request,'post_form.html',locals())
+#     return render(request,'post_form.html',locals())
 
+@login_required(login_url='/login')
 def review(request, trainer_id):
     current_user = request.user
     current_trainer = Trainer.objects.get(id=trainer_id)
@@ -124,8 +166,8 @@ def review(request, trainer_id):
         form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
             form = form.save(commit=False) 
-            form.user=current_user 
-            form.image=current_trainer
+            form.reviewer=current_user 
+            form.reviewed=current_trainer
             form.save()
             
             return redirect(index)
@@ -133,3 +175,21 @@ def review(request, trainer_id):
         form=ReviewForm()
             
     return render(request,'review_form.html',locals())
+
+@login_required(login_url='/login')
+def book(request, trainer_id):
+    current_user= request.user.Dog_Owner
+    current_trainer = Trainer.objects.get(id=trainer_id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form = form.save(commit=False) 
+            form.user=current_user 
+            form.trainer=current_trainer
+            form.save()
+            
+            return redirect(index)
+    else:
+        form=BookForm()
+            
+    return render(request,'book_form.html',locals())

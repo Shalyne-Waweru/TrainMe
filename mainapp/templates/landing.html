@@ -21,76 +21,41 @@
     {%endblock%}
   </head>
   <body class="body">
-    <div class="container-fluid main">
-      <div class="row navbars">
-        <nav class="navbar navbar-inverse" id="navbar">
-          <div class="navbar-header">
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <span
-                  style="font-size: 30px; cursor: pointer; color: #fff"
-                  onclick="openNav()"
-                  >&#9776; Home</span
-                >
-                <div id="mySidenav" class="sidenav">
-                  <a
-                    href="javascript:void(0)"
-                    class="closebtn"
-                    onclick="closeNav()"
-                    >&times;</a
-                  >
-                  <a class="tag1" href="#">&#9776;Home</a>
-                  <a class="tag2" href="#about">About</a>
-                  <a class="tag3" href="#services">Services</a>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="navbar-end">
-            <ul class="list-inline">
-              {% if user.is_authenticated %}
-              <li class="list-inline-item">
-                <div class="dropdown">
-                  <a href="/home" class="navbar-brand text-white">DashBoard</a>
-                  <a
-                    class="navbar-brand text-white dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    href=""
-                    >{{user.username | title}}
-                  </a>
-
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        href="/profile/{{user.profile.user.id}}"
-                        >My Profile</a
-                      >
-                    </li>
-
-                    <li>
-                      <a class="dropdown-item" href="/logout">Logout</a>
-                    </li>
-                  </ul>
-                </div>
+    <div class="container">
+        {{user.username}} <br />
+        {{user.is_authenticated}} <br />
+        {{user.is_owner}} <br />
+        {{user.is_trainer}}
+      {% if user.is_authenticated %}
+          <a href="">{{user.username | title}}</a>
+          {% if user.is_trainer %}
+            <li>
+              <a href="/profile/trainer/{{user.id}}">{{user.username}} Profile</a>
+            </li>
+            {% elif user.is_owner %}
+            <li>
+                <a href="/profile/owner/{{user.id}}">{{user.username}} Profile</a>
               </li>
               {% else %}
-              <li class="list-inline-item">
-                <a class="navbar-brand text-white" href="/logs"
-                  >Admin Register</a
-                >
-                <a class="navbar-brand text-white" href="/member"
-                  >Member Register</a
-                >
-                <a class="navbar-brand text-white" href="/login">Login</a>
+              <li>
+                <a href="/admin">Admin</a>
               </li>
+            {% endif %}
+            <li>
+              <a href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {% else %}
+        <a href="/login">Login</a> <br>
+        <a href="/accounts/signup/">Sign Up</a> <br>
 
-              {% endif %}
-            </ul>
-          </div>
-        </nav>
-      </div>
-      <div class="row">Landing Page</div>
+      {% endif %}
+      Landing Page
+      {% for trainer in trainers %}
+      <a href="/profile/trainer/{{trainer.user.id}}">{{trainer.user.username}}</a>
+      {% endfor %}
     </div>
   </body>
 </html>

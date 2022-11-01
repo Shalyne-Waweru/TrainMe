@@ -1,0 +1,251 @@
+{% extends 'auth/base.html'%}{% load static %}{%block content%}
+<div class="card">
+  <a href="/">Back Home</a>
+  <h4>{{trainer.user.username|title}}</h4>
+
+  <p>
+    Email:
+    <small class="text-muted"> {{trainer.user.email}}</small>
+  </p>
+  <p>
+    Telphone:
+    <small class="text-muted"> {{trainer.user.phone}}</small>
+  </p>
+  <p>
+    First Name:
+    <small class="text-muted"> {{trainer.user.first_name|title}}</small>
+  </p>
+  <p>
+    last name:
+    <small class="text-muted"> {{trainer.user.last_name|title}}</small>
+  </p>
+  <p>
+    Role:
+    <small class="text-muted"> {{trainer.user.is_trainer|title}}</small>
+  </p>
+  <p>
+    UserID:
+    <small class="text-muted"> {{trainer.user.id|title}}</small>
+  </p>
+  <p>
+    UserID2:
+    <small class="text-muted"> {{user.Dog_Trainer.id}}</small>
+  </p>
+  <p>
+    UserID3:
+    <small class="text-muted"> {{user.Dog_Trainer.user.id}}</small>
+  </p>
+  <p>
+    TrainerID:
+    <small class="text-muted"> {{trainer.id|title}}</small>
+  </p>
+  <p>
+    Reviews:
+    <small class="text-muted"> {{reviews}}</small> <br />
+    {% for review in reviews %} Title: {{review.title}},
+    Description:{{review.description}}, Reviewer:{{review.reviewer}}, Reviewed:
+    {{review.reviewed}}. <br />
+    {% endfor %}
+  </p>
+  
+  <p>
+    Hours:
+    <small class="text-muted"> {{hours}}</small> <br />
+    {% for hour in hours %} Day: {{hour.day}}, Start Time: {{hour.start}}, End Time: {{hour.end}}, 
+    {{hour.open_closed}} {% endfor %}
+  </p>
+  <p>
+    clinic:
+    <small class="text-muted"> {{clinics}}</small> <br />
+    {% for clinic in clinics %} name:{{clinic.clinic_name}}, location {{clinic.clinic_location}}{% endfor %}
+  </p>
+  <a href="/addreview/{{trainer.id}}">Review</a>
+  {% if trainer.user.id == request.user.id%}
+  <p>
+    Bookings:
+    <small class="text-muted"> {{bookings}}</small> <br />
+    {% for book in bookings %} Booker: {{book.user.user.username}},
+    Date:{{book.date}}, Time:
+    {{book.time}}. <br />
+    {% endfor %}
+  </p>
+  <a
+    href=""
+    class="btn btn-warning"
+    data-bs-toggle="modal"
+    data-bs-target="#post"
+    >Add Post</a
+  >
+  <a
+    href=""
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#profile"
+    >Add Profile</a
+  >
+  <a
+    href=""
+    class="btn btn-success"
+    data-bs-toggle="modal"
+    data-bs-target="#clinic"
+    >Add clinic</a
+  >
+  <a href="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#hours"
+    >Add Hours</a
+  >
+  {% endif %}
+</div>
+<!-- The Modal -->
+<div class="modal" id="post">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Post</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{form.as_p}}
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button class="btn btn-outline-info btn-md" type="submit">
+              Edit
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="profile">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Profile</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{pform.as_p}}
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button class="btn btn-outline-info btn-md" type="submit">
+              Add to profile
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="clinic">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Clinic</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{cform.as_p}}
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button class="btn btn-outline-info btn-md" type="submit">
+              Add clinic
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- The Modal -->
+<div class="modal" id="hours">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Hours</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{hform.as_p}}
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button class="btn btn-outline-info btn-md" type="submit">
+              Add Hours
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

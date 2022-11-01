@@ -1,0 +1,14 @@
+{% extends 'auth/base.html'%}{% load static %}{%block content%}
+<div class="card">
+  <h4>{{owner.user.username|title}}</h4>
+
+  <p>
+    Email:
+    <small> {{owner.user.email|title}}</small>
+  </p>
+  <p>
+    Telphone:
+    <small> {{owner.user.phone|title}}</small>
+  </p>
+</div>
+{%endblock%}

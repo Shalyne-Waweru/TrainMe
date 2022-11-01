@@ -18,6 +18,7 @@ urlpatterns = [
     path('profile/owner/<id>', views.owner_profile, name='owner_profile'),
     
     path('dogadd/<id>', views.dog, name='dog_form'),
-    path('addpost/<id>', views.post, name='post_form'),
-    path('addreview/<id>', views.review, name='review_form'),
+    # path('addpost/<id>', views.post, name='post_form'),
+    path('addreview/<trainer_id>', views.review, name='review_form'),
+    path('book/<trainer_id>', views.book, name='book_form'),
 ]
