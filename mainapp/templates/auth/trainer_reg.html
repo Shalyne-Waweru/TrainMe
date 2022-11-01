@@ -1,23 +1,135 @@
-{% extends 'auth/base.html' %}{% load static %}{% block content%}
+{% extends 'auth/base.html' %}
+{% load static %}
+
+{% block content%}
+<!-- <div class="container">
+  <form action="" method="POST">
+    {% csrf_token %}
+
+    <a class="navbar-brand" href="#">
+      <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+      <span class="logoName">TrainMe</span>
+    </a>
+
+    {% if messages %}
+      {% for message in messages %}
+  
+      <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+        {{message}}
+        <span class="close" data-dismiss="modal">&times;</span>
+      </div>
+  
+      {% endfor %}
+    {% endif %}
+
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" class="form-control" placeholder="Enter first name">
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" class="form-control" placeholder="Enter last name">
+    </div>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="form-control" placeholder="Enter username">
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" class="form-control" placeholder="Enter email">
+    </div>
+
+  </form>
+</div> -->
+
 <div class="container-fluid">
   <div class="row">
-    <div class="form">
-      <h4 class="head text-center">Dog Trainer Sign Up</h4>
+    <div class="form-section">
+      <div class="logo">
+        <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        <span class="logoName">TrainMe</span>
+      </div>
+      
+      <div class="header">
+        <div class="hl"></div>
+        <p>Dog Trainer Sign Up</p>
+        <div class="hl"></div>
+      </div>
 
       <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} {{form.as_p}}
+        {% csrf_token %} 
+        
+        <!-- {{form.as_p}} -->
 
-        <p>
-          <span
-            >Are you a dog owner?
-            <a href="accounts/login/owner/">Click Here</a></span
-          ><span
-            >Already Registered?<a href="accounts/login/trainer/"
-              >Login</a
-            ></span
-          >
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.first_name.label}}</label>
+            {{form.first_name}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.last_name.label}}</label>
+            {{form.last_name}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.email.label}}</label>
+            {{form.email}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.gender.label}}</label>
+            {{form.gender}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.location.label}}</label>
+            {{form.location}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.phone.label}}</label>
+            {{form.phone}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.password1.label}}</label>
+            {{form.password1}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.password2.label}}</label>
+            {{form.password2}}
+          </div>
+        </div>
+
+        <div class="form-group image">
+          <label>{{form.image.label}}</label>
+          {{form.image}}
+        </div>
+
+        <p class="redirects">
+          <span>
+            Are you a dog owner?
+            <a href="{% url 'owner_signup' %}">Click Here</a>
+          </span>
+            
+          <span>
+            Already Registered?
+            <a href="{% url 'trainer_login' %}">Login</a>
+          </span>
         </p>
-        <button class="btn btn-primary" type="submit">Register</button>
+        
+        <button class="btn" type="submit">SIGNUP</button>
       </form>
     </div>
   </div>

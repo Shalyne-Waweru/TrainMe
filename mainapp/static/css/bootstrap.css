@@ -339,6 +339,13 @@ progress {
 ::-webkit-file-upload-button {
   font: inherit;
   -webkit-appearance: button;
+  margin-left: 10px;
+  background-color: #e28440;
+  color: white;
+  margin-top: 2px;
+  border-radius: 5px;
+  border: 1px;
+  padding: 3px;
 }
 
 output {
