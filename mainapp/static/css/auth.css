@@ -25,6 +25,7 @@ body {
   color: white;
   padding-left: 30px;
   padding-right: 30px;
+  padding-bottom: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -80,6 +81,10 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.login .form-group {
+  width: 100%;
 }
 
 .form-group {
@@ -156,10 +161,22 @@ form .btn {
   color: white;
   background-color: #E56A10;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 form .btn:hover {
   color: white;
   box-shadow: 0 12px 16px 0 #f8cfb23c,0 17px 50px 0 #f8cfb23c;
+}
+
+.forgotPass {
+  display: block;
+  color: white;
+  margin-left: 333px;
+  margin-bottom: 20px;
+}
+
+.forgotPass:hover {
+  color: #f0c4a4;
+  text-decoration: none;
 }
