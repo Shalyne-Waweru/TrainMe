@@ -346,6 +346,7 @@ progress {
   border-radius: 5px;
   border: 1px;
   padding: 3px;
+  cursor: pointer;
 }
 
 output {
