@@ -3098,8 +3098,9 @@ input[type="button"].btn-block {
 }
 
 .fade {
-  opacity: 0;
+  opacity: 0.9;
   transition: opacity 0.15s linear;
+  background-color: #1312127a;
 }
 
 .fade.show {
@@ -3279,13 +3280,13 @@ tbody.collapse.show {
 .dropdown-item:hover, .dropdown-item:focus {
   color: #16181b;
   text-decoration: none;
-  background-color: #f8f9fa;
+  background-color: #FDF3EC;
 }
 
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #007bff;
+  background-color: #E56A10;
 }
 
 .dropdown-item.disabled, .dropdown-item:disabled {
@@ -4038,7 +4039,7 @@ tbody.collapse.show {
 .navbar-toggler-icon {
   display: inline-block;
   width: 1.5em;
-  height: 1.5em;
+  height: 1em;
   vertical-align: middle;
   content: "";
   background: no-repeat center center;
@@ -4353,7 +4354,7 @@ tbody.collapse.show {
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
-  color: rgba(0, 0, 0, 0.9);
+  color: #E56A10;
 }
 
 .navbar-light .navbar-toggler {
@@ -4362,7 +4363,7 @@ tbody.collapse.show {
 }
 
 .navbar-light .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-image: url("../images/hamurger_icon.png");
 }
 
 .navbar-light .navbar-text {
@@ -5423,7 +5424,7 @@ button.close {
 }
 
 .modal.fade .modal-dialog {
-  transition: -webkit-transform 0.3s ease-out;
+  transition: -webkit-transform 1s ease-out;
   transition: transform 0.3s ease-out;
   transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
   -webkit-transform: translate(0, -25%);
@@ -5471,11 +5472,11 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: black;
 }
 
 .modal-backdrop.fade {
-  opacity: 0;
+  opacity: 0.8;
 }
 
 .modal-backdrop.show {
