@@ -1,7 +1,7 @@
-from enum import unique
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.db.models import Q, F
+from django.utils import timezone
 
 from cloudinary.models import CloudinaryField
 
@@ -93,15 +93,21 @@ class Post(models.Model):
         return posts
     
 class Booking(models.Model):
-    email= models.EmailField()
     user= models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='bookings')
     trainer=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='book')
-    date= models.DateField()
-    time= models.TimeField(unique=True)
-    
+    created_date = models.DateTimeField(auto_now_add=True)
+    book_date = models.DateField(null=True)
+    book_time = models.TimeField(null=True)
+    booking_number = models.CharField(max_length=50,unique=True)
+
     def __str__(self):
-        return self.user.user.username + ' ' + self.trainer.user.username
-    
+        return self.booking_number
+
+    def save(self, **kwargs):
+        if not self.booking_number:
+            self.booking_number = f"{self.book_date:%Y%m%d}{self.book_time:%H%M}"
+        super().save(**kwargs)
+        
     @classmethod
     def filter_by_trainer(cls, id):
         bookings = Booking.objects.filter(trainer__pk=id)
