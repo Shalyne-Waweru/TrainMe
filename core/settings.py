@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     
     'bootstrap5',
     'cloudinary',
-    'bootstrap_datepicker_plus',
     
     'accounts',
     'mainapp',
