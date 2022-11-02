@@ -14,6 +14,9 @@ from mainapp.forms import DogForm, PostForm, ReviewForm
 def index(request):
     return render(request, 'index.html',locals())
 
+def search(request):
+    return render(request, 'search.html', locals())
+
 class TrainerSignUpView(CreateView):
     model = User
     form_class = TrainerForm

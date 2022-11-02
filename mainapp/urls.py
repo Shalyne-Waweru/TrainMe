@@ -17,4 +17,6 @@ urlpatterns = [
 
     # Index/Landing Page
     path('', views.index, name='landingPage'),
+    # Search Page
+    path('search/', views.search, name='searchPage'),
 ]
