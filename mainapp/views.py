@@ -17,11 +17,11 @@ def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
-def signup(request):
-    return render(request, 'auth/signup.html',locals())
+# def signup(request):
+#     return render(request, 'auth/signup.html',locals())
 
-def loginView(request):
-    return render(request, 'auth/login.html',locals())
+# def loginView(request):
+#     return render(request, 'auth/login.html',locals())
 
 def search(request):
     servs= services
@@ -31,7 +31,7 @@ class TrainerSignUpView(CreateView):
     model = User
     form_class = TrainerForm
     template_name = 'auth/trainer_reg.html'
-    success_url =reverse_lazy('signup')
+    success_url =reverse_lazy('trainer_login')
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'Dog_Trainer'
@@ -41,7 +41,7 @@ class OwnerSignUpView(CreateView):
     model = User
     form_class = OwnerForm
     template_name = 'auth/owner_reg.html'
-    success_url =reverse_lazy('signup')
+    success_url =reverse_lazy('owner_login')
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'Dog_Owner'
