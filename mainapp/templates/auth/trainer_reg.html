@@ -2,56 +2,25 @@
 {% load static %}
 
 {% block content%}
-<!-- <div class="container">
-  <form action="" method="POST">
-    {% csrf_token %}
-
-    <a class="navbar-brand" href="#">
-      <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
-      <span class="logoName">TrainMe</span>
-    </a>
-
-    {% if messages %}
-      {% for message in messages %}
-  
-      <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
-        {{message}}
-        <span class="close" data-dismiss="modal">&times;</span>
-      </div>
-  
-      {% endfor %}
-    {% endif %}
-
-    <div class="form-group">
-      <label>First Name</label>
-      <input type="text" class="form-control" placeholder="Enter first name">
-    </div>
-
-    <div class="form-group">
-      <label>Last Name</label>
-      <input type="text" class="form-control" placeholder="Enter last name">
-    </div>
-
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" class="form-control" placeholder="Enter username">
-    </div>
-
-    <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" class="form-control" placeholder="Enter email">
-    </div>
-
-  </form>
-</div> -->
 
 <div class="container-fluid">
   <div class="row">
     <div class="form-section">
-      <div class="logo">
+      <a class="logo" href="{% url 'landingPage' %}">
         <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         <span class="logoName">TrainMe</span>
-      </div>
+      </a>
+
+      <!-- {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+          {{message}}
+          <span class="close" data-dismiss="modal">&times;</span>
+        </div>
+    
+        {% endfor %}
+      {% endif %} -->
       
       <div class="header">
         <div class="hl"></div>
@@ -117,9 +86,9 @@
           {{form.image}}
         </div>
 
-        <p class="redirects">
+        <p class="redirects trainer">
           <span>
-            Are you a dog owner?
+            Are You A Dog Owner?
             <a href="{% url 'owner_signup' %}">Click Here</a>
           </span>
             

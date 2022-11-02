@@ -11,6 +11,11 @@ body {
 }
 
 /* Form Section */
+.container-fluid {
+  height: 100vh;
+  position: relative;
+}
+
 .form-section {
   width: 500px;
   margin-left: auto;
@@ -20,8 +25,11 @@ body {
   color: white;
   padding-left: 30px;
   padding-right: 30px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form-section .logo {
@@ -41,6 +49,11 @@ body {
   font-family: 'Great Vibes', cursive;
   font-size: 22px;
   letter-spacing: 1px;
+  color: white;
+}
+
+.form-section .logoName:hover {
+  text-decoration: none;
 }
 
 .form-section .header {
@@ -68,6 +81,10 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.login .form-group {
+  width: 100%;
 }
 
 .form-group {
@@ -114,12 +131,19 @@ select {
   border-radius: 5px;
 }
 
-.redirects {
+.trainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 11px;
   margin-top: 15px;
+}
+
+.redirects {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
 }
 
 .redirects a {
@@ -128,9 +152,31 @@ select {
   font-weight: bold;
 }
 
+.redirects a:hover {
+  color: #f0c4a4;
+  text-decoration: none;
+}
+
 form .btn {
   color: white;
   background-color: #E56A10;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+form .btn:hover {
+  color: white;
+  box-shadow: 0 12px 16px 0 #f8cfb23c,0 17px 50px 0 #f8cfb23c;
+}
+
+.forgotPass {
+  display: block;
+  color: white;
+  margin-left: 333px;
+  margin-bottom: 20px;
+}
+
+.forgotPass:hover {
+  color: #f0c4a4;
+  text-decoration: none;
 }

@@ -35,7 +35,7 @@ class TrainerForm(UserCreationForm):
     password2 = forms.CharField(label='Password Confirm', widget=forms.PasswordInput, required=True)
     class Meta:
         model = User
-        fields =('first_name','last_name','email','gender','location','phone','password1','password2','image')
+        fields =('first_name','last_name','username','email','gender','location','phone','password1','password2','image')
         extra_kwargs = {'password1':{'write_only':True,'min_length':6}}
 
     def create(self,validated_data):
