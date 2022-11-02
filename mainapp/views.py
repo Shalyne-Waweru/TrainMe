@@ -3,12 +3,13 @@ from django.views.generic import CreateView
 
 from accounts.forms import OwnerLoginForm, TrainerForm, OwnerForm, TrainerLoginForm, TrainerProfileForm
 from accounts.models import Owner, Trainer, User
+from accounts.choices import services
 
 from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
-from mainapp.forms import BookForm, ClinicForm, DogForm, HoursForm, PostForm, ReviewForm
+from mainapp.forms import BookingForm, ClinicForm, DogForm, HoursForm, PostForm, ReviewForm
 from mainapp.models import Booking, BusinessHours, Clinic, Post, Review
 
 # Create your views here.
@@ -23,6 +24,7 @@ def loginView(request):
     return render(request, 'auth/login.html',locals())
 
 def search(request):
+    servs= services
     return render(request, 'search.html', locals())
 
 class TrainerSignUpView(CreateView):
@@ -146,21 +148,6 @@ def dog(request, id):
             
     return render(request,'dog_form.html',locals())
 
-# def post(request, id):
-#     # user=User.objects.filter(id=id).first()
-#     # trainer = Trainer.objects.get(user=id)
-#     current_user = request.user
-#     if request.method == 'POST':
-#         form = HoursForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
-#         if form.is_valid():
-#             lan =form.save(commit=False)
-#             lan.user = current_user
-#             lan.save()
-#     else:
-#         form= HoursForm()
-            
-#     return render(request,'post_form.html',locals())
-
 @login_required(login_url='/login')
 def review(request, trainer_id):
     current_user = request.user
@@ -180,19 +167,18 @@ def review(request, trainer_id):
     return render(request,'review_form.html',locals())
 
 @login_required(login_url='/login')
-def book(request, trainer_id):
+def booking(request, trainer_id):
     current_user= request.user.Dog_Owner
     current_trainer = Trainer.objects.get(id=trainer_id)
     if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES)
+        form = BookingForm(request.POST, request.FILES)
         if form.is_valid():
             form = form.save(commit=False) 
             form.user=current_user 
             form.trainer=current_trainer
             form.save()
-            
             return redirect(index)
     else:
-        form=BookForm()
+        form=BookingForm()
             
-    return render(request,'book_form.html',locals())
+    return render(request,'booking.html',locals())

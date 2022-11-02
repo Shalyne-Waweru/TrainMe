@@ -1,3 +1,8 @@
+import datetime as dt
+
+
+HOUR_CHOICES = [(dt.time(hour=x), '{:02d}:00'.format(x)) for x in range(7, 18)]
+
 DAYS_OF_WEEK = (
     ('Monday', 'Monday'),
     ('Tuesday', 'Tuesday'),

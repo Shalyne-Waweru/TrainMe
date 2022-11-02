@@ -173,10 +173,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
+                    {% for trainer in trainers %}
+                    {% if trainer.image %}
+                    <img class="trainer-img" src="{{trainer.image.url}}"/>
+                    {% else %}
                     <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
-
+                    {% endif %}
                     <div class="trainer-info">
-                        <h5>Darren Elder</h5>
+                        <h5>{{trainer.user.username | title}}</h5>
                         <h6><strong>Dog Trainer</strong></h6>
                         
                         <div class="ratings">
@@ -192,7 +196,7 @@
 
                         <div class="more-info">
                             <img src="{% static 'images/location_image.png' %}"/>
-                            <p>Nairobi, Kenya</p>
+                            <p>{{trainer.location}}</p>
                         </div>
 
                         <div class="more-info">
@@ -213,7 +217,7 @@
                         <hr>
 
                         <div class="buttons">
-                            <a class="orange-btn" href="#">
+                            <a class="orange-btn" href="/profile/trainer/{{trainer.user.id}}">
                                 View Profile
                             </a>
 
@@ -223,6 +227,7 @@
                         </div>
 
                     </div>
+                    {% endfor %}
                 </div>
 
                 <div class="col-md-4">
