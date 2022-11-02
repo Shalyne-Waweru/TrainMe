@@ -1,15 +1,21 @@
-{% load static %} {% load bootstrap5 %}
+{% load static %} 
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <title>Dog Web</title>
+
     {% block styles%} {% bootstrap_css%}
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
     {% endblock%} {% block scripts%} {% bootstrap_javascript%} {% endblock%}
+
   </head>
   <body>
     {% block content %} {%endblock%}

@@ -21,4 +21,9 @@ urlpatterns = [
     # path('addpost/<id>', views.post, name='post_form'),
     path('addreview/<trainer_id>', views.review, name='review_form'),
     path('book/<trainer_id>', views.book, name='book_form'),
+
+    # Index/Landing Page
+    path('', views.index, name='landingPage'),
+    # Search Page
+    path('search/', views.search, name='searchPage'),
 ]

@@ -14,13 +14,16 @@ from mainapp.models import Booking, BusinessHours, Clinic, Post, Review
 # Create your views here.
 def index(request):
     trainers= Trainer.objects.all()
-    return render(request, 'landing.html',locals())
+    return render(request, 'index.html',locals())
 
 def signup(request):
     return render(request, 'auth/signup.html',locals())
 
 def loginView(request):
     return render(request, 'auth/login.html',locals())
+
+def search(request):
+    return render(request, 'search.html', locals())
 
 class TrainerSignUpView(CreateView):
     model = User

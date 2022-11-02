@@ -1,6 +1,7 @@
 {% extends 'auth/base.html' %}{% load static %}{% block content%}
 <div class="container-fluid">
   <div class="row">
+<<<<<<< HEAD
     <div class="form">
       <h4 class="head text-center">Dog Owner Sign Up</h4>
 
@@ -14,8 +15,102 @@
           ><span
             >Already Registered?<a href="/accounts/login/owner">Login</a></span
           >
+=======
+    <div class="form-section">
+      <a class="logo" href="{% url 'landingPage' %}">
+        <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        <span class="logoName">TrainMe</span>
+      </a>
+
+      <!-- {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-dark alert-dismissible text-center fade show m-0" role="alert">
+          {{message}}
+          <span class="close" data-dismiss="modal">&times;</span>
+        </div>
+    
+        {% endfor %}
+      {% endif %} -->
+      
+      <div class="header">
+        <div class="hl"></div>
+        <p>Dog Owner Sign Up</p>
+        <div class="hl"></div>
+      </div>
+
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %} 
+        
+        <!-- {{form.as_p}} -->
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.first_name.label}}</label>
+            {{form.first_name}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.last_name.label}}</label>
+            {{form.last_name}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.email.label}}</label>
+            {{form.email}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.username.label}}</label>
+            {{form.username}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.location.label}}</label>
+            {{form.location}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.phone.label}}</label>
+            {{form.phone}}
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="form-group">
+            <label>{{form.password1.label}}</label>
+            {{form.password1}}
+          </div>
+  
+          <div class="form-group">
+            <label>{{form.password2.label}}</label>
+            {{form.password2}}
+          </div>
+        </div>
+
+        <div class="form-group image">
+          <label>{{form.image.label}}</label>
+          {{form.image}}
+        </div>
+
+        <p class="redirects">
+          <span>
+            Are You A Dog Trainer?
+            <a href="{% url 'trainer_signup' %}">Click Here</a>
+          </span>
+            
+          <span>
+            Already Registered?
+            <a href="{% url 'owner_login' %}">Login</a>
+          </span>
+>>>>>>> 1506107d3fa8611e1ae01252a21e0fabb66af59f
         </p>
-        <button class="btn btn-primary" type="submit">Sign Up</button>
+        
+        <button class="btn" type="submit">SIGNUP</button>
       </form>
     </div>
   </div>

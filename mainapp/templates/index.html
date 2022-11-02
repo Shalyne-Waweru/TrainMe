@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="body-info">
+    <!-- Hero Section -->
+    <div class="section">
+        <div class="overlay">
+            <div class="hero-info">   
+                <h3>Welcome To TrainMe</h3>
+                <h2>Providing <span class="orange-txt">Professional</span> Dog <br> Training The <span class="orange-txt">Fun</span> And <br> <span class="orange-txt">Effective</span> Way</h1>
+                <p>We help dog owners transform their dogs into well-behaved, <br> obedient furry friends.</p>
+                <a href="{% url 'searchPage' %}" class="book-btn">BOOK TRAINING <i class="fas fa-paw"></i></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- About Section -->
+    <div class="about-section">
+        <div class="about-images">
+            <img src="{% static 'images/about_image_1.png' %}"/>
+            <img src="{% static 'images/about_image_2.png' %}"/>
+        </div>
+
+        <div class="about-info">
+            <div class="header">
+                <div class="vl"></div>
+                <p>About Us</p>
+            </div>
+
+            <h2>Dedicated To Transform Your Dog's <br>
+                Behaviours And Your Family’s Life</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime <br> mollitia, molestiae quas vel sint commodi repudiandae consequuntur <br> voluptatum laborum 
+                numquam blanditiis harum quisquam.</p>
+            
+            <p>We help you and your Dog:-</p>
+
+            <p><i class="fas fa-check"></i> Develop a clear and loving relationship</p>
+            <p><i class="fas fa-check"></i> Be able to communicate effectively</p> 
+            <p><i class="fas fa-check"></i> Create a golden relationship</p>  
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="services-section">
+        <div class="header">
+            <i class="fas fa-paw"></i>
+            <h5>Our Services</h5>
+        </div>
+        
+        <div class="container">
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Obedience Training</strong></h6>
+                    <p>Obedience training will involve training <br> your dog to obey basic commands that <br> are necessary for keeping proper control <br> of the dog.</p>
+                </div>
+    
+                <img src="{% static 'images/service_1.png' %}" />
+            </div>
+
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Protection Training</strong></h6>
+                    <p>Protection training  will involve training <br> your dog to attack people.This is only <br> applicable to those licensed security <br> guards that are eligible to have their <br> dogs trained as protection dogs</p>
+                </div>
+    
+                <img src="{% static 'images/service_2.png' %}" />
+            </div>
+
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Behaviour Modification</strong></h6>
+                    <p>Behaviour Modification training will help <br> in Behaviour Modification training will help <br> in changing the undesirable behaviors <br> that your dog exhibits</p>
+                </div>
+    
+                <img src="{% static 'images/service_3.png' %}" />
+            </div>
+
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Puppy Training</strong></h6>
+                    <p>Puppy training will involve simple sessions <br> that involve the use of positive <br> reinforcement techniques</p>
+                </div>
+    
+                <img src="{% static 'images/service_4.png' %}" />
+            </div>
+
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Service Training</strong></h6>
+                    <p>Service training is a technique that involves <br> training your dog to perform  specific <br> tasks on cue for the benefit of  people <br> with disabilities.</p>
+                </div>
+    
+                <img src="{% static 'images/service_5.png' %}" />
+            </div>
+
+            <div class="service-layout">
+                <div class="service-info">
+                    <h6><strong>Agility Training</strong></h6>
+                    <p>Dog agility training will involve a sport <br> where your dog will be directed through <br> a pre-set obstacle course within a <br> certain time limit</p>
+                </div>
+    
+                <img src="{% static 'images/service_2.png' %}" />
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Why Choose Us Section -->
+    <div class="why-us-section">
+        <div class="why-us-images">
+
+            <div class="container">
+                <img src="{% static 'images/why_us_1.png' %}"/>
+                <img src="{% static 'images/why_us_2.png' %}"/>
+            </div>
+
+            <div class="container">
+                <img src="{% static 'images/why_us_3.png' %}"/>
+                <img src="{% static 'images/why_us_4.png' %}"/>
+            </div>
+                 
+        </div>
+
+        <div class="why-us-info">
+            <div class="header">
+                <div class="vl"></div>
+                <p>Why Choose Us</p>
+            </div>
+
+            <h2>Offering The Best Training For <br>
+                The Best Results</h2>
+
+            <p>We are equipped with professional dog trainers ready to <br> meet your dog training specifications through offering <br> the necessary types of training for your Dog. The <br> services are affordable and convenient for you <br> at any time. We offer:-</p>
+            
+            <div class="offers">
+                <img src="{% static 'images/offer_image_1.png'%}" />
+
+                <div class="offer-info">
+                    <h5>Expert Training</h5>
+                    <p>This are skilled Professional Dog trainers who  <br> have been tested and proved by the system</p>
+                </div>
+            </div>
+
+            <div class="offers">
+                <img src="{% static 'images/offer_image_2.png'%}" />
+
+                <div class="offer-info">
+                    <h5>Modern Equipment</h5>
+                    <p>The dogs are trained in the best facilities that <br> have all the necessary tools to ensure training <br> is facilitated.</p>
+                </div>
+            </div>
+
+            <div class="offers">
+                <img src="{% static 'images/offer_image_3.png'%}" />
+
+                <div class="offer-info">
+                    <h5>Force-Free Training</h5>
+                    <p>This training is focused on providing your dog <br> with something that is reinforcing or desirable, <br> like a treat or praise, immediately when the <br> desired behavior occurs to have your dog <br> motivated. </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Team Section -->
+    <div class="team-section">
+        <div class="header">
+            <i class="fas fa-paw"></i>
+            <h5>Our Team</h5>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
+
+                    <div class="trainer-info">
+                        <h5>Darren Elder</h5>
+                        <h6><strong>Dog Trainer</strong></h6>
+                        
+                        <div class="ratings">
+                            <div class="stars">
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                            </div>
+                            <p>(10)</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/location_image.png' %}"/>
+                            <p>Nairobi, Kenya</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/time_image.png' %}"/>
+                            <p>Available on Mon-Fri</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/dollar_icon.png' %}"/>
+                            <p>Ksh 1,000 - Ksh 3,000</p>
+                        </div>
+
+                        <div class="services">
+                            <p><i class="fas fa-check"></i> Obedience Training</p>
+                            <p><i class="fas fa-check"></i> Protection Training</p>
+                        </div>
+
+                        <hr>
+
+                        <div class="buttons">
+                            <a class="orange-btn" href="#">
+                                View Profile
+                            </a>
+
+                            <a class="outline-btn" href="#">
+                                Book Now
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <img class="trainer-img" src="{% static 'images/trainer_3.jpg' %}"/>
+
+                    <div class="trainer-info">
+                        <h5>John Hawkins</h5>
+                        <h6><strong>Dog Trainer</strong></h6>
+                        
+                        <div class="ratings">
+                            <div class="stars">
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                            </div>
+                            <p>(10)</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/location_image.png' %}"/>
+                            <p>Nairobi, Kenya</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/time_image.png' %}"/>
+                            <p>Available on Mon-Fri</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/dollar_icon.png' %}"/>
+                            <p>Ksh 1,000 - Ksh 3,000</p>
+                        </div>
+
+                        <div class="services">
+                            <p><i class="fas fa-check"></i> Obedience Training</p>
+                            <p><i class="fas fa-check"></i> Protection Training</p>
+                        </div>
+
+                        <hr>
+
+                        <div class="buttons">
+                            <a class="orange-btn" href="#">
+                                View Profile
+                            </a>
+
+                            <a class="outline-btn" href="#">
+                                Book Now
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <img class="trainer-img" src="{% static 'images/trainer_2.jpg' %}"/>
+
+                    <div class="trainer-info">
+                        <h5>Sofia Brient</h5>
+                        <h6><strong>Dog Trainer</strong></h6>
+                        
+                        <div class="ratings">
+                            <div class="stars">
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/filled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                                <img src="{% static 'images/unfilled_star.png' %}"/>
+                            </div>
+                            <p>(10)</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/location_image.png' %}"/>
+                            <p>Nairobi, Kenya</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/time_image.png' %}"/>
+                            <p>Available on Mon-Fri</p>
+                        </div>
+
+                        <div class="more-info">
+                            <img src="{% static 'images/dollar_icon.png' %}"/>
+                            <p>Ksh 1,000 - Ksh 3,000</p>
+                        </div>
+
+                        <div class="services">
+                            <p><i class="fas fa-check"></i> Obedience Training</p>
+                            <p><i class="fas fa-check"></i> Protection Training</p>
+                        </div>
+
+                        <hr>
+
+                        <div class="buttons">
+                            <a class="orange-btn" href="#">
+                                View Profile
+                            </a>
+
+                            <a class="outline-btn" href="#">
+                                Book Now
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="loading" href="#">Load More</a>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="gallery-section">
+        <img src="{% static 'images/gallery_1.png' %}"/>
+        <img src="{% static 'images/gallery_2.png' %}"/>
+        <img src="{% static 'images/gallery_3.png' %}"/>
+        <img src="{% static 'images/gallery_4.jpg' %}"/>
+        <img src="{% static 'images/gallery_5.png' %}"/>
+    </div>
+
+</div>
+
+{% endblock %}
