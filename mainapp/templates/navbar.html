@@ -20,9 +20,15 @@
           Dog Trainers
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        {% if user.is_authenticated %}
           <a class="dropdown-item" href="#">Trainer Dashboard </a>
           <a class="dropdown-item" href="#">Appointments</a>
-          <a class="dropdown-item" href="#">Profile Settings</a>
+          <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+          {% else %}
+          <a class="dropdown-item" href="{% url 'trainer_login' %}">Trainer Dashboard </a>
+          <a class="dropdown-item" href="{% url 'trainer_login' %}">Appointments</a>
+          <a class="dropdown-item" href="{% url 'trainer_login' %}">Profile Settings</a>
+          {% endif %}
       </div>
       </li>
 
@@ -31,9 +37,15 @@
             Dog Owners
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Owner Dashboard </a>
-            <a class="dropdown-item" href="#">Bookings</a>
-            <a class="dropdown-item" href="#">Profile Settings</a>
+            {% if user.is_authenticated %}
+          <a class="dropdown-item" href="#">Owner Dashboard </a>
+          <a class="dropdown-item" href="#">Bookings</a>
+          <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+          {% else %}
+          <a class="dropdown-item" href="{% url 'owner_login' %}">Owner Dashboard </a>
+          <a class="dropdown-item" href="{% url 'owner_login' %}">Bookings</a>
+          <a class="dropdown-item" href="{% url 'owner_login' %}">Profile Settings</a>
+          {% endif %}
           </div>
       </li>
 
@@ -41,7 +53,11 @@
           <a class="nav-item nav-link" href="#">Contact Us</a>
       </li>
     </ul>
-
+    {%if user.is_authenticated%}
+    <a class="black-btn" href="{% url 'logout' %}">
+      Logout
+    </a>
+    {% else %}
     <div class="auth-btns">
       <a class="white-btn" href="#" data-toggle="modal" data-target="#signupModalCenter">
           Sign Up
@@ -86,10 +102,10 @@
             </div>
 
             <div class="modal-footer">
-              <a class="black-btn" href="#">
+              <a class="black-btn" href="{% url 'owner_login' %}">
                 Dog Trainer
               </a>
-              <a class="orange-btn" href="#">
+              <a class="orange-btn" href="{% url 'owner_login' %}">
                 Dog Owner
               </a>
             </div>
@@ -98,6 +114,6 @@
       </div>
 
     </div>
-
+    {% endif %}
   </div>
 </nav>
