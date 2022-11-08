@@ -12,7 +12,7 @@ urlpatterns = [
     # path('login/', views.loginView, name='login'),
     path('accounts/login/trainer', views.trainerloginView, name='trainer_login'),
     path('accounts/login/owner', views.ownerloginView, name='owner_login'),
-    path('logout/', views.logout_user),
+    path('logout/', views.logout_user, name='logout'),
     
     path('profile/trainer/<id>', views.trainer_profile, name='trainer_profile'),
     path('profile/owner/<id>', views.owner_profile, name='owner_profile'),
@@ -20,10 +20,11 @@ urlpatterns = [
     path('dogadd/<id>', views.dog, name='dog_form'),
     # path('addpost/<id>', views.post, name='post_form'),
     path('addreview/<trainer_id>', views.review, name='review_form'),
-    path('book/<trainer_id>', views.booking, name='bookin_form'),
+    path('book/<trainer_id>', views.booking, name='booking_form'),
 
     # Index/Landing Page
     path('', views.index, name='landingPage'),
     # Search Page
     path('search/', views.search, name='searchPage'),
+    path('gender/', views.gender, name='gender'),
 ]

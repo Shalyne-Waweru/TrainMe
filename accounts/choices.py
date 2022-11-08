@@ -31,8 +31,8 @@ places=(
     ('Mombasa', 'Mombasa'),      
 )
 gender=(
-    ('male', 'male'),
-    ('female', 'female'),
+    ('male', 'Male'),
+    ('female', 'Female'),
 )
 services=(
     ('Obedience Training', 'Obedience Training'),

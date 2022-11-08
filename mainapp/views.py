@@ -20,11 +20,29 @@ def index(request):
 # def signup(request):
 #     return render(request, 'auth/signup.html',locals())
 
-# def loginView(request):
-#     return render(request, 'auth/login.html',locals())
+def gender(request):
+    # gen3=Trainer.objects.filter(gender)
+    # print(gen3)
+    # if gender == "male" or gender == "Male" :
+    gen=Trainer.objects.filter(gender='male')
+        # gen=request.GET["gender"]
+    print(gen)
+    # elif gender == "female" or gender == "Female":
+    gen1=Trainer.objects.filter(gender='female')
+    print(gen1)
+    return render(request, 'search.html',locals())
 
 def search(request):
-    servs= services
+    if 'location' in request.GET and request.GET["location"]:
+        search_term = request.GET.get("location")
+        print(search_term)
+        searched_location = Trainer.search_by_location(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',locals())
+
+    else:
+        message = "You haven't searched for any term"
     return render(request, 'search.html', locals())
 
 class TrainerSignUpView(CreateView):

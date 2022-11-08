@@ -156,6 +156,7 @@
                 <hr>
 
                 <div class="buttons">
+                  {% if user.is_authenticated %}
                     <a class="orange-btn" href="/profile/trainer/{{trainer.user.id}}">
                         View Profile
                     </a>
@@ -163,6 +164,15 @@
                     <a class="outline-btn" href="/book/{{trainer.id}}">
                         Book Now
                     </a>
+                    {% else %}
+                    <a class="orange-btn" href="{% url 'owner_login' %}">
+                      View Profile
+                  </a>
+
+                  <a class="outline-btn" href="{% url 'owner_login' %}">
+                      Book Now
+                  </a>
+                    {% endif %}
                 </div>
 
             </div>
