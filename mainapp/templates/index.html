@@ -172,8 +172,9 @@
 
         <div class="container">
             <div class="row">
+                {% if trainers %}
+                {% for trainer in trainers %}
                 <div class="col-md-4">
-                    {% for trainer in trainers %}
                     {% if trainer.image %}
                     <img class="trainer-img" src="{{trainer.image.url}}"/>
                     {% else %}
@@ -210,8 +211,7 @@
                         </div>
 
                         <div class="services">
-                            <p><i class="fas fa-check"></i> Obedience Training</p>
-                            <p><i class="fas fa-check"></i> Protection Training</p>
+                            <p><i class="fas fa-check"></i> {{trainer.services}}</p>
                         </div>
 
                         <hr>
@@ -221,14 +221,14 @@
                                 View Profile
                             </a>
 
-                            <a class="outline-btn" href="#">
+                            <a class="outline-btn" href="/book/{{trainer.id}}">
                                 Book Now
                             </a>
                         </div>
 
                     </div>
-                    {% endfor %}
-                </div>
+                    
+                </div>{% endfor %} {% else %}
 
                 <div class="col-md-4">
                     <img class="trainer-img" src="{% static 'images/trainer_3.jpg' %}"/>
@@ -334,7 +334,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div>{% endif %}
             </div>
         </div>
 
