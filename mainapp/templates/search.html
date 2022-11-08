@@ -16,19 +16,26 @@
             </form> -->
 
             <div class="search">
+              <form
+              action="{% url 'searchPage' %}"
+            >
               <i class="fas fa-map-marker-alt"></i>
-              <input type="text" class="form-control" placeholder="Enter Location">
-              <button class="btn btn-primary">Search</button>
-            </div>        
+              <input type="text" class="form-control" name="location" placeholder="Enter Location">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+            </div>    
+               
                
         </div>
     </div>
   </div>
-{% for serv in servs %}
-{{serv.1}}
-{% endfor %}
-  <div class="search-details">
-    <p><strong class="bold">10</strong> Matches Found For Dog Trainers In <span class="orange-txt">Nairobi</span></p>
+  
+  <div class="search-details" id='search-details'>
+    {% if searched_location %}
+    <p><strong class="bold">{{searched_location.count}}</strong> Matches Found For Dog Trainers In <span class="orange-txt">{{search_term| title}}</span></p>
+    {% else %}
+    <p><strong class="bold">0</strong> Matches Found For Dog Trainers In <span class="orange-txt">{{search_term| title}}</span></p>
+    {% endif %}
   </div>
 
   <div class="search-results">
@@ -42,7 +49,7 @@
           <p class="grey">Select Gender</p>
           <div class="form-group">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="male" checked>
               <label class="form-check-label" for="exampleRadios1">
                 Male Trainer
               </label>
@@ -101,13 +108,19 @@
             </div>
           </div>
         </div>
-
+        
         <div class="col-md-8">
+          {% if searched_location %}
+          {% for trainer in searched_location %}
           <div class="trainer-layout">
-            <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
+            {% if trainer.image %}
+              <img class="trainer-img" src="{{trainer.image.url}}"/>
+              {% else %}
+              <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
+            {% endif %}
 
             <div class="trainer-info">
-                <h5>Darren Elder</h5>
+                <h5>{{trainer.user.username|title}}</h5>
                 <h6><strong>Dog Trainer</strong></h6>
                 
                 <div class="ratings">
@@ -123,7 +136,7 @@
 
                 <div class="more-info">
                     <img src="{% static 'images/location_image.png' %}"/>
-                    <p>Nairobi, Kenya</p>
+                    <p>{{trainer.location}}</p>
                 </div>
 
                 <div class="more-info">
@@ -137,183 +150,26 @@
                 </div>
 
                 <div class="services">
-                    <p><i class="fas fa-check"></i> Obedience Training</p>
-                    <p><i class="fas fa-check"></i> Protection Training</p>
+                    <p><i class="fas fa-check"></i> {{trainer.services}}</p>
                 </div>
 
                 <hr>
 
                 <div class="buttons">
-                    <a class="orange-btn" href="#">
+                    <a class="orange-btn" href="/profile/trainer/{{trainer.user.id}}">
                         View Profile
                     </a>
 
-                    <a class="outline-btn" href="#">
+                    <a class="outline-btn" href="/book/{{trainer.id}}">
                         Book Now
                     </a>
                 </div>
 
             </div>
           </div>
+          {% endfor %}
+          {% endif %}
 
-          <div class="trainer-layout">
-            <img class="trainer-img" src="{% static 'images/trainer_3.jpg' %}"/>
-
-            <div class="trainer-info">
-                <h5>John Hawkins</h5>
-                <h6><strong>Dog Trainer</strong></h6>
-                
-                <div class="ratings">
-                    <div class="stars">
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                    </div>
-                    <p>(10)</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/location_image.png' %}"/>
-                    <p>Nairobi, Kenya</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/time_image.png' %}"/>
-                    <p>Available on Mon-Fri</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/dollar_icon.png' %}"/>
-                    <p>Ksh 1,000 - Ksh 3,000</p>
-                </div>
-
-                <div class="services">
-                    <p><i class="fas fa-check"></i> Obedience Training</p>
-                    <p><i class="fas fa-check"></i> Protection Training</p>
-                </div>
-
-                <hr>
-
-                <div class="buttons">
-                    <a class="orange-btn" href="#">
-                        View Profile
-                    </a>
-
-                    <a class="outline-btn" href="#">
-                        Book Now
-                    </a>
-                </div>
-
-            </div>
-          </div>
-
-          <div class="trainer-layout">
-            <img class="trainer-img" src="{% static 'images/trainer_2.jpg' %}"/>
-
-            <div class="trainer-info">
-                <h5>Sofia Brient</h5>
-                <h6><strong>Dog Trainer</strong></h6>
-                
-                <div class="ratings">
-                    <div class="stars">
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                    </div>
-                    <p>(10)</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/location_image.png' %}"/>
-                    <p>Nairobi, Kenya</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/time_image.png' %}"/>
-                    <p>Available on Mon-Fri</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/dollar_icon.png' %}"/>
-                    <p>Ksh 1,000 - Ksh 3,000</p>
-                </div>
-
-                <div class="services">
-                    <p><i class="fas fa-check"></i> Obedience Training</p>
-                    <p><i class="fas fa-check"></i> Protection Training</p>
-                </div>
-
-                <hr>
-
-                <div class="buttons">
-                    <a class="orange-btn" href="#">
-                        View Profile
-                    </a>
-
-                    <a class="outline-btn" href="#">
-                        Book Now
-                    </a>
-                </div>
-
-            </div>
-          </div>
-
-          <div class="trainer-layout">
-            <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
-
-            <div class="trainer-info">
-                <h5>Darren Elder</h5>
-                <h6><strong>Dog Trainer</strong></h6>
-                
-                <div class="ratings">
-                    <div class="stars">
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/filled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                        <img src="{% static 'images/unfilled_star.png' %}"/>
-                    </div>
-                    <p>(10)</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/location_image.png' %}"/>
-                    <p>Nairobi, Kenya</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/time_image.png' %}"/>
-                    <p>Available on Mon-Fri</p>
-                </div>
-
-                <div class="more-info">
-                    <img src="{% static 'images/dollar_icon.png' %}"/>
-                    <p>Ksh 1,000 - Ksh 3,000</p>
-                </div>
-
-                <div class="services">
-                    <p><i class="fas fa-check"></i> Obedience Training</p>
-                    <p><i class="fas fa-check"></i> Protection Training</p>
-                </div>
-
-                <hr>
-
-                <div class="buttons">
-                    <a class="orange-btn" href="#">
-                        View Profile
-                    </a>
-
-                    <a class="outline-btn" href="#">
-                        Book Now
-                    </a>
-                </div>
-
-            </div>
-          </div>
         </div>
       </div>
     </div>
