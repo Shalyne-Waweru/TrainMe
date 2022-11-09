@@ -21,9 +21,13 @@
       </a>
       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         {% if user.is_authenticated %}
+        {% if user.Dog_Trainer%}
           <a class="dropdown-item" href="#">Trainer Dashboard </a>
           <a class="dropdown-item" href="#">Appointments</a>
           <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+          {% else %}
+          <p>You are not a Dog Trainer</p>
+          {% endif %}
           {% else %}
           <a class="dropdown-item" href="{% url 'trainer_login' %}">Trainer Dashboard </a>
           <a class="dropdown-item" href="{% url 'trainer_login' %}">Appointments</a>
@@ -38,9 +42,13 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             {% if user.is_authenticated %}
+            {% if user.Dog_Owner%}
           <a class="dropdown-item" href="#">Owner Dashboard </a>
           <a class="dropdown-item" href="#">Bookings</a>
           <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+          {% else %}
+          <p>You are not a Dog Owner</p>
+          {% endif %}
           {% else %}
           <a class="dropdown-item" href="{% url 'owner_login' %}">Owner Dashboard </a>
           <a class="dropdown-item" href="{% url 'owner_login' %}">Bookings</a>
@@ -102,7 +110,7 @@
             </div>
 
             <div class="modal-footer">
-              <a class="black-btn" href="{% url 'owner_login' %}">
+              <a class="black-btn" href="{% url 'trainer_login' %}">
                 Dog Trainer
               </a>
               <a class="orange-btn" href="{% url 'owner_login' %}">

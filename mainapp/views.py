@@ -18,6 +18,7 @@ def index(request):
     return render(request, 'index.html',locals())
 
 def search(request):
+    trainers= Trainer.objects.all()
     if 'location' in request.GET and request.GET["location"]:
         search_term = request.GET.get("location")
         searched_location = Trainer.search_by_location(search_term)
