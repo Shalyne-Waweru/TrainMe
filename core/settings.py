@@ -94,7 +94,6 @@ DATABASES = {
 }
 
 
-<<<<<<< HEAD
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -105,18 +104,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-=======
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'trainme',
-#         'USER': 'postgres',
-#         'PASSWORD': '12345',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
->>>>>>> ea5e2ff65e79b360daa16f27307facd2cb581887
 
 
 # Password validation
