@@ -172,11 +172,16 @@
 
         <div class="container">
             <div class="row">
+                {% if trainers %}
+                {% for trainer in trainers %}
                 <div class="col-md-4">
+                    {% if trainer.image %}
+                    <img class="trainer-img" src="{{trainer.image.url}}"/>
+                    {% else %}
                     <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
-
+                    {% endif %}
                     <div class="trainer-info">
-                        <h5>Darren Elder</h5>
+                        <h5>{{trainer.user.username | title}}</h5>
                         <h6><strong>Dog Trainer</strong></h6>
                         
                         <div class="ratings">
@@ -192,7 +197,7 @@
 
                         <div class="more-info">
                             <img src="{% static 'images/location_image.png' %}"/>
-                            <p>Nairobi, Kenya</p>
+                            <p>{{trainer.location}}</p>
                         </div>
 
                         <div class="more-info">
@@ -206,24 +211,37 @@
                         </div>
 
                         <div class="services">
-                            <p><i class="fas fa-check"></i> Obedience Training</p>
-                            <p><i class="fas fa-check"></i> Protection Training</p>
+                            <p><i class="fas fa-check"></i> {{trainer.services}}</p>
                         </div>
 
                         <hr>
 
                         <div class="buttons">
-                            <a class="orange-btn" href="#">
+                            {% if user.is_authenticated %}
+                            <a class="orange-btn" href="/profile/trainer/{{trainer.user.id}}">
                                 View Profile
                             </a>
 
-                            <a class="outline-btn" href="#">
+                            <a class="outline-btn" href="/book/{{trainer.id}}">
                                 Book Now
                             </a>
+                            {% else %}
+                            <a class="orange-btn" href="{% url 'owner_login' %}">
+                                View Profile
+                            </a>
+
+                            <a class="outline-btn" href="{% url 'owner_login' %}">
+                                Book Now
+                            </a>
+                            {% endif %}
                         </div>
 
                     </div>
+                    
                 </div>
+                {% endfor %} 
+                
+                {% else %}
 
                 <div class="col-md-4">
                     <img class="trainer-img" src="{% static 'images/trainer_3.jpg' %}"/>
@@ -330,6 +348,7 @@
 
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
 

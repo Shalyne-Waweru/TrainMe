@@ -370,18 +370,19 @@ body {
 
 /* Our Team Section */
 .team-section .container {
-    display: flex;
+    padding: 20px;
+    text-align: center;
+    /* display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
 }
 
 .team-section .row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 50px;
-    margin-top: 60px;
 }
 
 .team-section .col-md-4 {
@@ -394,6 +395,8 @@ body {
 .col-md-4 .trainer-img {
     width: 100%;
     border-radius: 10px 10px 0px 0px;
+    object-fit: cover;
+    height: auto;
 }
 
 .trainer-info {
@@ -788,6 +791,8 @@ body {
 
 .search-results .col-md-8 .trainer-layout .trainer-img {
     width: 100%;
+    height: auto;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    object-fit: cover;
 }

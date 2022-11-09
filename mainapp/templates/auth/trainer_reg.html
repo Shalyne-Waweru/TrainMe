@@ -1,13 +1,16 @@
-{% extends 'auth/base.html' %}
-{% load static %}
-
-{% block content%}
+{% extends 'auth/base.html' %} {% load static %} {% block content%}
 
 <div class="container-fluid">
   <div class="row">
     <div class="form-section">
       <a class="logo" href="{% url 'landingPage' %}">
-        <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        <img
+          src="{% static 'images/logo.png' %}"
+          width="30"
+          height="30"
+          class="d-inline-block align-top"
+          alt="Logo"
+        />
         <span class="logoName">TrainMe</span>
       </a>
 
@@ -21,7 +24,7 @@
     
         {% endfor %}
       {% endif %} -->
-      
+
       <div class="header">
         <div class="hl"></div>
         <p>Dog Trainer Sign Up</p>
@@ -29,8 +32,8 @@
       </div>
 
       <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %} 
-        
+        {% csrf_token %}
+
         <!-- {{form.as_p}} -->
 
         <div class="column">
@@ -38,7 +41,7 @@
             <label>{{form.first_name.label}}</label>
             {{form.first_name}}
           </div>
-  
+
           <div class="form-group">
             <label>{{form.last_name.label}}</label>
             {{form.last_name}}
@@ -47,10 +50,10 @@
 
         <div class="column">
           <div class="form-group">
-            <label>{{form.email.label}}</label>
-            {{form.email}}
+            <label>{{form.username.label}}</label>
+            {{form.username}}
           </div>
-  
+
           <div class="form-group">
             <label>{{form.gender.label}}</label>
             {{form.gender}}
@@ -62,7 +65,7 @@
             <label>{{form.location.label}}</label>
             {{form.location}}
           </div>
-  
+
           <div class="form-group">
             <label>{{form.phone.label}}</label>
             {{form.phone}}
@@ -74,7 +77,7 @@
             <label>{{form.password1.label}}</label>
             {{form.password1}}
           </div>
-  
+
           <div class="form-group">
             <label>{{form.password2.label}}</label>
             {{form.password2}}
@@ -91,13 +94,13 @@
             Are You A Dog Owner?
             <a href="{% url 'owner_signup' %}">Click Here</a>
           </span>
-            
+
           <span>
             Already Registered?
             <a href="{% url 'trainer_login' %}">Login</a>
           </span>
         </p>
-        
+
         <button class="btn" type="submit">SIGNUP</button>
       </form>
     </div>
