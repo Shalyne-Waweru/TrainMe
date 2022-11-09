@@ -18,8 +18,8 @@ class Trainer(models.Model):
     gender = models.CharField(max_length=10, choices= gender)
     services =models.CharField(max_length=255, choices=services)
     location= models.CharField(max_length=40, choices = places)
-    # min_price=models.CharField(max_length=10)
-    # max_price=models.CharField(max_length=10)
+    min_price=models.CharField(max_length=10)
+    max_price=models.CharField(max_length=10)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
