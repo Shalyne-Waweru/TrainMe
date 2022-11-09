@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.db.models import Q, F
-from django.utils import timezone
 
 from cloudinary.models import CloudinaryField
 
