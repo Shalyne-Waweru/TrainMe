@@ -24,7 +24,7 @@ class Clinic(models.Model):
     user=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='clinic')
     
     def __str__(self):
-        return self.clinic_owner + ' ' + self.clinic_name
+        return self.user.user.username + ' ' + self.clinic_name
     
     @classmethod   
     def filter_by_user(cls, user):
@@ -33,8 +33,8 @@ class Clinic(models.Model):
         
 class BusinessHours(models.Model):
     day= models.CharField(max_length=10, choices=DAYS_OF_WEEK, unique=True)
-    start = models.TimeField(blank=True)
-    end = models.TimeField(blank=True)
+    start = models.TimeField(null=True)
+    end = models.TimeField(null=True)
     open_closed= models.BooleanField(default=False)
     user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='business_hours')
     
