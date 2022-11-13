@@ -1,7 +1,7 @@
 from django import forms
 
-from mainapp.models import Booking, BusinessHours, Clinic, Dog, Post, Review
-from accounts.choices import HOUR_CHOICES
+from mainapp.models import Booking, BusinessHours, Dog, Post, Review
+from accounts.choices import HOUR_CHOICES, DAYS_OF_WEEK
 from datetime import datetime
 from accounts.utilities import check_free_time
 # Create your forms here.
@@ -20,19 +20,13 @@ class ReviewForm(forms.ModelForm):
         model= Review
         fields=['title', 'description']
 
-class ClinicForm(forms.ModelForm):
-    class Meta:
-        model= Clinic
-        fields=['clinic_name', 'clinic_location']
-
 class HoursForm(forms.ModelForm):
+    day= forms.ChoiceField(choices=DAYS_OF_WEEK)
+    start= forms.ChoiceField(choices=HOUR_CHOICES)
+    end= forms.ChoiceField(choices=HOUR_CHOICES)
     class Meta:
         model= BusinessHours
         fields=['day', 'start','end','open_closed']
-        widgets = {
-            'start': forms.TimeInput(attrs={'type': 'time'}),
-            'end': forms.TimeInput(attrs={'type': 'time'})
-        }
         
 class BookingForm(forms.ModelForm):
 
