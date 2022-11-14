@@ -21,22 +21,30 @@ class Dog(models.Model):
 class Clinic(models.Model):
     clinic_name = models.CharField(max_length=50)
     clinic_location=models.CharField(max_length=50, choices=places)
-    user=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='clinic')
+    user=models.OneToOneField(Trainer, on_delete=models.CASCADE, related_name='clinic')
     
     def __str__(self):
-        return self.clinic_owner + ' ' + self.clinic_name
+        return self.user.user.username + ' ' + self.clinic_name
     
     @classmethod   
     def filter_by_user(cls, user):
         clinics = cls.objects.filter(user__id__icontains=user).all()
         return clinics
+    
+class Service(models.Model):
+    services = models.CharField(max_length=50, choices=service)
+    user=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='service')
+    
+    def __str__(self):
+        return self.user.user.username + ' ' + self.services
+   
         
-class BusinessHours(models.Model):
-    day= models.CharField(max_length=10, choices=DAYS_OF_WEEK, unique=True)
-    start = models.TimeField(blank=True)
-    end = models.TimeField(blank=True)
-    open_closed= models.BooleanField(default=False)
+class Hours(models.Model):
     user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='business_hours')
+    day= models.CharField(max_length=10, choices=DAYS_OF_WEEK, unique=True)
+    start = models.TimeField(null=True)
+    end = models.TimeField(null=True)
+    open_closed= models.BooleanField(default=False)
     
     def __str__(self):
         return self.user.user.username + ' ' + self.day
@@ -51,15 +59,15 @@ class BusinessHours(models.Model):
             raise ValidationError('Start should be before end')
         return super().clean()
 
-    class Meta:
-        constraints = [
-            models.CheckConstraint(
-                check=Q(
-                    start__lte=F('end')
-                ),
-                name='start_before_end'
-            )
-        ]
+    # class Meta:
+    #     constraints = [
+    #         models.CheckConstraint(
+    #             check=Q(
+    #                 start__lte=F('end')
+    #             ),
+    #             name='start_before_end'
+    #         )
+    #     ]
     
     
     

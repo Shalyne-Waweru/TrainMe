@@ -40,24 +40,37 @@
     <small class="text-muted"> {{trainer.id|title}}</small>
   </p>
   <p>
+    Trainer Services:
+    <small class="text-muted"> {{trainer.services}}</small>
+  </p>
+  <p>
+    Trainer Location:
+    <small class="text-muted"> {{trainer.location}}</small>
+  </p>
+  <p>
+    Trainer Gender:
+    <small class="text-muted"> {{trainer.gender}}</small>
+  </p>
+  <p>
     Reviews:
     <small class="text-muted"> {{reviews}}</small> <br />
-    {% for review in reviews %} Title: {{review.title}},
-    Description:{{review.description}}, Reviewer:{{review.reviewer}}, Reviewed:
+    {% for review in reviews %} Title: {{review.title}},<br>
+    Description:{{review.description}}, <br>Reviewer:{{review.reviewer}}, <br>Reviewed:
     {{review.reviewed}}. <br />
     {% endfor %}
   </p>
-  
+
   <p>
     Hours:
     <small class="text-muted"> {{hours}}</small> <br />
-    {% for hour in hours %} Day: {{hour.day}}, Start Time: {{hour.start}}, End Time: {{hour.end}}, 
-    {{hour.open_closed}} {% endfor %}
+    {% for hour in hours %} Day: {{hour.day}}, <br> Start Time: {{hour.start}},<br> End
+    Time: {{hour.end}},<br> {{hour.open_closed}} <br>{% endfor %}
   </p>
   <p>
     clinic:
     <small class="text-muted"> {{clinics}}</small> <br />
-    {% for clinic in clinics %} name:{{clinic.clinic_name}}, location {{clinic.clinic_location}}{% endfor %}
+    {% for clinic in clinics %} name:{{clinic.clinic_name}} <br> location
+    {{clinic.clinic_location}}{% endfor %}
   </p>
   <a href="/addreview/{{trainer.id}}">Review</a>
   {% if trainer.user.id == request.user.id%}
@@ -65,8 +78,7 @@
     Bookings:
     <small class="text-muted"> {{bookings}}</small> <br />
     {% for book in bookings %} Booker: {{book.user.user.username}},
-    Date:{{book.date}}, Time:
-    {{book.time}}. <br />
+    Date:{{book.date}}, Time: {{book.time}}. <br />
     {% endfor %}
   </p>
   <a
@@ -76,23 +88,27 @@
     data-bs-target="#post"
     >Add Post</a
   >
-  <a
-    href=""
-    class="btn btn-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#profile"
-    >Add Profile</a
-  >
-  <a
-    href=""
-    class="btn btn-success"
-    data-bs-toggle="modal"
-    data-bs-target="#clinic"
-    >Add clinic</a
-  >
-  <a href="" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#hours"
-    >Add Hours</a
-  >
+  <div class="container">
+    <form action="" method="post" enctype="multipart/form-data" id="add">
+      {% csrf_token %} {{form.as_p}}
+      <input type="hidden" name="form_type" value="form" />
+      <input type="submit" class="btn btn-info" value="add" />
+    </form>
+  </div>
+  <div class="container">
+    <form action="" method="POST" enctype="multipart/form-data" id="upload">
+      {% csrf_token %} {{hform.as_p}}
+      <input type="hidden" name="form_type" value="hform" />
+      <input type="submit" class="btn btn-info" value="upload" />
+    </form>
+  </div>
+  <div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %} {{sform.as_p}}
+      <input type="hidden" name="form_type" value="sform" />
+      <input type="submit" class="btn btn-info" value="save" />
+    </form>
+  </div>
   {% endif %}
 </div>
 <!-- The Modal -->
@@ -112,128 +128,11 @@
       <!-- Modal body -->
       <div class="modal-body">
         <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{form.as_p}}
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button class="btn btn-outline-info btn-md" type="submit">
-              Edit
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- The Modal -->
-<div class="modal" id="profile">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Profile</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <form method="POST" enctype="multipart/form-data">
           {% csrf_token %} {{pform.as_p}}
-
+          <input type="hidden" name="form_type" value="pform" />
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button class="btn btn-outline-info btn-md" type="submit">
-              Add to profile
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- The Modal -->
-<div class="modal" id="clinic">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Clinic</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{cform.as_p}}
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button class="btn btn-outline-info btn-md" type="submit">
-              Add clinic
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- The Modal -->
-<div class="modal" id="hours">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Hours</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{hform.as_p}}
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button class="btn btn-outline-info btn-md" type="submit">
-              Add Hours
-            </button>
+            <input type="submit" class="btn btn-info" value="post" />
 
             <button
               type="button"

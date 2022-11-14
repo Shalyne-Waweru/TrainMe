@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Owner, Trainer, User, places, gender, services
+from .models import Owner, Trainer, User
+from .choices import *
 from cloudinary.forms import CloudinaryFileField
 
 # Create your forms here.
@@ -63,7 +64,9 @@ class TrainerLoginForm(forms.Form):
     password=forms.CharField(max_length=20, widget=forms.PasswordInput)
 
 class TrainerProfileForm(forms.ModelForm):
-    services = forms.MultipleChoiceField(choices=services, widget=forms.CheckboxSelectMultiple())
+    # services = forms.MultipleChoiceField(choices=service)
+    clinic_name = forms.CharField()
+    clinic_location = forms.ChoiceField(choices=places)
     class Meta:
         model = Trainer
-        fields=['bio','gender','services']
+        fields=('bio','gender','min_price','max_price','clinic_name','clinic_location')
