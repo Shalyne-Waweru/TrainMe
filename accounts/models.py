@@ -11,12 +11,18 @@ class User(AbstractUser):
     is_owner = models.BooleanField('Dog_Owner', default=False)
     phone= models.CharField(max_length=10)
 
+# class Service(models.Model):
+#     services = models.CharField(max_length=50, choices=service)
+#     user=models.ManyToManyField(Trainer, related_name='service')
+    
+#     def __str__(self):
+#         return self.services
 class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Trainer")
     image = CloudinaryField('image')
     bio = models.TextField()
     gender = models.CharField(max_length=10, choices= gender)
-    services =models.CharField(max_length=255, choices=services)
+    # services =models.ManyToManyField(Service, choices=service)
     location= models.CharField(max_length=40, choices = places)
     min_price=models.CharField(max_length=10)
     max_price=models.CharField(max_length=10)

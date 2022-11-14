@@ -1,6 +1,6 @@
 from django import forms
 
-from mainapp.models import Booking, BusinessHours, Dog, Post, Review
+from mainapp.models import Booking, Hours, Dog, Post, Review,Service
 from accounts.choices import HOUR_CHOICES, DAYS_OF_WEEK
 from datetime import datetime
 from accounts.utilities import check_free_time
@@ -20,12 +20,17 @@ class ReviewForm(forms.ModelForm):
         model= Review
         fields=['title', 'description']
 
-class HoursForm(forms.ModelForm):
-    day= forms.ChoiceField(choices=DAYS_OF_WEEK)
-    start= forms.ChoiceField(choices=HOUR_CHOICES)
-    end= forms.ChoiceField(choices=HOUR_CHOICES)
+class ServiceForm(forms.ModelForm):
     class Meta:
-        model= BusinessHours
+        model= Service
+        fields=['services']
+
+class HoursForm(forms.ModelForm):
+    # day= forms.ChoiceField(choices=DAYS_OF_WEEK)
+    # start= forms.ChoiceField(choices=HOUR_CHOICES)
+    # end= forms.ChoiceField(choices=HOUR_CHOICES)
+    class Meta:
+        model= Hours
         fields=['day', 'start','end','open_closed']
         
 class BookingForm(forms.ModelForm):
