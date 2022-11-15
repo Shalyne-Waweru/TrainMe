@@ -1,5 +1,6 @@
 {% extends 'auth/base.html'%}{% load static %}{%block content%}
-<div class="card">
+<div class="container card">
+  <a href="/">Back Home</a>
   <h4>{{owner.user.username|title}}</h4>
 
   <p>
@@ -10,5 +11,64 @@
     Telphone:
     <small> {{owner.user.phone|title}}</small>
   </p>
+  <p>
+    Location:
+    <small> {{owner.location}}</small>
+  </p>
+  <p>
+    Dog:
+    <small class="text-muted"> {{dogs}}</small> <br />
+    {% for dog in dogs %} Name:{{dog.dog_name}} <br />
+    Age: {{dog.dog_age}} Months <br>
+    Gender: {{dog.dog_sex}} <br>
+    Pic:
+    <img src="{{dog.dog_pic.url}}" alt="" class='img-responsive img-fluid'> <br>
+    <a href="/delete_dog/{{ dog.id }}">delete</a>
+    {% endfor %}
+  </p>
+  {% if owner.user.id == request.user.id%}
+  <a
+    href=""
+    class="btn btn-info btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#post"
+    >Dog</a
+  >
+  {% endif %}
+</div>
+<!-- The Dog Modal -->
+<div class="modal" id="post">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Post</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{form.as_p}}
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-info btn-sm" value="Save Dog" />
+
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}

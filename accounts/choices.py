@@ -35,10 +35,10 @@ gender=(
     ('female', 'Female'),
 )
 service=(
-    ('obedience', 'Obedience-Training'),
-    ('trick', 'Trick_Skill_Training'),
-    ('behavior', 'Behavior Modification'),
-    ('puppy', 'Puppy Training'),
-    ('security', 'Security Program'),
-    ('anxiety', 'Separation Anxiety'),
+    ('Obedience-Training', 'Obedience-Training'),
+    ('Trick_Skill_Training', 'Trick_Skill_Training'),
+    ('Behavior Modification', 'Behavior Modification'),
+    ('Puppy Training', 'Puppy Training'),
+    ('Security Program', 'Security Program'),
+    ('Separation Anxiety', 'Separation Anxiety'),
 )

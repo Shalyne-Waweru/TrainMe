@@ -64,9 +64,8 @@ class TrainerLoginForm(forms.Form):
     password=forms.CharField(max_length=20, widget=forms.PasswordInput)
 
 class TrainerProfileForm(forms.ModelForm):
-    # services = forms.MultipleChoiceField(choices=service)
-    clinic_name = forms.CharField()
-    clinic_location = forms.ChoiceField(choices=places)
+    gender=forms.ChoiceField(choices=gender)    
+    services=forms.MultipleChoiceField(choices=service, widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Trainer
-        fields=('bio','gender','min_price','max_price','clinic_name','clinic_location')
+        fields=('bio','gender','min_price','max_price','services')

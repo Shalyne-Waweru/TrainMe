@@ -207,17 +207,18 @@
 
                         <div class="more-info">
                             <img src="{% static 'images/dollar_icon.png' %}"/>
-                            <p>Ksh 1,000 - Ksh 3,000</p>
+                            <p>Ksh {{trainer.min_price}} - Ksh {{trainer.max_price}}</p>
                         </div>
 
                         <div class="services">
-                            <p><i class="fas fa-check"></i> {{trainer.services}}</p>
+                            {% for service in trainer.services %}
+                            <p><i class="fas fa-check"></i> {{service}}</p>
+                            {% endfor %}
                         </div>
 
                         <hr>
 
                         <div class="buttons">
-                            {% if user.is_authenticated %}
                             <a class="orange-btn" href="/profile/trainer/{{trainer.user.id}}">
                                 View Profile
                             </a>
@@ -225,15 +226,6 @@
                             <a class="outline-btn" href="/book/{{trainer.id}}">
                                 Book Now
                             </a>
-                            {% else %}
-                            <a class="orange-btn" href="{% url 'owner_login' %}">
-                                View Profile
-                            </a>
-
-                            <a class="outline-btn" href="{% url 'owner_login' %}">
-                                Book Now
-                            </a>
-                            {% endif %}
                         </div>
 
                     </div>

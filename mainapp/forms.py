@@ -1,11 +1,12 @@
 from django import forms
 
-from mainapp.models import Booking, Hours, Dog, Post, Review,Service
+from mainapp.models import *
 from accounts.choices import HOUR_CHOICES, DAYS_OF_WEEK
-from datetime import datetime
 from accounts.utilities import check_free_time
+from datetime import datetime
 # Create your forms here.
 class DogForm(forms.ModelForm):
+    dog_sex=forms.ChoiceField(choices=gender, label='Sex')
     class Meta:
         model= Dog
         fields=['dog_name', 'dog_age','dog_pic','dog_sex']
@@ -20,15 +21,16 @@ class ReviewForm(forms.ModelForm):
         model= Review
         fields=['title', 'description']
 
-class ServiceForm(forms.ModelForm):
+class ClinicForm(forms.ModelForm):
+    clinic_location=forms.ChoiceField(choices=places)
     class Meta:
-        model= Service
-        fields=['services']
+        model= Clinic
+        fields=['clinic_name', 'clinic_location']
 
 class HoursForm(forms.ModelForm):
-    # day= forms.ChoiceField(choices=DAYS_OF_WEEK)
-    # start= forms.ChoiceField(choices=HOUR_CHOICES)
-    # end= forms.ChoiceField(choices=HOUR_CHOICES)
+    day= forms.ChoiceField(choices=DAYS_OF_WEEK)
+    start= forms.ChoiceField(choices=HOUR_CHOICES)
+    end= forms.ChoiceField(choices=HOUR_CHOICES)
     class Meta:
         model= Hours
         fields=['day', 'start','end','open_closed']

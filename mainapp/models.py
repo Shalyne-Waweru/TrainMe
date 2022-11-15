@@ -16,28 +16,25 @@ class Dog(models.Model):
     dog_sex = models.CharField(max_length=10,choices=gender)
     
     def __str__(self):
-        return self.dog_name
+        return self.user.user.username+'s' + ' ' + self.dog_name
+    
+    @classmethod   
+    def filter_by_user(cls, user):
+        dogs = cls.objects.filter(user__id__icontains=user).all()
+        return dogs
     
 class Clinic(models.Model):
-    clinic_name = models.CharField(max_length=50)
+    clinic_name = models.CharField(max_length=50, unique=True)
     clinic_location=models.CharField(max_length=50, choices=places)
-    user=models.OneToOneField(Trainer, on_delete=models.CASCADE, related_name='clinic')
+    user=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='clinic')
     
     def __str__(self):
-        return self.user.user.username + ' ' + self.clinic_name
+        return self.clinic_name + ' ' + self.user.user.username+" 's Clinic"
     
     @classmethod   
     def filter_by_user(cls, user):
         clinics = cls.objects.filter(user__id__icontains=user).all()
         return clinics
-    
-class Service(models.Model):
-    services = models.CharField(max_length=50, choices=service)
-    user=models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='service')
-    
-    def __str__(self):
-        return self.user.user.username + ' ' + self.services
-   
         
 class Hours(models.Model):
     user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='business_hours')
@@ -59,15 +56,15 @@ class Hours(models.Model):
             raise ValidationError('Start should be before end')
         return super().clean()
 
-    # class Meta:
-    #     constraints = [
-    #         models.CheckConstraint(
-    #             check=Q(
-    #                 start__lte=F('end')
-    #             ),
-    #             name='start_before_end'
-    #         )
-    #     ]
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=Q(
+                    start__lte=F('end')
+                ),
+                name='start_before_end'
+            )
+        ]
     
     
     

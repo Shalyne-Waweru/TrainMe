@@ -1,5 +1,5 @@
 {% extends 'auth/base.html'%}{% load static %}{%block content%}
-<div class="card">
+<div class="container card">
   <a href="/">Back Home</a>
   <h4>{{trainer.user.username|title}}</h4>
 
@@ -41,6 +41,9 @@
   </p>
   <p>
     Trainer Services:
+    {% for service in trainer.services %}
+    {{service}},
+    {% endfor %}
     <small class="text-muted"> {{trainer.services}}</small>
   </p>
   <p>
@@ -51,26 +54,45 @@
     Trainer Gender:
     <small class="text-muted"> {{trainer.gender}}</small>
   </p>
+
+  <p>
+    Posts:
+    <small class="text-muted"> {{posts}}</small> <br />
+    {% for post in posts %} Title: {{post.video_title}}, <br />
+    Caption: {{post.video_caption}},<br />
+    Video: {{post.video}},<br />
+    <a href="/delete_post/{{ post.id }}">delete</a>
+    {% endfor %}
+  </p>
+
   <p>
     Reviews:
     <small class="text-muted"> {{reviews}}</small> <br />
-    {% for review in reviews %} Title: {{review.title}},<br>
-    Description:{{review.description}}, <br>Reviewer:{{review.reviewer}}, <br>Reviewed:
-    {{review.reviewed}}. <br />
+    {% for review in reviews %} Title: {{review.title}},<br />
+    Description:{{review.description}}, <br />Reviewer:{{review.reviewer}},
+    <br />
+    <a href="/delete_review/{{ review.id }}">delete</a>
     {% endfor %}
   </p>
 
   <p>
     Hours:
     <small class="text-muted"> {{hours}}</small> <br />
-    {% for hour in hours %} Day: {{hour.day}}, <br> Start Time: {{hour.start}},<br> End
-    Time: {{hour.end}},<br> {{hour.open_closed}} <br>{% endfor %}
+    {% for hour in hours %} Day: {{hour.day}}, <br />
+    Start Time: {{hour.start}},<br />
+    End Time: {{hour.end}},<br />
+    {{hour.open_closed}} <br />
+    <a href="/delete_hour/{{ hour.id }}">delete</a>
+    {% endfor %}
   </p>
+
   <p>
-    clinic:
+    Clinic:
     <small class="text-muted"> {{clinics}}</small> <br />
-    {% for clinic in clinics %} name:{{clinic.clinic_name}} <br> location
-    {{clinic.clinic_location}}{% endfor %}
+    {% for clinic in clinics %} name:{{clinic.clinic_name}} <br />
+    location {{clinic.clinic_location}} <br>
+    <a href="/delete_clinic/{{ clinic.id }}">delete</a>
+    {% endfor %}
   </p>
   <a href="/addreview/{{trainer.id}}">Review</a>
   {% if trainer.user.id == request.user.id%}
@@ -79,39 +101,53 @@
     <small class="text-muted"> {{bookings}}</small> <br />
     {% for book in bookings %} Booker: {{book.user.user.username}},
     Date:{{book.date}}, Time: {{book.time}}. <br />
+    <a href="/delete_booking/{{ book.id }}">delete</a>
     {% endfor %}
   </p>
+
   <a
     href=""
-    class="btn btn-warning"
+    class="btn btn-info btn-sm"
     data-bs-toggle="modal"
     data-bs-target="#post"
-    >Add Post</a
+    >Post</a
   >
+
   <div class="container">
-    <form action="" method="post" enctype="multipart/form-data" id="add">
+    <form action="" method="post" enctype="multipart/form-data">
       {% csrf_token %} {{form.as_p}}
       <input type="hidden" name="form_type" value="form" />
-      <input type="submit" class="btn btn-info" value="add" />
+      <input type="submit" class="btn btn-info btn-sm" value="Update Profile" />
     </form>
   </div>
+
   <div class="container">
-    <form action="" method="POST" enctype="multipart/form-data" id="upload">
+    <form action="" method="POST">
+      {% csrf_token %} {{cform.as_p}}
+      <input type="hidden" name="form_type" value="cform" />
+      <input type="submit" class="btn btn-info btn-sm" value="Save Clinic" />
+    </form>
+  </div>
+
+  <div class="container">
+    <form action="" method="POST">
       {% csrf_token %} {{hform.as_p}}
       <input type="hidden" name="form_type" value="hform" />
-      <input type="submit" class="btn btn-info" value="upload" />
+      <input type="submit" class="btn btn-info btn-sm" value="Save Business Hours" />
     </form>
   </div>
+
   <div class="container">
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form action="" method="POST">
       {% csrf_token %} {{sform.as_p}}
       <input type="hidden" name="form_type" value="sform" />
-      <input type="submit" class="btn btn-info" value="save" />
+      <input type="submit" class="btn btn-info btn-sm" value="Save Service" />
     </form>
   </div>
   {% endif %}
 </div>
-<!-- The Modal -->
+
+<!-- The Post Modal -->
 <div class="modal" id="post">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -132,7 +168,7 @@
           <input type="hidden" name="form_type" value="pform" />
           <!-- Modal footer -->
           <div class="modal-footer">
-            <input type="submit" class="btn btn-info" value="post" />
+            <input type="submit" class="btn btn-info btn-sm" value="Save Post" />
 
             <button
               type="button"
