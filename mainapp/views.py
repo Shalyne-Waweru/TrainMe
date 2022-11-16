@@ -8,6 +8,7 @@ from accounts.choices import services
 from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from mainapp.forms import BookingForm, ClinicForm, DogForm, HoursForm, PostForm, ReviewForm
 from mainapp.models import Booking, BusinessHours, Clinic, Post, Review
@@ -79,11 +80,15 @@ def trainerloginView(request):
             user=authenticate(request,username=username,password=password)
             if user is not None:
                 login(request,user)
+                messages.success(request, username + " Logged In Successfully!")
                 return redirect(index)
             else:
-                return HttpResponse('Such a user does not exist')
+                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
+                return redirect("trainer_login")
+
+                # return HttpResponse('Such a user does not exist')
         else:
-            return HttpResponse("Form is not Valid")
+            return HttpResponse("Form is Not Valid")
     
     return render(request,'auth/trainer_login.html',locals())
 

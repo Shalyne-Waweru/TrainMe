@@ -1,5 +1,155 @@
-{% extends 'auth/base.html'%}{% load static %}{%block content%}
-<div class="card">
+{% extends 'base.html' %}
+{% load static %}
+
+{%block content%}
+
+<div class="profile-info">
+  <div class="section">
+    <div class="overlay">
+      <h2>My Profile Info</h2>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="trainer-info">
+          <img class="trainer-image" src={{trainer.image.url}} alt="Profile Image" />
+          <h5>{{trainer.user.username | title}}</h5>
+          <p class="email">{{trainer.user.email}}</p>
+          <h6><strong>Dog Trainer</strong></h6>
+          <div class="ratings">
+            <div class="stars">
+                <img src="{% static 'images/filled_star.png' %}"/>
+                <img src="{% static 'images/filled_star.png' %}"/>
+                <img src="{% static 'images/filled_star.png' %}"/>
+                <img src="{% static 'images/unfilled_star.png' %}"/>
+                <img src="{% static 'images/unfilled_star.png' %}"/>
+            </div>
+            <p>(10)</p>
+          </div>
+          <div class="more-info">
+            <img src="{% static 'images/location_image.png' %}"/>
+            <p>{{trainer.location}}</p>
+          </div>
+
+          <div class="more-info">
+            <i class="fas fa-phone-alt"></i>
+            <p>{{trainer.user.phone}}</p>
+          </div>
+      
+          <div class="more-info time">
+            <i class="far fa-clock"></i>
+            <p>Available on Mon-Fri</p>
+          </div>
+      
+          <div class="more-info cash">
+            <img src="{% static 'images/dollar_icon.png' %}"/>
+            <p>Ksh 1,000 - Ksh 3,000</p>
+          </div>
+
+          <div class="hl"></div>
+
+          <p class="trainer-services">Services</p>
+      
+          <div class="services">
+              <p><i class="fas fa-check"></i> {{trainer.services}}</p>
+          </div>
+        
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="tabs">
+          <div class="tab-header">
+            <div class="active">
+              <p>Profile Details</p>
+            </div>
+
+            <div>
+              <p>My Posts</p>
+            </div>
+
+            <div>
+              <p>My Reviews</p>
+            </div>
+          </div>
+
+          <div class="tab-indicator">
+
+          </div>
+
+          <div class="tab-body">
+            <div class="active">
+              <section class="header">
+                <section class="hl"></section>
+                <p>Basic Information</p>
+                <section class="hl"></section>
+              </section>
+
+              <form>
+                <section class="form-row">
+                  <section class="form-group col-md-6">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" id="first_name" placeholder={{trainer.user.username|title}}>
+                  </section>
+                  
+                  <section class="form-group col-md-6">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" id="last_name" placeholder="Last Name">
+                  </section>
+
+                  <section class="form-group col-md-6">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="username" placeholder={{trainer.user.username}}>
+                  </section>
+
+                  <section class="form-group col-md-6">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="{{trainer.user.email}}">
+                  </section>
+
+                  <section class="form-group col-md-6">
+                    <label>Location</label>
+                    <input type="text" class="form-control" id="last_name" placeholder="{{trainer.location}}">
+                  </section>
+
+                  <section class="form-group col-md-6">
+                    <label>Phone Number</label>
+                    <input type="text" class="form-control" id="username" placeholder="phone number">
+                  </section>    
+                </section>
+
+                <section class="form-group">
+                  <label>Gender</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="Gender">
+                </section>
+                
+                <section class="form-group">
+                  <label>Profile Image</label>
+                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                </section>
+                
+                <button type="submit" class="btn btn-primary">UPDATE PROFILE</button>
+              </form>
+            </div>
+
+            <div>
+              <p>My Posts Go Here</p>
+            </div>
+
+            <div>
+              <p>My Reviews Go Here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- <div class="card">
   <a href="/">Back Home</a>
   <h4>{{trainer.user.username|title}}</h4>
 
@@ -94,7 +244,9 @@
     >Add Hours</a
   >
   {% endif %}
-</div>
+</div> -->
+
+
 <!-- The Modal -->
 <div class="modal" id="post">
   <div class="modal-dialog">
