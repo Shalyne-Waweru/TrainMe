@@ -68,4 +68,4 @@ class TrainerProfileForm(forms.ModelForm):
     services=forms.MultipleChoiceField(choices=service, widget=forms.CheckboxSelectMultiple())
     class Meta:
         model = Trainer
-        fields=('bio','gender','min_price','max_price','services')
+        fields=('bio','gender','services','price_charge')

@@ -18,8 +18,7 @@ class Trainer(models.Model):
     gender = models.CharField(max_length=10, choices= gender)
     services=ArrayField(models.CharField(max_length=100, choices=service), null=True, blank=True)
     location= models.CharField(max_length=40, choices = places)
-    min_price=models.CharField(max_length=10)
-    max_price=models.CharField(max_length=10)
+    price_charge= models.IntegerField(default=1000)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
