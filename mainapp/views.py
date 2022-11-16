@@ -9,6 +9,7 @@ from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from mainapp.forms import *
 from mainapp.models import *
@@ -80,11 +81,15 @@ def trainerloginView(request):
             user=authenticate(request,username=username,password=password)
             if user is not None:
                 login(request,user)
+                messages.success(request, username + " Logged In Successfully!")
                 return redirect(index)
             else:
-                return HttpResponse('Such a user does not exist')
+                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
+                return redirect("trainer_login")
+
+                # return HttpResponse('Such a user does not exist')
         else:
-            return HttpResponse("Form is not Valid")
+            return HttpResponse("Form is Not Valid")
     
     return render(request,'auth/trainer_login.html',locals())
 
@@ -113,12 +118,14 @@ def trainer_profile(request, id):
     user=User.objects.filter(id=id).first()
     trainer = Trainer.objects.get(user=id)
     posts=Post.filter_by_user(user=trainer.id)
+    
+    print(posts)
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
     hours=Hours.filter_by_user(user=trainer.id)
     bookings=Booking.filter_by_trainer(id=trainer.id)
     
-    form = TrainerProfileForm()
+    tform = TrainerProfileForm()
     hform=HoursForm()
     pform=PostForm()
     cform=ClinicForm()
@@ -134,16 +141,16 @@ def trainer_profile(request, id):
     else:
         pform=PostForm()
         
-    if request.method=='POST' and request.POST.get('form_type') == 'form':
-        form = TrainerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
-        if form.is_valid():
-            print(form.cleaned_data)
-            profile= form.save(commit=False)
+    if request.method=='POST' and request.POST.get('form_type') == 'tform':
+        tform = TrainerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
+        if tform.is_valid():
+            print(tform.cleaned_data)
+            profile= tform.save(commit=False)
             profile.user= request.user
             profile.save()
             return HttpResponseRedirect(request.path_info)
     else:
-        form=TrainerProfileForm()
+        tform=TrainerProfileForm()
         
     if request.method=='POST' and request.POST.get('form_type') == 'cform':
         cform = ClinicForm(request.POST, request.FILES)
@@ -182,7 +189,8 @@ def review(request, trainer_id):
             form.reviewed=current_trainer
             form.save()
             
-            return redirect('trainer_profile')
+            # return redirect('trainer_profile')
+            return HttpResponseRedirect(request.path_info)
     else:
         form=ReviewForm()
             

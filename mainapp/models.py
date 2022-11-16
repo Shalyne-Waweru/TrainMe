@@ -86,10 +86,10 @@ class Post(models.Model):
     video_title = models.CharField(max_length=100)
     video_caption = models.TextField()
     video = CloudinaryField(resource_type='video', blank=True)
-    user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='posts')
     
     def __str__(self):
-        return self.user.username + ' ' + self.video_title
+        return self.user.user.username + ' ' + self.video_title
     
     @classmethod   
     def filter_by_user(cls, user):
