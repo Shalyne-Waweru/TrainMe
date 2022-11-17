@@ -118,8 +118,6 @@ def trainer_profile(request, id):
     user=User.objects.filter(id=id).first()
     trainer = Trainer.objects.get(user=id)
     posts=Post.filter_by_user(user=trainer.id)
-    
-    print(posts)
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
     hours=Hours.filter_by_user(user=trainer.id)

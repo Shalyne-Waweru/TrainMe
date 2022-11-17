@@ -58,6 +58,11 @@
             <p><i class="fas fa-check"></i> {{service}}</p>
             {% endfor %}
           </div>
+          {% if request.user.Dog_Owner %}
+          <a class="outline-btn" href="/book/{{trainer.id}}">
+            Book Now
+          </a>
+          {% endif %}
         </div>
       </div>
 
@@ -245,11 +250,38 @@
                   />
                 </form>
               </section>
+              {% else %}
+              <h4>About Me</h4>
+              <p><small class='text-muted'>{{trainer.bio}}</small></p>
+              <h4>Clinic Information</h4>
+              <p>
+                {% if clinics %}
+                {% for clinic in clinics %}
+                Clinic Name: <small class='text-muted'>{{clinic.clinic_name}}</small>
+                <br />
+                Location: <small class='text-muted'>{{clinic.clinic_location}}</small>
+                {% endfor %}
+                {% else %}
+                <p><small class='text-muted'>{{trainer.user.username|title}} does not have a clinic yet!</small></p>
+                {% endif %}
+              </p>
+              <h4>Services</h4>
+              {% for service in trainer.services %}
+              <p><i class="fas fa-check"></i><small class='text-muted'> {{service}}</small></p>
+              {% endfor %}
+              <h4>Business Hours</h4>
+              {% if hours %}
+              {% for hour in hours %}
+              <p>{{hour.day}}................{{hour.start}}-{{hour.end}}</p>
+              {% endfor %}
+              {% else %}
+              <p><small class='text-muted'>{{trainer.user.username|title}} does not have a Business Hours added yet!</small></p>
+              {% endif %}
               {% endif %}
             </div>
 
             <div>
-              <p>My Posts Go Here</p>
+              {% if trainer.user.id == request.user.id%}
               <a
                 href=""
                 class="btn btn-info btn-sm"
@@ -257,12 +289,15 @@
                 data-target="#post"
                 >Post</a
               >
+              {% endif %}
               <br />
-              {% if posts %} {% for post in posts %} {{post.video_title}} <br />
-              {{post.video_caption}} <br />
-              <a href="{{post.video.url}}">Video Link</a>
+              {% if posts %} {% for post in posts %} Video Title: <small class='text-muted'>{{post.video_title}} </small><br />
+              Video Caption:<small class='text-muted'>{{post.video_caption}} </small><br />
+              Video Link:<small class='text-muted'><a href="{{post.video.url}}" class='btn btn-dark btn-sm'>Video Link</a></small>
 
-              {% endfor %} {% endif %}
+              {% endfor %} {% else %}
+              <p><small class='text-muted'>{{trainer.user.username|title}} does not have a any posts added yet!</small></p>
+              {% endif %}
             </div>
 
             <div>
@@ -291,48 +326,6 @@
 </div>
 
 <!-- <div class="card">
- 
-  <p>
-    Posts:
-    <small class="text-muted"> {{posts}}</small> <br />
-    {% for post in posts %} Title: {{post.video_title}}, <br />
-    Caption: {{post.video_caption}},<br />
-    Video: {{post.video}},<br />
-    <a href="/delete_post/{{ post.id }}">delete</a>
-    {% endfor %}
-  </p>
-
-  <p>
-    Reviews:
-    <small class="text-muted"> {{reviews}}</small> <br />
-    {% for review in reviews %} Title: {{review.title}},<br />
-    Description:{{review.description}}, <br />Reviewer:{{review.reviewer}},
-    <br />
-    <a href="/delete_review/{{ review.id }}">delete</a>
-    {% endfor %}
-  </p>
-
-  <p>
-    Hours:
-    <small class="text-muted"> {{hours}}</small> <br />
-    {% for hour in hours %} Day: {{hour.day}}, <br />
-    Start Time: {{hour.start}},<br />
-    End Time: {{hour.end}},<br />
-    {{hour.open_closed}} <br />
-    <a href="/delete_hour/{{ hour.id }}">delete</a>
-    {% endfor %}
-  </p>
-
-  <p>
-    Clinic:
-    <small class="text-muted"> {{clinics}}</small> <br />
-    {% for clinic in clinics %} name:{{clinic.clinic_name}} <br />
-    location {{clinic.clinic_location}} <br>
-    <a href="/delete_clinic/{{ clinic.id }}">delete</a>
-    {% endfor %}
-  </p>
-  <a href="/addreview/{{trainer.id}}">Review</a>
-  {% if trainer.user.id == request.user.id%}
   <p>
     Bookings:
     <small class="text-muted"> {{bookings}}</small> <br />
@@ -341,9 +334,6 @@
     <a href="/delete_booking/{{ book.id }}">delete</a>
     {% endfor %}
   </p>
-
- 
-  {% endif %}
 </div> -->
 
 <!-- The Post Modal -->
