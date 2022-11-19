@@ -76,8 +76,14 @@
                 <div class="clinics">
                   {% for clinic in clinics %}
                   <div class="div">
-                    <p><i class="fas fa-clinic-medical"></i> <strong>{{clinic.clinic_name}}</strong></p>
-                    <p><i class="fas fa-map-marker-alt"></i> {{clinic.clinic_location}}</p>
+                    <div class="clinic-info">
+                      <p><i class="fas fa-clinic-medical"></i> <strong>{{clinic.clinic_name}}</strong></p>
+                      <p><i class="fas fa-map-marker-alt"></i> {{clinic.clinic_location}}</p>
+                    </div>
+                    
+                    <div class="del-btn">
+                      <a href="#"><i class="fas fa-trash"></i></a>
+                    </div>
                   </div>
                   <div class="hl"></div>
                   {% endfor %}
@@ -91,6 +97,10 @@
                   {% for hour in hours %}
                   <div class="div">
                     <p><strong>{{hour.day}}</strong> : {{hour.start}} - {{hour.end}}</p>
+
+                    <div class="del-btn">
+                      <a href="#"><i class="fas fa-trash"></i></a>
+                    </div>
                     <!-- <div class="stats">{{hour.open_closed}}</div>                -->
                   </div>
                   <div class="hl"></div>
@@ -388,24 +398,40 @@
             </section>
 
             <!-- Posts -->
-            <section>
+            <section class="posts">
               {% if trainer.user.id == request.user.id%}
               <a
                 href=""
-                class="btn btn-info btn-sm"
+                class="orange-btn"
                 data-toggle="modal"
                 data-target="#post"
-                >Post</a
+                >ADD POST</a
               >
               {% endif %}
-              <br />
-              {% if posts %} {% for post in posts %} Video Title: <small class='text-muted'>{{post.video_title}} </small><br />
-              Video Caption:<small class='text-muted'>{{post.video_caption}} </small><br />
-              Video Link:<small class='text-muted'><a href="{{post.video.url}}" class='btn btn-dark btn-sm'>Video Link</a></small>
+              
+              <div class="videos">
+                {% if posts %} 
+                    {% for post in posts %} 
+                    <div class="video-layout">
+                      <video controls>
+                        <source src="{{post.video.url}}">
+                      </video>
 
-              {% endfor %} {% else %}
-              <p><small class='text-muted'>{{trainer.user.username|title}} does not have a any posts added yet!</small></p>
-              {% endif %}
+                      <p class="title"><strong>{{post.video_title|title}}</strong></p>
+                      <p class="caption">{{post.video_caption}}</p>
+
+                      {% if request.user.Dog_Trainer %}
+                        <a href="#"><i class="fas fa-trash"></i></a>
+                      {% endif %}
+                    </div>
+
+                    {% endfor %}
+                
+                {% else %}
+                    <p><small class='text-muted'>{{trainer.user.first_name|title}} does not have a any posts added yet!</small></p>      
+                {% endif %}
+              </div>
+
             </section>
 
             <!-- Reviews -->
@@ -446,6 +472,55 @@
 </div> -->
 
 <!-- The Post Modal -->
+<div class="modal-section">
+  <div class="modal" id="post" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">ADD A POST</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label>Video Title</label>
+              <div class="form-control">
+                {{pform.video_title}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Video Caption</label>
+              <div class="form-control">
+                {{pform.video_caption}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Upload Video</label>
+              <div class="form-control">
+                {{pform.video}}
+              </div>
+            </div>
+
+            <input type="hidden" name="form_type" value="pform" />
+
+            <button type="submit" class="upload-btn">SUBMIT POST</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}
+
 <div class="modal" id="post">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -488,4 +563,3 @@
     </div>
   </div>
 </div>
-{%endblock%}

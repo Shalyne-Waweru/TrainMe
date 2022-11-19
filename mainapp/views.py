@@ -139,6 +139,11 @@ def trainer_profile(request, id):
             post=pform.save(commit=False)
             post.user= request.user.Dog_Trainer
             post.save()
+
+            messages.success(request, "Post Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         pform=PostForm()
