@@ -2,7 +2,7 @@
 <div class="container">
   {{message}}
   <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %} {{form.as_p}}
+    {% csrf_token %} {{rform.as_p}}
     <button class="btn btn-primary" type="submit">Post</button>
   </form>
 </div>

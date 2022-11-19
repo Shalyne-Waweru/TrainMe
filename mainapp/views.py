@@ -205,17 +205,22 @@ def review(request, trainer_id):
     current_user = request.user
     current_trainer = Trainer.objects.get(id=trainer_id)
     if request.method == 'POST':
-        form = ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            form = form.save(commit=False) 
-            form.reviewer=current_user 
-            form.reviewed=current_trainer
-            form.save()
-            
+        rform = ReviewForm(request.POST, request.FILES)
+        if rform.is_valid():
+            rform = rform.save(commit=False) 
+            rform.reviewer=current_user 
+            rform.reviewed=current_trainer
+            rform.save()
+
+            messages.success(request, "Trainer Reviewed Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
             # return redirect('trainer_profile')
             return HttpResponseRedirect(request.path_info)
     else:
-        form=ReviewForm()
+        rform=ReviewForm()
             
     return render(request,'review_form.html',locals())
 
@@ -239,6 +244,8 @@ def booking(request, trainer_id):
 def delete_hour(request, id):
   hour = Hours.objects.get(id=id)
   hour.delete()
+
+#   messages.success(request, "Business Hour Deleted Successfully!")
   return redirect(index)
 
 def delete_post(request, id):

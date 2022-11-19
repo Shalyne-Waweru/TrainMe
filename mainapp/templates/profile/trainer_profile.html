@@ -99,7 +99,7 @@
                     <p><strong>{{hour.day}}</strong> : {{hour.start}} - {{hour.end}}</p>
 
                     <div class="del-btn">
-                      <a href="#"><i class="fas fa-trash"></i></a>
+                      <a href="/delete_hour/{{ hour.id }}"><i class="fas fa-trash"></i></a>
                     </div>
                     <!-- <div class="stats">{{hour.open_closed}}</div>                -->
                   </div>
@@ -127,11 +127,11 @@
             </section>
 
             <section>
-              <p>My Posts</p>
+              <p>Posts</p>
             </section>
 
             <section>
-              <p>My Reviews</p>
+              <p>Reviews</p>
             </section>
           </div>
 
@@ -140,260 +140,289 @@
           <div class="tab-body">
             <!-- Profile Details -->
             <section class="active">
-              <div class="header">
-                <div class="hl"></div>
-                <p>Personal Information</p>
-                <div class="hl"></div>
-              </div>
-              
+              <!-- Trainer View -->
               {% if trainer.user.id == request.user.id%}
-              <div>
-                <form class="personal_details" action="" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label>First Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="first_name"
-                        placeholder="{{trainer.user.first_name|title}}"
-                      />
+                <div class="header">
+                  <div class="hl"></div>
+                  <p>Personal Information</p>
+                  <div class="hl"></div>
+                </div>
+                
+                <div>
+                  <form class="personal_details" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>First Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="first_name"
+                          placeholder="{{trainer.user.first_name|title}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Last Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="last_name"
+                          placeholder="{{trainer.user.last_name|title}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Username</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="{{trainer.user.username}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Price Charge</label>   
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="price_charge"
+                          placeholder="{{trainer.price_charge}}"
+                        /> 
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Phone Number</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="{{trainer.user.phone}}"
+                        />
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label>{{tform.gender.label}}</label>
+                        {{tform.gender}}
+                      </div>
                     </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>Last Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="last_name"
-                        placeholder="{{trainer.user.last_name|title}}"
-                      />
-                    </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>Username</label>
+
+                    <div class="form-group">
+                      <label>Location</label>
                       <input
                         type="text"
                         class="form-control"
                         id="username"
-                        placeholder="{{trainer.user.username}}"
-                      />
-                    </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>Price Charge</label>   
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="price_charge"
-                        placeholder="{{trainer.price_charge}}"
-                      /> 
-                    </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>Phone Number</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="username"
-                        placeholder="{{trainer.user.phone}}"
+                        placeholder="{{trainer.location}}"
                       />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
+                      <label>Profile Image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="image"
+                      />
+                    </div>
+
+                    <div class="header">
+                      <div class="hl"></div>
+                      <p>About Me</p>
+                      <div class="hl"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>{{tform.bio.label}}</label>
+                      <textarea
+                        name="bio"
+                        cols="40"
+                        rows="2"
+                        required
+                        id="id_bio"
+                        placeholder="{{trainer.bio}}"
+                      ></textarea>
+                    </div>
+
+                    <div class="header">
+                      <div class="hl"></div>
+                      <p>My Services</p>
+                      <div class="hl"></div>
+                    </div>
+
+                    <div class="form-group prof-services">
+                      <label>{{tform.services.label}}</label>
+                      {{tform.services}}
+                    </div>
+
+                    <!-- <div class="form-group">
                       <label>{{tform.gender.label}}</label>
                       {{tform.gender}}
                     </div>
-                  </div>
+                    <div class="form-group">
+                      <label>{{tform.price_charge.label}}</label>
+                      {{tform.price_charge}}
+                    <div> -->
 
-                  <div class="form-group">
-                    <label>Location</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="username"
-                      placeholder="{{trainer.location}}"
-                    />
-                  </div>
+                    <input type="hidden" name="form_type" value="tform" />
 
-                  <div class="form-group">
-                    <label>Profile Image</label>
-                    <input
-                      type="file"
-                      class="form-control"
-                      id="image"
-                    />
-                  </div>
-
-                  <div class="header">
-                    <div class="hl"></div>
-                    <p>About Me</p>
-                    <div class="hl"></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>{{tform.bio.label}}</label>
-                    <textarea
-                      name="bio"
-                      cols="40"
-                      rows="2"
-                      required
-                      id="id_bio"
-                      placeholder="{{trainer.bio}}"
-                    ></textarea>
-                  </div>
-
-                  <div class="header">
-                    <div class="hl"></div>
-                    <p>My Services</p>
-                    <div class="hl"></div>
-                  </div>
-
-                  <div class="form-group prof-services">
-                    <label>{{tform.services.label}}</label>
-                    {{tform.services}}
-                  </div>
-
-                  <!-- <div class="form-group">
-                    <label>{{tform.gender.label}}</label>
-                    {{tform.gender}}
-                  </div>
-                  <div class="form-group">
-                    <label>{{tform.price_charge.label}}</label>
-                    {{tform.price_charge}}
-                  <div> -->
-
-                  <input type="hidden" name="form_type" value="tform" />
-
-                  <button type="submit" class="save-btn">UPDATE PROFILE</button>
-                </form>
-              </div>
-
-              <div class="more-btns">
-                <button class="outline-btn add-clinic" onclick="showClinicForm()">ADD CLINIC</button>
-                <button class="outline-btn add-hours" onclick="showHoursForm()">ADD BUSINESS HOURS</button>
-              </div>
-
-              
-              <!-- Clinic Info -->
-              <div class="clinic-form">
-                <div class="header">
-                  <div class="hl"></div>
-                  <p>My Clinic Info</p>
-                  <div class="hl"></div>
+                    <button type="submit" class="save-btn">UPDATE PROFILE</button>
+                  </form>
                 </div>
 
-                <form action="" method="POST">
-                  {% csrf_token %}
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label>{{cform.clinic_name.label}}</label>
-                      <input
-                        class="form-control"
-                        type="text"
-                        name="clinic_name"
-                        maxlength="50"
-                        required
-                        id="id_clinic_name"
-                        placeholder="Enter clinic name"
-                      />
-                    </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>{{cform.clinic_location.label}}</label>
-                      {{cform.clinic_location}}
-                    </div>
+                <div class="more-btns">
+                  <button class="outline-btn add-clinic" onclick="showClinicForm()">ADD CLINIC</button>
+                  <button class="outline-btn add-hours" onclick="showHoursForm()">ADD BUSINESS HOURS</button>
+                </div>
+              
+                <!-- Clinic Info -->
+                <div class="clinic-form">
+                  <div class="header">
+                    <div class="hl"></div>
+                    <p>My Clinic Info</p>
+                    <div class="hl"></div>
                   </div>
 
-                  <input type="hidden" name="form_type" value="cform" />
+                  <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>{{cform.clinic_name.label}}</label>
+                        <input
+                          class="form-control"
+                          type="text"
+                          name="clinic_name"
+                          maxlength="50"
+                          required
+                          id="id_clinic_name"
+                          placeholder="Enter clinic name"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>{{cform.clinic_location.label}}</label>
+                        {{cform.clinic_location}}
+                      </div>
+                    </div>
 
-                  <button type="submit" class="save-btn" onclick="hideClinicForm()">SAVE CLINIC</button>
-                </form>
-              </div>
+                    <input type="hidden" name="form_type" value="cform" />
+
+                    <button type="submit" class="save-btn" onclick="hideClinicForm()">SAVE CLINIC</button>
+                  </form>
+                </div>
               
-              <div class="hours-form">
-                <div class="header">
-                  <div class="hl"></div>
-                  <p>Business Hours</p>
-                  <div class="hl"></div>
+                <!-- Business Hours Info -->
+                <div class="hours-form">
+                  <div class="header">
+                    <div class="hl"></div>
+                    <p>Business Hours</p>
+                    <div class="hl"></div>
+                  </div>
+
+                  <form action="" method="POST">
+                    {% csrf_token %} 
+
+                    <div class="form-group">
+                      <label>Select A Working Day</label>
+                      {{hform.day}}
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>Opening Hours</label>
+                        {{hform.start}}
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Closing Hours</label>
+                        {{hform.end}}
+                      </div>
+                    </div>
+                    
+                    <!-- <div class="form-group">
+                      <label>{{hform.open_closed.label}}</label>
+                      {{hform.open_closed}}
+                    </div> -->
+
+                    <div class="form-group status">
+                      <label class="switch">
+                        <input id="open_closed" name="open_closed" type="checkbox"  onclick="checkStatus()"/>
+                        <span class="slider round"></span>
+                      </label>
+                      <p class="status-title">Closed</p>
+                    </div>
+
+                    <!-- {{hform.as_p}} -->
+                    <input type="hidden" name="form_type" value="hform" />
+
+                    <button type="submit" class="save-btn" onclick="hideHoursForm()">SAVE BUSINESS HOURS</button>
+                  </form>
                 </div>
 
-                <form action="" method="POST">
-                  {% csrf_token %} 
+              {% else %}
 
-                  <div class="form-group">
-                    <label>Select A Working Day</label>
-                    {{hform.day}}
-                  </div>
+              <!-- Owner View -->
+              <div class="owner-view">
+                <div class="bio-section">
+                  <h6>Trainer Bio</h6>
 
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label>Opening Hours</label>
-                      {{hform.start}}
-                    </div>
-  
-                    <div class="form-group col-md-6">
-                      <label>Closing Hours</label>
-                      {{hform.end}}
-                    </div>
+                  <div class="bio-info">
+                    {% if trainer.bio %}
+                      <p><small class='text-muted'>{{trainer.bio}}</small></p>
+                    {% else %}
+                      <p><small class='text-muted'>Trainer Has No Bio Added Yet!</small></p>
+                    {% endif %}
                   </div>
+                </div>
+
+                <div class="clinics-section">
+                  <h6>Clinic Information</h6>
+
+                  <div class="clinics-info">
+                    <p>
+                      {% if clinics %}
+                        {% for clinic in clinics %}
+                          <p><i class="fas fa-clinic-medical"></i><strong>Clinic Name: </strong>{{clinic.clinic_name}}</p>
+                          <p><i class="fas fa-map-marker-alt"></i><strong>      Location: </strong>{{clinic.clinic_location}}</p>
+                          <div class="hl"></div>
+                        {% endfor %}
+                      {% else %}
+                        <p><small class='text-muted'>{{trainer.user.username|title}} does not have a clinic yet!</small></p>
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="services-section">
+                  <h6>Services</h6>
+
+                  <div class="services-info">
+                    {% if trainer.services %}
+                      {% for service in trainer.services %}
+                      <p><i class="fas fa-check"></i><small class='text-muted'> {{service}}</small></p>
+                      {% endfor %}
+                    {% else %}
+                      <p><small class='text-muted'>No Services yet!</small></p>
+                    {% endif %}
+                  </div>
+                </div>
+
+                <div class="hours-section">
+                  <h6>Business Hours</h6>
                   
-                  <!-- <div class="form-group">
-                    <label>{{hform.open_closed.label}}</label>
-                    {{hform.open_closed}}
-                  </div> -->
-
-                  <div class="form-group status">
-                    <label class="switch">
-                      <input id="open_closed" name="open_closed" type="checkbox"  onclick="checkStatus()"/>
-                      <span class="slider round"></span>
-                    </label>
-                    <p class="status-title">Closed</p>
+                  <div class="hours-info">
+                    {% if hours %}
+                      {% for hour in hours %}
+                      <p><strong>{{hour.day}}</strong>   .................................................................................................................................................................................   {{hour.start}} - {{hour.end}}</p>
+                      {% endfor %}
+                    {% else %}
+                      <p><small class='text-muted'>{{trainer.user.username|title}} does not have a Business Hours added yet!</small></p>
+                    {% endif %}     
                   </div>
+                </div>
 
-                  <!-- {{hform.as_p}} -->
-                  <input type="hidden" name="form_type" value="hform" />
-
-                  <button type="submit" class="save-btn" onclick="hideHoursForm()">SAVE BUSINESS HOURS</button>
-                </form>
               </div>
-
-              {% else %}
-              <h4>About Me</h4>
-              {% if trainer.bio %}
-              <p><small class='text-muted'>{{trainer.bio}}</small></p>
-              {% else %}
-              <p><small class='text-muted'>No Bio added yet!</small></p>
-              {% endif %}
-              <h4>Clinic Information</h4>
-              <p>
-                {% if clinics %}
-                {% for clinic in clinics %}
-                Clinic Name: <small class='text-muted'>{{clinic.clinic_name}}</small>
-                <br />
-                Location: <small class='text-muted'>{{clinic.clinic_location}}</small>
-                {% endfor %}
-                {% else %}
-                <p><small class='text-muted'>{{trainer.user.username|title}} does not have a clinic yet!</small></p>
-                {% endif %}
-              </p>
-              <h4>Services</h4>
-              {% if trainer.services %}
-              {% for service in trainer.services %}
-              <p><i class="fas fa-check"></i><small class='text-muted'> {{service}}</small></p>
-              {% endfor %}
-              {% else %}
-              <p><small class='text-muted'>No Services yet!</small></p>
-              {% endif %}
-              <h4>Business Hours</h4>
-              {% if hours %}
-              {% for hour in hours %}
-              <p>{{hour.day}}................{{hour.start}}-{{hour.end}}</p>
-              {% endfor %}
-              {% else %}
-              <p><small class='text-muted'>{{trainer.user.username|title}} does not have a Business Hours added yet!</small></p>
-              {% endif %}
               {% endif %}
             </section>
 
@@ -435,23 +464,49 @@
             </section>
 
             <!-- Reviews -->
-            <section>
+            <section class="reviews">
               {% if request.user.Dog_Owner %}
-              <a href="/addreview/{{trainer.id}}">Review</a>
+              <a
+                href=""
+                class="orange-btn"
+                data-toggle="modal"
+                data-target="#review"
+                >ADD REVIEW</a
+              >
+              <!-- <a href="/addreview/{{trainer.id}}">Review</a> -->
               {% endif %}
-              <br />
-              {% if trainer.user.id == request.user.id%} {% if reviews %}
-              <p>
-                Reviews: {% for review in reviews %} Title: {{review.title}},<br />
-                Description:{{review.description}},
-                <br />Reviewer:{{review.reviewer}},
-                <br />
-                <a href="/delete_review/{{ review.id }}">Delete</a> <br />
-                {% endfor %}
-              </p>
-              {% else %}
-              <p>There are No Reviews yet!</p>
-              {% endif %} {% endif %}
+
+              <div class="reviews-layout">        
+                  {% if reviews %}
+                    {% for review in reviews %}
+                      <div class="review">
+                        <img
+                          class="reviewer-image"
+                          src="{% static 'images/trainer_3.jpg' %}"
+                          alt="Profile Image"
+                        />
+
+                        <div class="review-info">
+                          <p><strong>{{review.reviewer|title}}</strong></p>
+                          <h6>Nov 19</h6>
+
+                          <div class="more">
+                            <p class="description">{{review.description}}</p>
+                            {% if request.user.Dog_Owner %}
+                              <div class="del-btn">
+                                <a href="/delete_review/{{ review.id }}"><i class="fas fa-trash"></i></a>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                        
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <p>There are No Reviews yet!</p>
+                  {% endif %} 
+              </div>
             </section>
           </div>
         </div>
@@ -519,47 +574,46 @@
     </div>
   </div>
 </div>
-{%endblock%}
 
-<div class="modal" id="post">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Post</h4>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+<!-- The Review Modal -->
+<div class="modal-section">
+  <div class="modal" id="review" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">ADD A REVIEW</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{pform.as_p}}
-          <input type="hidden" name="form_type" value="pform" />
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <input
-              type="submit"
-              class="btn btn-info btn-sm"
-              value="Save Post"
-            />
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
 
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </form>
+            <div class="form-group">
+              <label>Review Title</label>
+              <div class="form-control">
+                <!-- {{form.title}} -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Review Description</label>
+              <div class="form-control">
+                <!-- {{form.description}} -->
+              </div>
+            </div>
+
+            <input type="hidden" name="form_type" value="form" />
+
+            <button type="submit" class="upload-btn">SUBMIT REVIEW</button>
+          </form>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
+{%endblock%}

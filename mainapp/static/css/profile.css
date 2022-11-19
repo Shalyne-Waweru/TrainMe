@@ -498,7 +498,7 @@ select option {
 
 
 /* POSTS SECTION */
-.posts .orange-btn {
+.posts .orange-btn, .reviews .orange-btn {
   display: block;
   width: 150px;
   text-align: center;
@@ -516,7 +516,7 @@ select option {
   text-decoration: none;
 }
 
-.posts .orange-btn:hover {
+.posts .orange-btn:hover, .reviews .orange-btn:hover {
   text-decoration: none;
   color: white;
   background-color: black;
@@ -638,4 +638,156 @@ select option {
   color: white;
   background-color: black;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+/* REVIEWS SECTION */
+.reviews-layout {
+  /* border: 2px solid purple; */
+  position: absolute;
+  width: 100%;
+  height: auto;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 20px;
+  padding-right: 15px;
+}
+
+.review {
+  border: 2px solid #f69856a8;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+  height: auto;
+}
+
+.reviewer-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* border: 2px solid black; */
+}
+
+.review-info {
+  width: 100%;
+}
+
+.review-info h6 {
+  font-size: 12px;
+  color: #908A8A;
+  font-weight: 600;
+  margin-top: -10px;
+}
+
+.more {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.review-info .description {
+  font-size: 12px;
+  text-align: left;
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+.review .del-btn {
+  margin-top: 10px;
+}
+
+.review .del-btn .fas {
+  color: gray;
+  transition: 0.5s;
+}
+
+.review .del-btn .fas:hover {
+  color: #E56A10;
+} 
+
+
+/* Profile Owner View */
+.owner-view h6 {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.owner-view .bio-section {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.owner-view .bio-section .bio-info {
+  background-color: white;
+  width: 97%;
+  height: 40px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px #a49d9d7e;
+  padding: 5px;
+}
+
+.owner-view .bio-section .bio-info p {
+  margin-left: 10px;
+}
+
+.owner-view .clinics-section .clinics-info {
+  margin-top: 20px;
+  width: 97%;
+}
+
+.owner-view .clinics-section .clinics-info p {
+  font-size: 12px;
+}
+
+.owner-view .clinics-section .clinics-info .fas {
+  color: #E56A10;
+  margin-right: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.owner-view .clinics-section .clinics-info .hl {
+  border-top: 1px dotted #a49d9d;
+  margin-top: -5px;
+  margin-bottom: 15px;
+}
+
+.owner-view .services-section {
+  text-align: left;
+  padding: 0px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.owner-view .services-section .services-info {
+  margin-top: 20px;
+}
+
+.owner-view .hours-section {
+  width: 97%;
+}
+
+.owner-view .hours-section .hours-info {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px #a49d9d7e;
+  width: 100%;
+  padding: 15px 25px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.owner-view .hours-section .hours-info p {
+  font-size: 12px;
 }
