@@ -1,9 +1,17 @@
-{% extends 'base.html' %} {% load static %} {%block content%}
+{% extends 'base.html' %} 
+{% load static %} 
 
+{%block content%}
 <div class="profile-info">
   <div class="section">
     <div class="overlay">
-      <h2>My Profile Info</h2>
+      {% if user.is_authenticated %}
+        {% if user.Dog_Trainer %}
+        <h2>My Profile Info</h2>
+        {% else %}
+        <h2>Trainer Profile</h2>
+        {% endif %}
+      {% endif %}
     </div>
   </div>
 
@@ -16,8 +24,7 @@
             src="{{trainer.image.url}}"
             alt="Profile Image"
           />
-          <h5>{{trainer.user.username | title}}</h5>
-          <p class="email">{{trainer.user.email}}</p>
+          <h5>{{trainer.user.first_name | title}} {{trainer.user.last_name | title}}</h5>
           <h6><strong>Dog Trainer</strong></h6>
           <div class="ratings">
             <div class="stars">
@@ -51,205 +58,297 @@
 
           <div class="hl"></div>
 
-          <p class="trainer-services">Services</p>
+          {% if trainer.services %}
+            <p class="trainer-services">Services</p>
 
-          <div class="services">
-            {% for service in trainer.services %}
-            <p><i class="fas fa-check"></i> {{service}}</p>
-            {% endfor %}
-          </div>
+            <div class="services">
+              {% for service in trainer.services %}
+              <p><i class="fas fa-check"></i> {{service}}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            {% if request.user.Dog_Trainer %}
+              {% if clinics %}
+                <p class="trainer-services">Clinics</p>
+
+                <div class="clinics">
+                  {% for clinic in clinics %}
+                  <div class="div">
+                    <p><i class="fas fa-clinic-medical"></i> <strong>{{clinic.clinic_name}}</strong></p>
+                    <p><i class="fas fa-map-marker-alt"></i> {{clinic.clinic_location}}</p>
+                  </div>
+                  <div class="hl"></div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+
+              {% if hours %}
+                <p class="trainer-services">Business Hours</p>
+
+                <div class="hours">
+                  {% for hour in hours %}
+                  <div class="div">
+                    <p><strong>{{hour.day}}</strong> : {{hour.start}} - {{hour.end}}</p>
+                    <!-- <div class="stats">{{hour.open_closed}}</div>                -->
+                  </div>
+                  <div class="hl"></div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+
           {% if request.user.Dog_Owner %}
-          <a class="outline-btn" href="/book/{{trainer.id}}">
+          <a class="orange-btn" href="/book/{{trainer.id}}">
             Book Now
           </a>
           {% endif %}
         </div>
       </div>
 
+      <!-- Tabs Section -->
       <div class="col-md-8">
         <div class="tabs">
           <div class="tab-header">
-            <div class="active">
+            <section class="active">
               <p>Profile Details</p>
-            </div>
+            </section>
 
-            <div>
+            <section>
               <p>My Posts</p>
-            </div>
+            </section>
 
-            <div>
+            <section>
               <p>My Reviews</p>
-            </div>
+            </section>
           </div>
 
           <div class="tab-indicator"></div>
 
           <div class="tab-body">
-            <div class="active">
-              <section class="header">
-                <section class="hl"></section>
-                <p>Basic Information</p>
-                <section class="hl"></section>
-              </section>
+            <!-- Profile Details -->
+            <section class="active">
+              <div class="header">
+                <div class="hl"></div>
+                <p>Personal Information</p>
+                <div class="hl"></div>
+              </div>
+              
+              {% if trainer.user.id == request.user.id%}
+              <div>
+                <form class="personal_details" action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>First Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="first_name"
+                        placeholder="{{trainer.user.first_name|title}}"
+                      />
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>Last Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="last_name"
+                        placeholder="{{trainer.user.last_name|title}}"
+                      />
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        placeholder="{{trainer.user.username}}"
+                      />
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>Price Charge</label>   
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="price_charge"
+                        placeholder="{{trainer.price_charge}}"
+                      /> 
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>Phone Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        placeholder="{{trainer.user.phone}}"
+                      />
+                    </div>
 
-              {% comment %}
-              <form>
-                <section class="form-row">
-                  <section class="form-group col-md-6">
-                    <label>First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="first_name"
-                      placeholder="{{trainer.user.first_name|title}}"
-                    />
-                  </section>
+                    <div class="form-group col-md-6">
+                      <label>{{tform.gender.label}}</label>
+                      {{tform.gender}}
+                    </div>
+                  </div>
 
-                  <section class="form-group col-md-6">
-                    <label>Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="last_name"
-                      placeholder="{{trainer.user.last_name|title}}"
-                    />
-                  </section>
-
-                  <section class="form-group col-md-6">
-                    <label>Username</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="username"
-                      placeholder="{{trainer.user.username}}"
-                    />
-                  </section>
-
-                  <section class="form-group col-md-6">
-                    <label>Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      placeholder="{{trainer.user.email}}"
-                    />
-                  </section>
-
-                  <section class="form-group col-md-6">
+                  <div class="form-group">
                     <label>Location</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="last_name"
+                      id="username"
                       placeholder="{{trainer.location}}"
                     />
-                  </section>
+                  </div>
 
-                  <section class="form-group col-md-6">
-                    <label>Phone Number</label>
+                  <div class="form-group">
+                    <label>Profile Image</label>
                     <input
-                      type="text"
+                      type="file"
                       class="form-control"
-                      id="username"
-                      placeholder="phone number"
+                      id="image"
                     />
-                  </section>
-                </section>
+                  </div>
 
-                <section class="form-group">
-                  <label>Gender</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Gender"
-                  />
-                </section>
+                  <div class="header">
+                    <div class="hl"></div>
+                    <p>About Me</p>
+                    <div class="hl"></div>
+                  </div>
 
-                <section class="form-group">
-                  <label>Profile Image</label>
-                  <input
-                    type="file"
-                    class="form-control-file"
-                    id="exampleFormControlFile1"
-                  />
-                </section>
-
-                <button type="submit" class="btn btn-primary">
-                  UPDATE PROFILE
-                </button>
-              </form>
-              {% endcomment %} {% if trainer.user.id == request.user.id%}
-              <section>
-                <form action="" method="post" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <section class="form-group image">
+                  <div class="form-group">
                     <label>{{tform.bio.label}}</label>
                     <textarea
                       name="bio"
                       cols="40"
-                      rows="3"
+                      rows="2"
                       required
                       id="id_bio"
                       placeholder="{{trainer.bio}}"
                     ></textarea>
-                  </section>
-                  <section class="form-group image">
+                  </div>
+
+                  <div class="header">
+                    <div class="hl"></div>
+                    <p>My Services</p>
+                    <div class="hl"></div>
+                  </div>
+
+                  <div class="form-group prof-services">
                     <label>{{tform.services.label}}</label>
                     {{tform.services}}
-                  </section>
-                  <section class="form-group image">
+                  </div>
+
+                  <!-- <div class="form-group">
                     <label>{{tform.gender.label}}</label>
                     {{tform.gender}}
-                  </section>
-                  <section class="form-group image">
+                  </div>
+                  <div class="form-group">
                     <label>{{tform.price_charge.label}}</label>
                     {{tform.price_charge}}
-                  </section>
+                  <div> -->
+
                   <input type="hidden" name="form_type" value="tform" />
-                  <input type="submit" value="Update Profile" />
+
+                  <button type="submit" class="save-btn">UPDATE PROFILE</button>
                 </form>
-              </section>
-              {% for clinic in clinics %}{% endfor %}
-              <section>
+              </div>
+
+              <div class="more-btns">
+                <button class="outline-btn add-clinic" onclick="showClinicForm()">ADD CLINIC</button>
+                <button class="outline-btn add-hours" onclick="showHoursForm()">ADD BUSINESS HOURS</button>
+              </div>
+
+              
+              <!-- Clinic Info -->
+              <div class="clinic-form">
+                <div class="header">
+                  <div class="hl"></div>
+                  <p>My Clinic Info</p>
+                  <div class="hl"></div>
+                </div>
+
                 <form action="" method="POST">
                   {% csrf_token %}
-                  <section class="form-group image">
-                    <label>{{cform.clinic_name.label}}</label>
-                    <input
-                      type="text"
-                      name="clinic_name"
-                      maxlength="50"
-                      required
-                      id="id_clinic_name"
-                      {% for clinic in clinics %}
-                      placeholder="{{clinic.clinic_name}}"
-                      {% endfor %}
-                    />
-                  </section>
-                  <section class="form-group image">
-                    <label>{{cform.clinic_name.label}}</label>
-                    {{cform.clinic_location}}
-                  </section>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>{{cform.clinic_name.label}}</label>
+                      <input
+                        class="form-control"
+                        type="text"
+                        name="clinic_name"
+                        maxlength="50"
+                        required
+                        id="id_clinic_name"
+                        placeholder="Enter clinic name"
+                      />
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>{{cform.clinic_location.label}}</label>
+                      {{cform.clinic_location}}
+                    </div>
+                  </div>
+
                   <input type="hidden" name="form_type" value="cform" />
-                  <input
-                    type="submit"
-                    class="btn btn-info btn-sm"
-                    value="Save Clinic"
-                  />
+
+                  <button type="submit" class="save-btn" onclick="hideClinicForm()">SAVE CLINIC</button>
                 </form>
-              </section>
-              <section>
+              </div>
+              
+              <div class="hours-form">
+                <div class="header">
+                  <div class="hl"></div>
+                  <p>Business Hours</p>
+                  <div class="hl"></div>
+                </div>
+
                 <form action="" method="POST">
-                  {% csrf_token %} {{hform.as_p}}
+                  {% csrf_token %} 
+
+                  <div class="form-group">
+                    <label>Select A Working Day</label>
+                    {{hform.day}}
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Opening Hours</label>
+                      {{hform.start}}
+                    </div>
+  
+                    <div class="form-group col-md-6">
+                      <label>Closing Hours</label>
+                      {{hform.end}}
+                    </div>
+                  </div>
+                  
+                  <!-- <div class="form-group">
+                    <label>{{hform.open_closed.label}}</label>
+                    {{hform.open_closed}}
+                  </div> -->
+
+                  <div class="form-group status">
+                    <label class="switch">
+                      <input id="open_closed" name="open_closed" type="checkbox"  onclick="checkStatus()"/>
+                      <span class="slider round"></span>
+                    </label>
+                    <p class="status-title">Closed</p>
+                  </div>
+
+                  <!-- {{hform.as_p}} -->
                   <input type="hidden" name="form_type" value="hform" />
-                  <input
-                    type="submit"
-                    class="btn btn-info btn-sm"
-                    value="Save Business Hours"
-                  />
+
+                  <button type="submit" class="save-btn" onclick="hideHoursForm()">SAVE BUSINESS HOURS</button>
                 </form>
-              </section>
+              </div>
+
               {% else %}
               <h4>About Me</h4>
               {% if trainer.bio %}
@@ -286,9 +385,10 @@
               <p><small class='text-muted'>{{trainer.user.username|title}} does not have a Business Hours added yet!</small></p>
               {% endif %}
               {% endif %}
-            </div>
+            </section>
 
-            <div>
+            <!-- Posts -->
+            <section>
               {% if trainer.user.id == request.user.id%}
               <a
                 href=""
@@ -306,9 +406,10 @@
               {% endfor %} {% else %}
               <p><small class='text-muted'>{{trainer.user.username|title}} does not have a any posts added yet!</small></p>
               {% endif %}
-            </div>
+            </section>
 
-            <div>
+            <!-- Reviews -->
+            <section>
               {% if request.user.Dog_Owner %}
               <a href="/addreview/{{trainer.id}}">Review</a>
               {% endif %}
@@ -325,7 +426,7 @@
               {% else %}
               <p>There are No Reviews yet!</p>
               {% endif %} {% endif %}
-            </div>
+            </section>
           </div>
         </div>
       </div>

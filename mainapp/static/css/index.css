@@ -12,6 +12,17 @@ body {
     padding-top: 20px;
 }
 
+.alert {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+
+.alert .close {
+    cursor: pointer;
+}
+
 .navColor {
     background: black;
 }
@@ -128,10 +139,6 @@ body {
     padding-right: 5px;
     text-align: center;
     padding-bottom: 0px;
-}
-
-.alert .close {
-    cursor: pointer;
 }
 
 /* If the width is 1000px or smaller */
@@ -268,6 +275,10 @@ body {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.395);
 }
+
+/* .alert {
+    position: absolute;
+} */
 
 .hero-info {
     position: absolute;
@@ -546,10 +557,13 @@ body {
     font-family: 'Charm', cursive;
     text-decoration: underline;
     color: #E56A10;
+    text-align: left;
+    margin-top: -15px;
 }
 
 .trainer-info h6 {
     font-size: 14px;
+    text-align: left;
 }
 
 .trainer-info .ratings {
@@ -611,7 +625,7 @@ body {
     background-color: #E56A10;
     color: white;
     font-size: 14px;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     border-radius: 10px;
     cursor: pointer;
@@ -630,7 +644,7 @@ body {
     border: 2px solid #E56A10;
     color: #E56A10;
     font-size: 14px;
-    padding: 8px;
+    padding: 5px;
     text-align: center;
     border-radius: 10px;
     cursor: pointer;

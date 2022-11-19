@@ -19,6 +19,7 @@ def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
+@login_required(login_url='/accounts/login/owner')
 def search(request):
     trainers= Trainer.objects.all()
     if 'location' in request.GET and request.GET["location"]:
@@ -63,9 +64,11 @@ def ownerloginView(request):
             user=authenticate(request,username=username,password=password)
             if user is not None:
                 login(request,user)
+                messages.success(request, username + " Logged In Successfully!")
                 return redirect(index)
             else:
-                return HttpResponse('Such a user does not exist')
+                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
+                return redirect(ownerloginView)
         else:
             return HttpResponse("Form is not Valid")
     
@@ -85,7 +88,7 @@ def trainerloginView(request):
                 return redirect(index)
             else:
                 messages.error(request, "Username or Password is Incorrect. Please Try Again!")
-                return redirect("trainer_login")
+                return redirect(trainerloginView)
 
                 # return HttpResponse('Such a user does not exist')
         else:
@@ -95,6 +98,7 @@ def trainerloginView(request):
 
 def logout_user(request):
     logout(request)
+    messages.success(request,"User Logged Out Successfully!")
     return redirect(index)
 
 @login_required(login_url='/accounts/login/owner')
@@ -120,14 +124,14 @@ def trainer_profile(request, id):
     posts=Post.filter_by_user(user=trainer.id)
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
-    hours=Hours.filter_by_user(user=trainer.id)
+    hours=Hours.filter_by_user(user=trainer.id).order_by("day")
     bookings=Booking.filter_by_trainer(id=trainer.id)
     
     tform = TrainerProfileForm()
     hform=HoursForm()
     pform=PostForm()
     cform=ClinicForm()
-    
+
     if request.method=='POST' and request.POST.get('form_type') == 'pform':
         pform = PostForm(request.POST, request.FILES)
         if pform.is_valid():
@@ -146,6 +150,11 @@ def trainer_profile(request, id):
             profile= tform.save(commit=False)
             profile.user= request.user
             profile.save()
+
+            messages.success(request, " Profile Updated Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Profile Updated Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         tform=TrainerProfileForm()
@@ -157,8 +166,14 @@ def trainer_profile(request, id):
             clinic=cform.save(commit=False)
             clinic.user= request.user.Dog_Trainer
             clinic.save()
-            cform=ClinicForm()
+
+            messages.success(request, " Clinic Added Successfully!")
             return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+
     else:
         cform=ClinicForm()
     
@@ -169,6 +184,11 @@ def trainer_profile(request, id):
             h=hform.save(commit=False)
             h.user=request.user.Dog_Trainer
             h.save()
+            messages.success(request, " Business Hours Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         hform=HoursForm()

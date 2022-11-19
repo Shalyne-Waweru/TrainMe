@@ -1,158 +1,193 @@
 {% load static %}
 
-<nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-light">
-  <a class="navbar-brand" href="#">
-      <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
-      <span class="logoName">TrainMe</span>
-  </a>
+<div class="navcontainer">
+  <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="{% url 'landingPage' %}">
+        <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        <span class="logoName">TrainMe</span>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'landingPage' %}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dog Trainers
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        {% if user.is_authenticated %}
-            {% if user.Dog_Trainer%}
-              <a class="dropdown-item" href="#">Trainer Dashboard </a>
-              <a class="dropdown-item" href="#">Appointments</a>
-              <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
-            
-              {% else %}
-              <i class="fas fa-times-circle"></i>
-              <p>Sorry! This View Is For Dog Trainers Only</p>
-     
-            {% endif %}
-
-        {% else %}
-          <a class="dropdown-item" href="{% url 'trainer_login' %}">Trainer Dashboard </a>
-          <a class="dropdown-item" href="{% url 'trainer_login' %}">Appointments</a>
-          <a class="dropdown-item" href="{% url 'trainer_login' %}">Profile Settings</a>
-        {% endif %}
-      </div>
-      </li>
-
-      <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dog Owners
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            {% if user.is_authenticated %}
-              {% if user.Dog_Owner%}
-                <a class="dropdown-item" href="#">Owner Dashboard </a>
-                <a class="dropdown-item" href="#">Bookings</a>
-                <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
-                
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'landingPage' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dog Trainers
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          {% if user.is_authenticated %}
+              {% if user.Dog_Trainer%}
+                <a class="dropdown-item" href="#">Trainer Dashboard </a>
+                <a class="dropdown-item" href="#">Appointments</a>
+                <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+              
                 {% else %}
-                  <i class="fas fa-times-circle"></i>
-                  <p>Sorry! This View Is For Dog Owners Only</p>
-
+                <i class="fas fa-times-circle"></i>
+                <p>Sorry! This View Is For Dog Trainers Only</p>
+       
               {% endif %}
-
-            {% else %}
-              <a class="dropdown-item" href="{% url 'owner_login' %}">Owner Dashboard </a>
-              <a class="dropdown-item" href="{% url 'owner_login' %}">Bookings</a>
-              <a class="dropdown-item" href="{% url 'owner_login' %}">Profile Settings</a>
-
-          {% endif %}
-          </div>
-      </li>
-
-      <li class="nav-item">
-          <a class="nav-item nav-link" href="#">Contact Us</a>
-      </li>
-    </ul>
-
-    <!-- If User Is Logged In -->
-    {%if user.is_authenticated%}
-
-    <div class="logged-info">
-      <p>{{user.username |upper}}</p>
-      <div class="dropdown">
-        <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src={{user.Dog_Trainer.image.url}} alt="Image">
-        </button>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          {% if user.Dog_Trainer%}
-            <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
-            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+  
           {% else %}
-            <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
-            <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+            <a class="dropdown-item" href="{% url 'trainer_login' %}">Trainer Dashboard </a>
+            <a class="dropdown-item" href="{% url 'trainer_login' %}">Appointments</a>
+            <a class="dropdown-item" href="{% url 'trainer_login' %}">Profile Settings</a>
           {% endif %}
         </div>
-    </div>
-
-    <!-- <a class="black-btn" href="{% url 'logout' %}">
-      Logout
-    </a> -->
-
-    {% else %}
-    <div class="auth-btns">
-      <a class="white-btn" href="#" data-toggle="modal" data-target="#signupModalCenter">
-          Sign Up
-      </a>
-
-      <!-- Sign Up Modal -->
-      <div class="modal fade" id="signupModalCenter" tabindex="-1" role="dialog" aria-labelledby="signupModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="signupModalLongTitle"><strong>Sign Up As</strong></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        </li>
+  
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dog Owners
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% if user.is_authenticated %}
+                {% if user.Dog_Owner%}
+                  <a class="dropdown-item" href="#">Owner Dashboard </a>
+                  <a class="dropdown-item" href="#">Bookings</a>
+                  <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+                  
+                  {% else %}
+                    <i class="fas fa-times-circle"></i>
+                    <p>Sorry! This View Is For Dog Owners Only</p>
+  
+                {% endif %}
+  
+              {% else %}
+                <a class="dropdown-item" href="{% url 'owner_login' %}">Owner Dashboard </a>
+                <a class="dropdown-item" href="{% url 'owner_login' %}">Bookings</a>
+                <a class="dropdown-item" href="{% url 'owner_login' %}">Profile Settings</a>
+  
+              {% endif %}
             </div>
+        </li>
+  
+        <li class="nav-item">
+            <a class="nav-item nav-link" href="#">Contact Us</a>
+        </li>
+      </ul>
+  
+      <!-- If User Is Logged In -->
+      {%if user.is_authenticated%}
+        {% if user.Dog_Trainer%}
+          <div class="logged-info">
+            <p>{{user.username |upper}}</p>
+            <div class="dropdown">
+              <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src={{user.Dog_Trainer.image.url}} alt="Image">
+              </button>
+      
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              </div>
+          </div>
+        {% else %}
 
-            <div class="modal-footer">
-              <a class="black-btn" href="{% url 'trainer_signup' %}">
-                Dog Trainer
-              </a>
-              <a class="orange-btn" href="{% url 'owner_signup' %}">
-                Dog Owner
-              </a>
+        <div class="logged-info">
+          <p>{{user.username |upper}}</p>
+          <div class="dropdown">
+            <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src={{user.Dog_Owner.image.url}} alt="Image">
+            </button>
+    
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+            </div>
+            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% if user.Dog_Trainer%}
+                <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              {% endif %}
+            </div> -->
+        </div>
+        
+        {% endif %}
+
+      {% else %}
+      <div class="auth-btns">
+        <a class="white-btn" href="#" data-toggle="modal" data-target="#signupModalCenter">
+            Sign Up
+        </a>
+  
+        <!-- Sign Up Modal -->
+        <div class="modal fade" id="signupModalCenter" tabindex="-1" role="dialog" aria-labelledby="signupModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="signupModalLongTitle"><strong>Sign Up As</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+  
+              <div class="modal-footer">
+                <a class="black-btn" href="{% url 'trainer_signup' %}">
+                  Dog Trainer
+                </a>
+                <a class="orange-btn" href="{% url 'owner_signup' %}">
+                  Dog Owner
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <a class="orange-btn" href="#" data-toggle="modal" data-target="#exampleModalCenter">
-          Sign In
-      </a>
-
-      <!-- Sign In Modal -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle"><strong>Sign In As</strong></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-
-            <div class="modal-footer">
-              <a class="black-btn" href="{% url 'trainer_login' %}">
-                Dog Trainer
-              </a>
-              <a class="orange-btn" href="{% url 'owner_login' %}">
-                Dog Owner
-              </a>
+  
+        <a class="orange-btn" href="#" data-toggle="modal" data-target="#exampleModalCenter">
+            Sign In
+        </a>
+  
+        <!-- Sign In Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><strong>Sign In As</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+  
+              <div class="modal-footer">
+                <a class="black-btn" href="{% url 'trainer_login' %}">
+                  Dog Trainer
+                </a>
+                <a class="orange-btn" href="{% url 'owner_login' %}">
+                  Dog Owner
+                </a>
+              </div>
             </div>
           </div>
         </div>
+  
       </div>
 
     </div>
     {% endif %}
-  </div>
-</nav>
+  </nav>
+  
+  {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <div class="alert alert-success alert-dismissible text-center fade show m-0" role="alert" style="top:90px">
+          {{message}}
+          <span class="close" data-bs-dismiss="modal" onclick="closeBtn()">&times;</span>
+          </div>
+        {% else %}
+          <div class="alert alert-danger alert-dismissible text-center fade show m-0" role="alert" style="top:90px">
+            {{message}}
+          <span class="close" data-bs-dismiss="modal" onclick="closeBtn()">&times;</span>
+          </div>
+        {% endif %}
+      {% endfor %}
+  {% endif %}
+</div>
