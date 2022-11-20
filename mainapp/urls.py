@@ -29,4 +29,10 @@ urlpatterns = [
     path('delete_booking/<id>', views.delete_booking, name='delete_booking'),
     path('delete_clinic/<id>', views.delete_clinic, name='delete_clinic'),
     path('delete_dog/<id>', views.delete_dog, name='delete_dog'),
+    
+    # mpesa
+    path('lipa/<trainer_id>', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
+    
+    path('success', views.success, name='success'),
+    path('unsuccessful', views.unsuccessful, name='unsuccessful'),
 ]
