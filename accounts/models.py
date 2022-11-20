@@ -10,7 +10,7 @@ from django.contrib.postgres.fields import ArrayField
 class User(AbstractUser):
     is_trainer = models.BooleanField('Dog_Trainer', default=False)
     is_owner = models.BooleanField('Dog_Owner', default=False)
-    phone= models.CharField(max_length=10)
+    phone= models.CharField(max_length=12)
 class Trainer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Trainer")
     image = CloudinaryField('image')
