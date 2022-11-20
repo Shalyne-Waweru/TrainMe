@@ -19,6 +19,9 @@ def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
+def appointments(request):
+    return render(request, 'appointments.html', locals())
+    
 @login_required(login_url='/accounts/login/owner')
 def search(request):
     trainers= Trainer.objects.all()

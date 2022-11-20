@@ -21,6 +21,8 @@ urlpatterns = [
     path('', views.index, name='landingPage'),
     # Search Page
     path('search/', views.search, name='searchPage'),
+    # Appointments Page
+    path('appointments/', views.appointments, name='appointments'),
     
     # delete
     path('delete_hour/<id>', views.delete_hour, name='delete_hour'),

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<div class="appointments-info">
+  <div class="section">
+    <div class="overlay">
+      <h2>Appointments</h2>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="profile-info">
+          <div class="border-overlay">
+            <img
+              class="image"
+              src="{% static 'images/trainer_2.jpg' %}"
+              alt="Profile Image"
+            />
+
+            <h5>Trainer Name</h5>
+            <h6><strong>Dog Trainer</strong></h6>
+
+            <p><i class="fas fa-map-marker-alt"></i>Trainer Location</p>
+            <p><i class="fas fa-phone-alt"></i>Trainer Phone</p>
+            <p><i class="fas fa-search-dollar"></i>Ksh 1000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="header">
+          <h6>Patient Appointments</h6>
+          <div class="indicator"></div>
+        </div>
+
+        <div class="appointments">
+          <div class="appointments-layout"> 
+            <div class="table-wrapper">
+              <table class="fl-table">
+                  <thead>
+                  <tr>
+                      <th>Patients</th>
+                      <th>Appt Date</th>
+                      <th>Appt Time</th>
+                      <th>Booking Date</th>
+                      <th>Amount</th>
+                      <th>Actions</th>
+                      <!-- <th>Billing</th> -->
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                        <td class="trainer">
+                          <div class="trainer-deets">
+                            <img
+                              class="image"
+                              src="{%static 'images/trainer_2.jpg' %}"
+                              alt="Trainer Image"
+                            />
+                            <p>Patient Name</p>
+                          </div>
+                        </td>
+
+                        <td class="appt-date">
+                          <h6>Jan,20 2022</h6>
+                        </td>
+
+                        <td class="appt-time">
+                          <h6>08:00 am</h6>
+                        </td>
+
+                        <td class="booking-date">
+                          <h6>Jun,30 2022</h6>
+                        </td>
+
+                        <td class="amount">
+                          <h6>Ksh 1,000</h6>
+                        </td>
+
+                        <td class="actions">
+                          <p class="confirm"><i class="fas fa-check"></i>Accept</p>
+                          <p class="cancel"><i class="fas fa-times"></i>Cancel</p>
+                        </td>
+
+                        <!-- <td class="billing">
+                          <a class="pay-btn" href="#">PAID</a>
+                        </td> -->
+
+                    </tr>
+
+                    <tr>
+                      <td class="trainer">
+                        <div class="trainer-deets">
+                          <img
+                            class="image"
+                            src="{%static 'images/trainer_2.jpg' %}"
+                            alt="Trainer Image"
+                          />
+                          <p>Patient Name</p>
+                        </div>
+                      </td>
+
+                      <td class="appt-date">
+                        <h6>Jan,20 2022</h6>
+                      </td>
+
+                      <td class="appt-time">
+                        <h6>08:00 am</h6>
+                      </td>
+
+                      <td class="booking-date">
+                        <h6>Jun,30 2022</h6>
+                      </td>
+
+                      <td class="amount">
+                        <h6>Ksh 1,000</h6>
+                      </td>
+
+                      <td class="actions">
+                        <p class="confirm"><i class="fas fa-check"></i>Accept</p>
+                        <p class="cancel"><i class="fas fa-times"></i>Cancel</p>
+                      </td>
+
+                      <!-- <td class="billing">
+                        <a class="pay-btn" href="#">PENDING</a>
+                      </td> -->
+
+                  </tr>
+                  
+                  <tbody>
+              </table>
+            </div>       
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

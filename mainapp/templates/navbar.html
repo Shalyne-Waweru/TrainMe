@@ -24,7 +24,7 @@
           {% if user.is_authenticated %}
               {% if user.Dog_Trainer%}
                 <a class="dropdown-item" href="#">Trainer Dashboard </a>
-                <a class="dropdown-item" href="#">Appointments</a>
+                <a class="dropdown-item" href="{% url 'appointments' %}">Appointments</a>
                 <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
               
                 {% else %}

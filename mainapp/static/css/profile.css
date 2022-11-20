@@ -932,7 +932,7 @@ select option {
   font-weight: normal;
   border: none;
   border-collapse: collapse;
-  width: 100%;
+  /* width: 100%; */
   max-width: 100%;
   white-space: nowrap;
   background-color: white;
