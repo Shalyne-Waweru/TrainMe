@@ -82,6 +82,11 @@ body {
     color: white;
     cursor: pointer;
     transition: 0.5s;
+    border: 2px solid #E56A10;
+}
+
+.orange-btn:hover {
+    border: 2px solid black;
 }
 
 .auth-btns .orange-btn:hover {
@@ -89,6 +94,7 @@ body {
     color: white;
     background-color: black;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+    border: none;
 }
 
 .logged-info {

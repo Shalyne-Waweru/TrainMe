@@ -106,13 +106,22 @@ def owner_profile(request, id):
     user=User.objects.filter(id=id).first()
     owner = Owner.objects.get(user=id)
     dogs=Dog.filter_by_user(user=owner.id)
+    bookings=Booking.objects.all()
+
     if request.method == 'POST':
         form = DogForm(request.POST, request.FILES)
         if form.is_valid():
             owner= form.save(commit=False)
             owner.user= request.user.Dog_Owner
             owner.save()
+
+            messages.success(request, "Dog Added Successfully!")
             return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+
     else:
         form=DogForm()
     return render(request,'profile/owner_profile.html',locals())
@@ -125,7 +134,7 @@ def trainer_profile(request, id):
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
     hours=Hours.filter_by_user(user=trainer.id).order_by("day")
-    bookings=Booking.filter_by_trainer(id=trainer.id)
+    appointments=Booking.filter_by_trainer(id=trainer.id)
     
     tform = TrainerProfileForm()
     hform=HoursForm()

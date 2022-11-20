@@ -1,5 +1,319 @@
-{% extends 'auth/base.html'%}{% load static %}{%block content%}
-<div class="container card">
+{% extends 'base.html'%}
+{% load static %}
+
+{%block content%}
+<div class="profile-info">
+  <div class="section">
+    <div class="overlay">
+        <h2>My Profile Info</h2>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="trainer-info">
+          <img
+            class="trainer-image"
+            src="{% static 'images/trainer_3.jpg' %}"
+            alt="Profile Image"
+          />
+          <h5>{{owner.user.first_name|title}} {{owner.user.last_name | title}}</h5>
+          <h6><strong>Dog Owner</strong></h6>
+
+          <div class="more-info">
+            <i class="far fa-envelope"></i>
+            <p>{{owner.user.email}}</p>
+          </div>
+
+          <div class="more-info">
+            <img src="{% static 'images/location_image.png' %}" />
+            <p>{{owner.location}}</p>
+          </div>
+
+          <div class="more-info">
+            <i class="fas fa-phone-alt"></i>
+            <p>{{owner.user.phone}}</p>
+          </div>
+
+          <div class="hl"></div>
+
+          <!-- {% if request.user.Dog_Owner %}
+          <a class="orange-btn" href="/book/{{trainer.id}}">
+            Book Now
+          </a>
+          {% endif %} -->
+        </div>
+      </div>
+
+      <!-- Tabs Section -->
+      <div class="col-md-8">
+        <div class="tabs">
+          <div class="tab-header">
+            <section class="active">
+              <p>My Profile Details</p>
+            </section>
+
+            <section>
+              <p>My Dogs Profile</p>
+            </section>
+
+            <section>
+              <p>My Appointments</p>
+            </section>
+          </div>
+
+          <div class="tab-indicator"></div>
+
+          <div class="tab-body owner-profile">
+            <!-- Profile Details -->
+            <section class="active">
+              <!-- Owner View -->
+                <div class="header">
+                  <div class="hl"></div>
+                  <p>Personal Information</p>
+                  <div class="hl"></div>
+                </div>
+                
+                <div class="owner-profile">
+                  <form class="personal_details" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>First Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="first_name"
+                          placeholder="{{owner.user.first_name|title}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Last Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="last_name"
+                          placeholder="{{owner.user.last_name|title}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Username</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="{{owner.user.username}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="{{owner.user.email}}"
+                        />
+                      </div>
+    
+                      <div class="form-group col-md-6">
+                        <label>Location</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="{{owner.location}}"
+                        />
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label>Phone Number</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="{{owner.user.phone}}"
+                        />
+                      </div>
+                    </div>               
+
+                    <div class="form-group">
+                      <label>Profile Image</label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="image"
+                      />
+                    </div>
+
+                    <!-- <input type="hidden" name="form_type" value="tform" /> -->
+
+                    <button type="submit" class="save-btn">UPDATE PROFILE</button>
+                  </form>
+                </div>
+            </section>
+
+            <!-- Dog Profile -->
+            <section class="posts">
+              {% if owner.user.id == request.user.id%}
+              <a
+                href=""
+                class="orange-btn"
+                data-toggle="modal"
+                data-target="#dogModal"
+                >ADD DOG</a
+              >
+              {% endif %}
+
+              <div class="videos">
+                {% if dogs %} 
+                    {% for dog in dogs %} 
+                    <div class="dog-layout">
+                      <img
+                        class="dog-image"
+                        src="{{dog.dog_pic.url}}"
+                        alt="Dog Image"
+                      />
+
+                      <p class="title"><strong>{{dog.dog_name|title}}</strong></p>
+                      <p class="breed">Dog Breed</p>
+                      <div class="more-dog-info">
+                        <p class="age">{{dog.dog_age}} years</p>
+                        <p class="gender">{{dog.dog_sex|title}}</p>
+                      </div>
+
+                      <a class="orange-btn" href="/delete_dog/{{ dog.id }}">DELETE</a>
+                    </div>
+
+                    {% endfor %}
+                
+                {% else %}
+                    <p><small class='text-muted'>There Are No Dogs Added Yet!</small></p>      
+                {% endif %}
+              </div>
+
+            </section>
+
+            <!-- Appointments -->
+            <section class="reviews">
+
+              <div class="appointments-layout"> 
+                <div class="table-wrapper">
+                  <table class="fl-table">
+                      <thead>
+                      <tr>
+                          <th>Trainer</th>
+                          <th>Appt Date</th>
+                          <th>Appt Time</th>
+                          <th>Booking Date</th>
+                          <th>Amount</th>
+                          <th>Status</th>
+                          <th>Billing</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                            <td class="trainer">
+                              <div class="trainer-deets">
+                                <img
+                                  class="image"
+                                  src="{%static 'images/trainer_2.jpg' %}"
+                                  alt="Trainer Image"
+                                />
+                                <p>Trainer Name</p>
+                              </div>
+                            </td>
+
+                            <td class="appt-date">
+                              <h6>Jan,20 2022</h6>
+                            </td>
+
+                            <td class="appt-time">
+                              <h6>08:00 am</h6>
+                            </td>
+
+                            <td class="booking-date">
+                              <h6>Jun,30 2022</h6>
+                            </td>
+
+                            <td class="amount">
+                              <h6>Ksh 1,000</h6>
+                            </td>
+
+                            <td class="status">
+                              <p class="confirm">Confirmed</p>
+                              <!-- <p class="cancel">Cancelled</p> -->
+                            </td>
+
+                            <td class="billing">
+                              <a class="pay-btn" href="#">PAY</a>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                          <td class="trainer">
+                            <div class="trainer-deets">
+                              <img
+                                class="image"
+                                src="{%static 'images/trainer_2.jpg' %}"
+                                alt="Trainer Image"
+                              />
+                              <p>Trainer Name</p>
+                            </div>
+                          </td>
+
+                          <td class="appt-date">
+                            <h6>Jan,20 2022</h6>
+                          </td>
+
+                          <td class="appt-time">
+                            <h6>08:00 am</h6>
+                          </td>
+
+                          <td class="booking-date">
+                            <h6>Jun,30 2022</h6>
+                          </td>
+
+                          <td class="amount">
+                            <h6>Ksh 1,000</h6>
+                          </td>
+
+                          <td class="status">
+                            <!-- <p class="confirm">Confirmed</p> -->
+                            <p class="cancel">Cancelled</p>
+                          </td>
+
+                          <td class="billing">
+                            <a class="pay-btn" href="#">PAY</a>
+                          </td>
+
+                      </tr>
+                      
+                      <tbody>
+                  </table>
+              </div>       
+                  <!-- {% if bookings %}
+                    {% for booking in bookings %}
+                      <p>{{booking.book_date}}</p>
+                      <p>{{booking.book_time}}</p>
+                    {% endfor %}
+                  {% else %}
+                    <p>There are No Appointments yet!</p>
+                  {% endif %}  -->
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="container card">
   <a href="/">Back Home</a>
   <h4>{{owner.user.username|title}}</h4>
 
@@ -35,38 +349,59 @@
     >Dog</a
   >
   {% endif %}
-</div>
+</div> -->
+
 <!-- The Dog Modal -->
-<div class="modal" id="post">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Add Post</h4>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
+<div class="modal-section">
+  <div class="modal" id="dogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">ADD DOG</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-      <!-- Modal body -->
-      <div class="modal-body">
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %} {{form.as_p}}
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <input type="submit" class="btn btn-info btn-sm" value="Save Dog" />
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
 
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </form>
+            <div class="form-group">
+              <label>Dog Name</label>
+              <div class="form-control">
+                {{form.dog_name}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Dog Age</label>
+              <div class="form-control">
+                {{form.dog_age}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Dog Gender</label>
+              <div class="form-control">
+                {{form.dog_sex}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Dog Image</label>
+              <div class="form-control">
+                {{form.dog_pic}}
+              </div>
+            </div>
+
+            <input type="hidden" name="form_type" value="form" />
+
+            <button type="submit" class="upload-btn">SUBMIT DOG INFO</button>
+          </form>
+
+        </div>
       </div>
     </div>
   </div>

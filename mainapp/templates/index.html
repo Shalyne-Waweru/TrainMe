@@ -223,9 +223,15 @@
                                 View Profile
                             </a>
 
-                            <a class="outline-btn" href="/book/{{trainer.id}}">
-                                Book Now
-                            </a>
+                            {% if user.Dog_Owner %}
+                                <a class="outline-btn" href="/book/{{trainer.id}}">
+                                    Book Now
+                                </a>
+                            {% else %}
+                                <a class="outline-btn" href="{% url 'owner_login' %}">
+                                    Book Now
+                                </a>
+                            {% endif %}
                         </div>
 
                     </div>
