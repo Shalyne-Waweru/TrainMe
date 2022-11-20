@@ -7,22 +7,7 @@
     <!-- Hero Section -->
     <div class="section">
         <div class="overlay">
-            <!-- {% if messages %}
-                {% for message in messages %}
-        
-                {% if message %}
-                <div class="alert alert-dark alert-dismissible text-center fade show" role="alert">
-                    {{message}}
-                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                
-                {% endif %}
-        
-                {% endfor %}
-            {% endif %}   -->
-            <div class="hero-info"> 
+            <div class="hero-info">
                 <h3>Welcome To TrainMe</h3>
                 <h2>Providing <span class="orange-txt">Professional</span> Dog <br> Training The <span class="orange-txt">Fun</span> And <br> <span class="orange-txt">Effective</span> Way</h1>
                 <p>We help dog owners transform their dogs into well-behaved, <br> obedient furry friends.</p>
@@ -196,7 +181,7 @@
                     <img class="trainer-img" src="{% static 'images/trainer_1.jpg' %}"/>
                     {% endif %}
                     <div class="trainer-info">
-                        <h5>{{trainer.user.username | title}}</h5>
+                        <h5>{{trainer.user.first_name | title}}  {{trainer.user.last_name | title}}</h5>
                         <h6><strong>Dog Trainer</strong></h6>
                         
                         <div class="ratings">
@@ -238,9 +223,15 @@
                                 View Profile
                             </a>
 
-                            <a class="outline-btn" href="/book/{{trainer.id}}">
-                                Book Now
-                            </a>
+                            {% if user.Dog_Owner %}
+                                <a class="outline-btn" href="/book/{{trainer.id}}">
+                                    Book Now
+                                </a>
+                            {% else %}
+                                <a class="outline-btn" href="{% url 'owner_login' %}">
+                                    Book Now
+                                </a>
+                            {% endif %}
                         </div>
 
                     </div>

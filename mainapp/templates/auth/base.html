@@ -19,10 +19,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 
-    {% endblock%} {% block scripts%} {% bootstrap_javascript%} {% endblock%}
+    {% endblock%} 
 
   </head>
   <body>
     {% block content %} {%endblock%}
+
+    {% block scripts %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.6.0.min.js' %} "></script>
+    <script src="{% static 'js/popper.min.js' %} "></script>
+    <script src="{% static 'js/bootstrap.min.js' %} "></script>
+    <script src="{% static 'js/script.js' %} "></script>
+    {% endblock %}
   </body>
 </html>

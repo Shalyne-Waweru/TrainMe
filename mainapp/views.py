@@ -22,6 +22,10 @@ def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
+def appointments(request):
+    return render(request, 'appointments.html', locals())
+    
+@login_required(login_url='/accounts/login/owner')
 def search(request):
     trainers= Trainer.objects.all()
     if 'location' in request.GET and request.GET["location"]:
@@ -66,9 +70,11 @@ def ownerloginView(request):
             user=authenticate(request,username=username,password=password)
             if user is not None:
                 login(request,user)
+                messages.success(request, username + " Logged In Successfully!")
                 return redirect(index)
             else:
-                return HttpResponse('Such a user does not exist')
+                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
+                return redirect(ownerloginView)
         else:
             return HttpResponse("Form is not Valid")
     
@@ -88,7 +94,7 @@ def trainerloginView(request):
                 return redirect(index)
             else:
                 messages.error(request, "Username or Password is Incorrect. Please Try Again!")
-                return redirect("trainer_login")
+                return redirect(trainerloginView)
 
                 # return HttpResponse('Such a user does not exist')
         else:
@@ -98,6 +104,7 @@ def trainerloginView(request):
 
 def logout_user(request):
     logout(request)
+    messages.success(request,"User Logged Out Successfully!")
     return redirect(index)
 
 @login_required(login_url='/accounts/login/owner')
@@ -105,13 +112,22 @@ def owner_profile(request, id):
     user=User.objects.filter(id=id).first()
     owner = Owner.objects.get(user=id)
     dogs=Dog.filter_by_user(user=owner.id)
+    bookings=Booking.objects.all()
+
     if request.method == 'POST':
         form = DogForm(request.POST, request.FILES)
         if form.is_valid():
             owner= form.save(commit=False)
             owner.user= request.user.Dog_Owner
             owner.save()
+
+            messages.success(request, "Dog Added Successfully!")
             return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+
     else:
         form=DogForm()
     return render(request,'profile/owner_profile.html',locals())
@@ -123,14 +139,14 @@ def trainer_profile(request, id):
     posts=Post.filter_by_user(user=trainer.id)
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
-    hours=Hours.filter_by_user(user=trainer.id)
-    bookings=Booking.filter_by_trainer(id=trainer.id)
+    hours=Hours.filter_by_user(user=trainer.id).order_by("day")
+    appointments=Booking.filter_by_trainer(id=trainer.id)
     
     tform = TrainerProfileForm()
     hform=HoursForm()
     pform=PostForm()
     cform=ClinicForm()
-    
+
     if request.method=='POST' and request.POST.get('form_type') == 'pform':
         pform = PostForm(request.POST, request.FILES)
         if pform.is_valid():
@@ -138,6 +154,11 @@ def trainer_profile(request, id):
             post=pform.save(commit=False)
             post.user= request.user.Dog_Trainer
             post.save()
+
+            messages.success(request, "Post Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         pform=PostForm()
@@ -149,6 +170,11 @@ def trainer_profile(request, id):
             profile= tform.save(commit=False)
             profile.user= request.user
             profile.save()
+
+            messages.success(request, " Profile Updated Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Profile Updated Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         tform=TrainerProfileForm()
@@ -160,8 +186,14 @@ def trainer_profile(request, id):
             clinic=cform.save(commit=False)
             clinic.user= request.user.Dog_Trainer
             clinic.save()
-            cform=ClinicForm()
+
+            messages.success(request, " Clinic Added Successfully!")
             return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+
     else:
         cform=ClinicForm()
     
@@ -172,6 +204,11 @@ def trainer_profile(request, id):
             h=hform.save(commit=False)
             h.user=request.user.Dog_Trainer
             h.save()
+            messages.success(request, " Business Hours Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
             return HttpResponseRedirect(request.path_info)
     else:
         hform=HoursForm()
@@ -183,17 +220,22 @@ def review(request, trainer_id):
     current_user = request.user
     current_trainer = Trainer.objects.get(id=trainer_id)
     if request.method == 'POST':
-        form = ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            form = form.save(commit=False) 
-            form.reviewer=current_user 
-            form.reviewed=current_trainer
-            form.save()
-            
+        rform = ReviewForm(request.POST, request.FILES)
+        if rform.is_valid():
+            rform = rform.save(commit=False) 
+            rform.reviewer=current_user 
+            rform.reviewed=current_trainer
+            rform.save()
+
+            messages.success(request, "Trainer Reviewed Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
             # return redirect('trainer_profile')
             return HttpResponseRedirect(request.path_info)
     else:
-        form=ReviewForm()
+        rform=ReviewForm()
             
     return render(request,'review_form.html',locals())
 
@@ -208,7 +250,14 @@ def booking(request, trainer_id):
             form.user=current_user 
             form.trainer=current_trainer
             form.save()
-            return redirect(index)
+
+            messages.success(request, "Booking Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+            # return redirect(index)
     else:
         form=BookingForm()
             
@@ -217,6 +266,8 @@ def booking(request, trainer_id):
 def delete_hour(request, id):
   hour = Hours.objects.get(id=id)
   hour.delete()
+
+#   messages.success(request, "Business Hour Deleted Successfully!")
   return redirect(index)
 
 def delete_post(request, id):
