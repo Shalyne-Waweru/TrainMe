@@ -14,6 +14,9 @@ from django.contrib import messages
 from mainapp.forms import *
 from mainapp.models import *
 
+import requests
+from .mpesa import MpesaAccessToken, LipanaMpesaPpassword
+
 # Create your views here.
 def index(request):
     trainers= Trainer.objects.all()
@@ -240,3 +243,36 @@ def delete_dog(request, id):
   dog = Dog.objects.get(id=id)
   dog.delete()
   return redirect(index)
+
+
+# mpesa
+def success(request):
+  return render(request,'mpesa/success.html',locals())
+
+def unsuccessful(request):
+  return render(request,'mpesa/unsuccessful.html',locals())
+
+def lipa_na_mpesa_online(request, trainer_id):
+    current_user = request.user
+    current_trainer = Trainer.objects.get(id=trainer_id)
+    access_token = MpesaAccessToken.validated_mpesa_access_token
+    api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    headers = {"Authorization": "Bearer %s" % access_token}
+    request = {
+        "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
+        "Password": LipanaMpesaPpassword.decode_password,
+        "Timestamp": LipanaMpesaPpassword.lipa_time,
+        "TransactionType": "CustomerPayBillOnline",
+        "Amount": current_trainer.price_charge,
+        "PartyA": current_user.phone,  # replace with your phone number to get stk push
+        "PartyB": LipanaMpesaPpassword.Business_short_code,
+        "PhoneNumber": current_user.phone,  # replace with your phone number to get stk push
+        "CallBackURL": "https://sandbox.safaricom.co.ke/mpesa/",
+        "AccountReference": current_trainer.user.username,
+        "TransactionDesc": "Testing stk push"
+    }
+    response = requests.post(api_url, json=request, headers=headers)
+    if response.status_code==200:
+        return redirect(success)
+    else:
+        return redirect(unsuccessful)
