@@ -235,7 +235,14 @@ def booking(request, trainer_id):
             form.user=current_user 
             form.trainer=current_trainer
             form.save()
-            return redirect(index)
+
+            messages.success(request, "Booking Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+            # return redirect(index)
     else:
         form=BookingForm()
             

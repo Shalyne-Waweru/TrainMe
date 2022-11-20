@@ -1,8 +1,104 @@
-{% extends 'auth/base.html' %}{% load static %}{% block content %} {{message}}
-<div class="container">
-  <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %} {{form.as_p}}
-    <button class="btn btn-primary" type="submit">Post</button>
-  </form>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<div class="profile-info">
+  <div class="section">
+    <div class="overlay">
+      <h2>Appointment Booking</h2>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="trainer-info">
+          <img
+            class="trainer-image"
+            src="{% static 'images/trainer_2.jpg' %}"
+            alt="Profile Image"
+          />
+          <!-- <h5>{{trainer.user.first_name | title}} {{trainer.user.last_name | title}}</h5> -->
+          <h5>Trainer Name</h5>
+          <h6><strong>Dog Trainer</strong></h6>
+          <div class="ratings">
+            <div class="stars">
+              <img src="{% static 'images/filled_star.png' %}" />
+              <img src="{% static 'images/filled_star.png' %}" />
+              <img src="{% static 'images/filled_star.png' %}" />
+              <img src="{% static 'images/unfilled_star.png' %}" />
+              <img src="{% static 'images/unfilled_star.png' %}" />
+            </div>
+            <p>(10)</p>
+          </div>
+          <div class="more-info">
+            <img src="{% static 'images/location_image.png' %}" />
+            <!-- <p>{{trainer.location}}</p> -->
+            <p>Trainer Location</p>
+          </div>
+
+          <div class="more-info">
+            <i class="fas fa-phone-alt"></i>
+            <!-- <p>{{trainer.user.phone}}</p> -->
+            <p>Trainer Phone</p>
+          </div>
+
+          <div class="more-info time">
+            <i class="far fa-clock"></i>
+            <p>Available on Mon-Fri</p>
+          </div>
+
+          <div class="more-info cash">
+            <img src="{% static 'images/dollar_icon.png' %}" />
+            <!-- <p>Ksh {{trainer.price_charge}}</p> -->
+            <p>Trainer Price Charge</p>
+          </div>
+
+          <div class="hl"></div>
+
+          <p class="trainer-services">Services</p>
+
+          <div class="services">
+            <p><i class="fas fa-check"></i>Obedience Training</p>
+            <p><i class="fas fa-check"></i>Puppy Training</p>
+          </div>
+
+          <!-- {% if trainer.services %}
+            <p class="trainer-services">Services</p>
+
+            <div class="services">
+              {% for service in trainer.services %}
+              <p><i class="fas fa-check"></i> {{service}}</p>
+              {% endfor %}
+            </div>
+          {% endif %} -->
+        </div>
+      </div>
+
+      <!-- Appointment Section -->
+      <div class="col-md-8">
+        <div class="appointment-form">
+            <p><strong>Make An Appointment</strong></p>
+            <div class="hl"></div>
+
+            <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %} 
+
+              <div class="form-group">
+                <label>Select Date</label>
+                {{form.book_date}}
+              </div>
+
+              <div class="form-group">
+                <label>Select Time</label>
+                {{form.book_time}}
+              </div>
+
+              <button type="submit" class="save-btn">ADD BOOKING</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}
