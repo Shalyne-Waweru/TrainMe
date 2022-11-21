@@ -24,7 +24,7 @@
           {% if user.is_authenticated %}
               {% if user.Dog_Trainer%}
                 <a class="dropdown-item" href="#">Trainer Dashboard </a>
-                <a class="dropdown-item" href="{% url 'appointments' %}">Appointments</a>
+                <a class="dropdown-item" href="{% url 'appointments' user.Dog_Trainer.id %}">Appointments</a>
                 <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
               
                 {% else %}
@@ -49,7 +49,7 @@
               {% if user.is_authenticated %}
                 {% if user.Dog_Owner%}
                   <a class="dropdown-item" href="#">Owner Dashboard </a>
-                  <a class="dropdown-item" href="#">Bookings</a>
+                  <a class="dropdown-item" href="{% url 'appointments' user.Dog_Owner.id %}">Bookings</a>
                   <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
                   
                   {% else %}
