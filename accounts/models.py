@@ -52,6 +52,7 @@ class Trainer(models.Model):
 class Owner(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="Dog_Owner")
     location= models.CharField(max_length=40, choices = places)
+    image = CloudinaryField('image')
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
