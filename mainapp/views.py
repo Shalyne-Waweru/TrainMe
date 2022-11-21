@@ -22,7 +22,9 @@ def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
-def appointments(request):
+def appointments(request, id):
+    trainer = Trainer.objects.get(id=id)
+    appointments=Booking.filter_by_trainer(id=trainer.id)
     return render(request, 'appointments.html', locals())
     
 @login_required(login_url='/accounts/login/owner')
@@ -112,12 +114,33 @@ def owner_profile(request, id):
     user=User.objects.filter(id=id).first()
     owner = Owner.objects.get(user=id)
     dogs=Dog.filter_by_user(user=owner.id)
-    bookings=Booking.objects.all()
+    bookings=Booking.filter_by_owner(user=owner.id)
+    
+    uform=EditUserForm()
+    form = OwnerProfileForm()
+    dform = DogForm()
+    if request.method == 'POST'and request.POST.get('form_type') == 'form':
+        uform=EditUserForm(request.POST, instance=request.user)
+        form=OwnerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Owner)
+        if uform.is_valid() and form.is_valid():
+            user_form = uform.save()
+            profile= form.save(commit=False)
+            profile.user= user_form
+            profile.save()
 
-    if request.method == 'POST':
-        form = DogForm(request.POST, request.FILES)
-        if form.is_valid():
-            owner= form.save(commit=False)
+            messages.success(request, " Profile Updated Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Profile Updated Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+    else:
+        uform=EditUserForm()
+        form=OwnerProfileForm()
+        
+    if request.method == 'POST'and request.POST.get('form_type') == 'dform':
+        dform = DogForm(request.POST, request.FILES)
+        if dform.is_valid():
+            owner= dform.save(commit=False)
             owner.user= request.user.Dog_Owner
             owner.save()
 
@@ -129,10 +152,10 @@ def owner_profile(request, id):
             return HttpResponseRedirect(request.path_info)
 
     else:
-        form=DogForm()
+        dform=DogForm()
     return render(request,'profile/owner_profile.html',locals())
 
-@login_required(login_url='/accounts/login/owner')
+@login_required(login_url='/accounts/login/trainer')
 def trainer_profile(request, id):
     user=User.objects.filter(id=id).first()
     trainer = Trainer.objects.get(user=id)
@@ -140,12 +163,13 @@ def trainer_profile(request, id):
     reviews=Review.get_trainer_reviews(id=trainer.id)
     clinics=Clinic.filter_by_user(user=trainer.id)
     hours=Hours.filter_by_user(user=trainer.id).order_by("day")
-    appointments=Booking.filter_by_trainer(id=trainer.id)
     
+    uform=EditUserForm()
     tform = TrainerProfileForm()
     hform=HoursForm()
     pform=PostForm()
     cform=ClinicForm()
+    rform=ReviewForm()
 
     if request.method=='POST' and request.POST.get('form_type') == 'pform':
         pform = PostForm(request.POST, request.FILES)
@@ -164,11 +188,12 @@ def trainer_profile(request, id):
         pform=PostForm()
         
     if request.method=='POST' and request.POST.get('form_type') == 'tform':
+        uform=EditUserForm(request.POST, instance=request.user)
         tform = TrainerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Trainer)
-        if tform.is_valid():
-            print(tform.cleaned_data)
+        if uform.is_valid() and tform.is_valid():
+            user_form= uform.save()
             profile= tform.save(commit=False)
-            profile.user= request.user
+            profile.user= user_form
             profile.save()
 
             messages.success(request, " Profile Updated Successfully!")
@@ -213,31 +238,23 @@ def trainer_profile(request, id):
     else:
         hform=HoursForm()
     
-    return render(request,'profile/trainer_profile.html',locals())
-
-@login_required(login_url='/accounts/login/owner')
-def review(request, trainer_id):
-    current_user = request.user
-    current_trainer = Trainer.objects.get(id=trainer_id)
-    if request.method == 'POST':
+    if request.method=='POST' and request.POST.get('form_type') == 'rform':
         rform = ReviewForm(request.POST, request.FILES)
         if rform.is_valid():
-            rform = rform.save(commit=False) 
-            rform.reviewer=current_user 
-            rform.reviewed=current_trainer
-            rform.save()
-
+            r=rform.save(commit=False)
+            r.reviewer=request.user
+            r.reviewed=trainer
+            r.save()
             messages.success(request, "Trainer Reviewed Successfully!")
             return HttpResponseRedirect(request.path_info)
 
         else:
             messages.error(request, "Error! Please Try Again.")
-            # return redirect('trainer_profile')
             return HttpResponseRedirect(request.path_info)
     else:
         rform=ReviewForm()
-            
-    return render(request,'review_form.html',locals())
+    
+    return render(request,'profile/trainer_profile.html',locals())
 
 @login_required(login_url='/accounts/login/owner')
 def booking(request, trainer_id):
@@ -263,46 +280,60 @@ def booking(request, trainer_id):
             
     return render(request,'booking.html',locals())
 
+@login_required(login_url='/accounts/login/trainer')
 def delete_hour(request, id):
   hour = Hours.objects.get(id=id)
   hour.delete()
+  messages.success(request, "Business Hour Deleted Successfully!")
+  current_user= request.user
+  return redirect(trainer_profile, current_user.id)
 
-#   messages.success(request, "Business Hour Deleted Successfully!")
-  return redirect(index)
-
+@login_required(login_url='/accounts/login/trainer')
 def delete_post(request, id):
   post = Post.objects.get(id=id)
   post.delete()
-  return redirect(index)
+  messages.success(request, "Post Deleted Successfully!")
+  current_user= request.user
+  return redirect(trainer_profile, current_user.id)
 
-def delete_booking(request, id):
-  booking = Booking.objects.get(id=id)
-  booking.delete()
-  return redirect(index)
-
+@login_required(login_url='/accounts/login/owner')
 def delete_review(request, id):
   review = Review.objects.get(id=id)
   review.delete()
-  return redirect(index)
+  messages.success(request, "Review Deleted Successfully!")
+  current_user= request.user
+  return redirect(trainer_profile, current_user.id)
 
+@login_required(login_url='/accounts/login/trainer')
 def delete_clinic(request, id):
   clinic = Clinic.objects.get(id=id)
   clinic.delete()
-  return redirect(index)
+  messages.success(request, "Clinic Deleted Successfully!")
+  current_user= request.user
+  return redirect(trainer_profile, current_user.id)
 
+@login_required(login_url='/accounts/login/owner')
 def delete_dog(request, id):
   dog = Dog.objects.get(id=id)
   dog.delete()
-  return redirect(index)
+  messages.success(request, "Dog Deleted Successfully!")
+  current_user= request.user
+  return redirect(owner_profile, current_user.id)
 
 
 # mpesa
 def success(request):
-  return render(request,'mpesa/success.html',locals())
+  messages.success(request, "Transaction Successful!")
+  current_user= request.user
+  status=200
+  return redirect(owner_profile, current_user.id)
 
 def unsuccessful(request):
-  return render(request,'mpesa/unsuccessful.html',locals())
+  messages.success(request, "Unsuccessful Transaction, Please Try again later.!")
+  current_user= request.user
+  return redirect(owner_profile, current_user.id)
 
+@login_required(login_url='/accounts/login/owner')
 def lipa_na_mpesa_online(request, trainer_id):
     current_user = request.user
     current_trainer = Trainer.objects.get(id=trainer_id)
