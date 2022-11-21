@@ -82,7 +82,7 @@
                     </div>
                     
                     <div class="del-btn">
-                      <a href="#"><i class="fas fa-trash"></i></a>
+                      <a href="/delete_clinic/{{ clinic.id }}"><i class="fas fa-trash"></i></a>
                     </div>
                   </div>
                   <div class="hl"></div>
@@ -113,9 +113,6 @@
           {% if request.user.Dog_Owner %}
           <a class="orange-btn" href="/book/{{trainer.id}}">
             Book Now
-          </a>
-          <a class="outline-btn" href="/lipa/{{trainer.id}}">
-            pay
           </a>
           {% endif %}
         </div>
@@ -157,52 +154,31 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label>First Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="first_name"
-                          placeholder="{{trainer.user.first_name|title}}"
-                        />
+                        <input type="text" name="first_name" maxlength="150" id="id_first_name"  placeholder="{{trainer.user.first_name|title}}">
+                        
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Last Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="last_name"
-                          placeholder="{{trainer.user.last_name|title}}"
-                        />
+                        <input type="text" name="last_name" maxlength="150" id="id_last_name" placeholder="{{trainer.user.last_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Username</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="username"
-                          placeholder="{{trainer.user.username}}"
-                        />
+                        <input type="text" name="username" maxlength="150" required id="id_username" placeholder="{{trainer.user.username}}">
+                        
                       </div>
     
                       <div class="form-group col-md-6">
-                        <label>Price Charge</label>   
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="price_charge"
-                          placeholder="{{trainer.price_charge}}"
-                        /> 
+                        <label>Price Charge</label>
+                        <input type="number" name="price_charge" value="1000" required id="id_price_charge" placeholder="{{trainer.price_charge}}">
+                        
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Phone Number</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="username"
-                          placeholder="{{trainer.user.phone}}"
-                        />
+                        <input type="text" name="phone" maxlength="12" required id="id_phone"placeholder="{{trainer.user.phone}}">
+                        
                       </div>
 
                       <div class="form-group col-md-6">
@@ -213,21 +189,12 @@
 
                     <div class="form-group">
                       <label>Location</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="username"
-                        placeholder="{{trainer.location}}"
-                      />
+                      {{tform.location}}
                     </div>
 
                     <div class="form-group">
                       <label>Profile Image</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="image"
-                      />
+                      <input type="file" name="image" required id="id_image">
                     </div>
 
                     <div class="header">
@@ -258,15 +225,6 @@
                       <label>{{tform.services.label}}</label>
                       {{tform.services}}
                     </div>
-
-                    <!-- <div class="form-group">
-                      <label>{{tform.gender.label}}</label>
-                      {{tform.gender}}
-                    </div>
-                    <div class="form-group">
-                      <label>{{tform.price_charge.label}}</label>
-                      {{tform.price_charge}}
-                    <div> -->
 
                     <input type="hidden" name="form_type" value="tform" />
 
@@ -496,14 +454,14 @@
                           <div class="more">
                             <p class="description">{{review.description}}</p>
                             {% if request.user.Dog_Owner %}
+                            {% if review.reviewer.id == request.user.id %}
                               <div class="del-btn">
                                 <a href="/delete_review/{{ review.id }}"><i class="fas fa-trash"></i></a>
                               </div>
+                              {% endif %}
                             {% endif %}
                           </div>
-                        </div>
-
-                        
+                        </div> 
                       </div>
                     {% endfor %}
                   {% else %}
@@ -517,17 +475,6 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="card">
-  <p>
-    Bookings:
-    <small class="text-muted"> {{bookings}}</small> <br />
-    {% for book in bookings %} Booker: {{book.user.user.username}},
-    Date:{{book.date}}, Time: {{book.time}}. <br />
-    <a href="/delete_booking/{{ book.id }}">delete</a>
-    {% endfor %}
-  </p>
-</div> -->
 
 <!-- The Post Modal -->
 <div class="modal-section">
@@ -598,18 +545,18 @@
             <div class="form-group">
               <label>Review Title</label>
               <div class="form-control">
-                <!-- {{form.title}} -->
+                <input type="text" name="title" maxlength="255" required id="id_title" placeholder='Enter Title'>
               </div>
             </div>
 
             <div class="form-group">
               <label>Review Description</label>
               <div class="form-control">
-                <!-- {{form.description}} -->
+                <textarea name="description" cols="10" rows="10" required id="id_description" placeholder='Enter Review'></textarea>
               </div>
             </div>
 
-            <input type="hidden" name="form_type" value="form" />
+            <input type="hidden" name="form_type" value="rform" />
 
             <button type="submit" class="upload-btn">SUBMIT REVIEW</button>
           </form>
