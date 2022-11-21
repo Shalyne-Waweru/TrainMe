@@ -21,12 +21,12 @@
               alt="Profile Image"
             />
 
-            <h5>Trainer Name</h5>
+            <h5>{{trainer.user.username|title}}</h5>
             <h6><strong>Dog Trainer</strong></h6>
 
-            <p><i class="fas fa-map-marker-alt"></i>Trainer Location</p>
-            <p><i class="fas fa-phone-alt"></i>Trainer Phone</p>
-            <p><i class="fas fa-search-dollar"></i>Ksh 1000</p>
+            <p><i class="fas fa-map-marker-alt"></i>{{trainer.location}}</p>
+            <p><i class="fas fa-phone-alt"></i>{{trainer.user.phone}}</p>
+            <p><i class="fas fa-search-dollar"></i>Ksh {{trainer.price_charge}}</p>
           </div>
         </div>
       </div>
@@ -48,90 +48,57 @@
                       <th>Appt Time</th>
                       <th>Booking Date</th>
                       <th>Amount</th>
-                      <th>Actions</th>
-                      <!-- <th>Billing</th> -->
+                      {% comment %} <th>Actions</th>
+                      <th>Billing</th> {% endcomment %}
                   </tr>
                   </thead>
 
                   <tbody>
+                    {% for app in appointments %}
                     <tr>
                         <td class="trainer">
                           <div class="trainer-deets">
+                            {% if app.user.image %}
+                            <img class="image" src={{app.user.image.url}} alt="Image">
+                            {% else %}
                             <img
                               class="image"
                               src="{%static 'images/trainer_2.jpg' %}"
                               alt="Trainer Image"
                             />
-                            <p>Patient Name</p>
+                            {% endif %}
+                            <p>{{app.user|title}}</p>
                           </div>
                         </td>
 
                         <td class="appt-date">
-                          <h6>Jan,20 2022</h6>
+                          <h6>{{app.created_date| date}}</h6>
                         </td>
 
                         <td class="appt-time">
-                          <h6>08:00 am</h6>
+                          <h6>{{app.book_time}}</h6>
                         </td>
 
                         <td class="booking-date">
-                          <h6>Jun,30 2022</h6>
+                          <h6>{{app.book_date}}</h6>
                         </td>
 
                         <td class="amount">
-                          <h6>Ksh 1,000</h6>
+                          <h6>Ksh {{trainer.price_charge}}</h6>
                         </td>
 
-                        <td class="actions">
-                          <p class="confirm"><i class="fas fa-check"></i>Accept</p>
-                          <p class="cancel"><i class="fas fa-times"></i>Cancel</p>
-                        </td>
+                        {% comment %} <td class="actions">
+                          <button class="btn btn-sm confirm" onclick="accept()"><i class="fas fa-check"></i>Accept</button>
+                          <p class="confirm status-confirm" style='display:none' >Confirmed</p>
+                          <button class="btn btn-sm cancel" onclick="cancel()"><i class="fas fa-times"></i>Cancel</button>
+                          <p class="cancel status-cancel" style='display:none'>Cancelled</p>
+                          
+                        </td> {% endcomment %}
 
-                        <!-- <td class="billing">
-                          <a class="pay-btn" href="#">PAID</a>
-                        </td> -->
+                  
 
                     </tr>
-
-                    <tr>
-                      <td class="trainer">
-                        <div class="trainer-deets">
-                          <img
-                            class="image"
-                            src="{%static 'images/trainer_2.jpg' %}"
-                            alt="Trainer Image"
-                          />
-                          <p>Patient Name</p>
-                        </div>
-                      </td>
-
-                      <td class="appt-date">
-                        <h6>Jan,20 2022</h6>
-                      </td>
-
-                      <td class="appt-time">
-                        <h6>08:00 am</h6>
-                      </td>
-
-                      <td class="booking-date">
-                        <h6>Jun,30 2022</h6>
-                      </td>
-
-                      <td class="amount">
-                        <h6>Ksh 1,000</h6>
-                      </td>
-
-                      <td class="actions">
-                        <p class="confirm"><i class="fas fa-check"></i>Accept</p>
-                        <p class="cancel"><i class="fas fa-times"></i>Cancel</p>
-                      </td>
-
-                      <!-- <td class="billing">
-                        <a class="pay-btn" href="#">PENDING</a>
-                      </td> -->
-
-                  </tr>
-                  
+                    {% endfor %}
                   <tbody>
               </table>
             </div>       
