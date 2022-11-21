@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="profile-info">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <div>
+    <h6>Reports</h6>
+  </div>
+  <canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>
+  <canvas id="myChart2" style="width: 100%; max-width: 600px"></canvas>
+  <canvas id="myChart3" style="width: 100%; max-width: 600px"></canvas>
+
+  <script>
+    var xValues = [{% for user in users %}
+    '{{user.username|title}}',
+    {% endfor %}];
+    var yValues = [{% for user in users %}
+    {{user.login.all.count}},
+    {% endfor %}];
+    var kValues = [{% for user in trainers %}
+    '{{user.user.username|title}}',
+    {% endfor %}];
+    var lValues = [{% for user in trainers %}
+    {{user.book.all.count}},
+    {% endfor %}];
+    var mValues = [{% for user in owners %}
+    '{{user.user.username|title}}',
+    {% endfor %}];
+    var nValues = [{% for user in owners %}
+    {{user.bookings.all.count}},
+    {% endfor %}];
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+
+    new Chart("myChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "User No. of Logins"
+        }
+      }
+    });
+    new Chart("myChart2", {
+        type: "doughnut",
+        data: {
+          labels: kValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: lValues
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "No. of Appointments"
+          }
+        }
+      });
+      new Chart("myChart3", {
+        type: "doughnut",
+        data: {
+          labels: mValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: nValues
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "User No. of Bookings made"
+          }
+        }
+      });
+  </script>
+</div>
+{% endblock %}

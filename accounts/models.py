@@ -6,6 +6,9 @@ from cloudinary.models import CloudinaryField
 from .choices import *
 from django.contrib.postgres.fields import ArrayField
 
+from django.contrib.auth.signals import user_logged_in
+from django.utils import timezone
+
 # Create your models here.
 class User(AbstractUser):
     is_trainer = models.BooleanField('Dog_Trainer', default=False)
@@ -66,3 +69,20 @@ class Owner(models.Model):
 
     def save_profile(self):
         self.save()
+        
+        
+class UserLogin(models.Model):
+    """Represent users' logins, one per record"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='login') 
+    timestamp = models.DateTimeField()
+    
+    def __str__(self):
+        return self.user.username
+
+
+
+    def update_user_login(sender, user, **kwargs):
+        user.userlogin_set.create(timestamp=timezone.now())
+        user.save()
+
+    user_logged_in.connect(update_user_login)

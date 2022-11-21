@@ -35,4 +35,6 @@ urlpatterns = [
     
     path('success', views.success, name='success'),
     path('unsuccessful', views.unsuccessful, name='unsuccessful'),
+    
+    path('charts', views.charts, name='charts')
 ]

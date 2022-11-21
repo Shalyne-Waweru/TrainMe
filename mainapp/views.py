@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirec
 from django.views.generic import CreateView
 
 from accounts.forms import *
-from accounts.models import Owner, Trainer, User
+from accounts.models import Owner, Trainer, User, UserLogin
 # from accounts.choices import service
 
 from django.contrib.auth import login,authenticate, logout
@@ -358,3 +358,9 @@ def lipa_na_mpesa_online(request, trainer_id):
         return redirect(success)
     else:
         return redirect(unsuccessful)
+    
+def charts(request):
+    users=User.objects.all()
+    trainers=Trainer.objects.all()
+    owners=Owner.objects.all()
+    return render(request,'charts.html', locals())
