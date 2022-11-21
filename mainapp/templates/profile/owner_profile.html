@@ -81,75 +81,42 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label>First Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="first_name"
-                          placeholder="{{owner.user.first_name|title}}"
-                        />
+                        <input type="text" name="first_name" maxlength="150" id="id_first_name" placeholder="{{owner.user.first_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Last Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="last_name"
-                          placeholder="{{owner.user.last_name|title}}"
-                        />
+                        <input type="text" name="last_name" maxlength="150" id="id_last_name" placeholder="{{owner.user.last_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Username</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="username"
-                          placeholder="{{owner.user.username}}"
-                        />
+                        <input type="text" name="username" maxlength="150" required id="id_username" placeholder="{{owner.user.username}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Email</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="email"
-                          placeholder="{{owner.user.email}}"
-                        />
+                        <input type="email" name="email" maxlength="254" id="id_email" placeholder="{{owner.user.email}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Location</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="username"
-                          placeholder="{{owner.location}}"
-                        />
+                        {{form.location}}
                       </div>
 
                       <div class="form-group col-md-6">
                         <label>Phone Number</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="username"
-                          placeholder="{{owner.user.phone}}"
-                        />
+                        <input type="text" name="phone" maxlength="12" required id="id_phone" placeholder="{{owner.user.phone}}">
                       </div>
                     </div>               
 
                     <div class="form-group">
                       <label>Profile Image</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="image"
-                      />
+                      <input type="file" name="image" required id="id_image">
                     </div>
 
                     <!-- <input type="hidden" name="form_type" value="tform" /> -->
+                    <input type="hidden" name="form_type" value="form" />
 
                     <button type="submit" class="save-btn">UPDATE PROFILE</button>
                   </form>
@@ -202,6 +169,7 @@
 
               <div class="appointments-layout"> 
                 <div class="table-wrapper">
+                  {% if bookings %}
                   <table class="fl-table">
                       <thead>
                       <tr>
@@ -216,32 +184,37 @@
                       </thead>
 
                       <tbody>
+                        {% for app in bookings %}
                         <tr>
                             <td class="trainer">
                               <div class="trainer-deets">
+                                {% if app.user.image %}
+                                <img class="image" src={{app.user.image.url}} alt="Image">
+                                {% else %}
                                 <img
                                   class="image"
                                   src="{%static 'images/trainer_2.jpg' %}"
                                   alt="Trainer Image"
                                 />
-                                <p>Trainer Name</p>
+                                {% endif %}
+                                <p>{{app.user|title}}</p>
                               </div>
                             </td>
 
                             <td class="appt-date">
-                              <h6>Jan,20 2022</h6>
+                              <h6>{{app.book_date}}</h6>
                             </td>
 
                             <td class="appt-time">
-                              <h6>08:00 am</h6>
+                              <h6>{{app.book_time}}</h6>
                             </td>
 
                             <td class="booking-date">
-                              <h6>Jun,30 2022</h6>
+                              <h6>{{app.created_date|date}}</h6>
                             </td>
 
                             <td class="amount">
-                              <h6>Ksh 1,000</h6>
+                              <h6>Ksh {{app.trainer.price_charge}}</h6>
                             </td>
 
                             <td class="status">
@@ -250,62 +223,16 @@
                             </td>
 
                             <td class="billing">
-                              <a class="pay-btn" href="#">PAY</a>
+                              <a class="pay-btn" href="/lipa/{{ app.trainer.id }}">PAY</a>
                             </td>
 
                         </tr>
-
-                        <tr>
-                          <td class="trainer">
-                            <div class="trainer-deets">
-                              <img
-                                class="image"
-                                src="{%static 'images/trainer_2.jpg' %}"
-                                alt="Trainer Image"
-                              />
-                              <p>Trainer Name</p>
-                            </div>
-                          </td>
-
-                          <td class="appt-date">
-                            <h6>Jan,20 2022</h6>
-                          </td>
-
-                          <td class="appt-time">
-                            <h6>08:00 am</h6>
-                          </td>
-
-                          <td class="booking-date">
-                            <h6>Jun,30 2022</h6>
-                          </td>
-
-                          <td class="amount">
-                            <h6>Ksh 1,000</h6>
-                          </td>
-
-                          <td class="status">
-                            <!-- <p class="confirm">Confirmed</p> -->
-                            <p class="cancel">Cancelled</p>
-                          </td>
-
-                          <td class="billing">
-                            <a class="pay-btn" href="#">PAY</a>
-                          </td>
-
-                      </tr>
-                      
+                        {% endfor %}
                       <tbody>
                   </table>
-              </div>       
-                  <!-- {% if bookings %}
-                    {% for booking in bookings %}
-                      <p>{{booking.book_date}}</p>
-                      <p>{{booking.book_time}}</p>
-                    {% endfor %}
                   {% else %}
-                    <p>There are No Appointments yet!</p>
-                  {% endif %}  -->
-              </div>
+                        <p>There are No Appointments yet!</p>
+                  {% endif %}
             </section>
           </div>
         </div>
@@ -313,43 +240,6 @@
     </div>
   </div>
 </div>
-<!-- <div class="container card">
-  <a href="/">Back Home</a>
-  <h4>{{owner.user.username|title}}</h4>
-
-  <p>
-    Email:
-    <small> {{owner.user.email|title}}</small>
-  </p>
-  <p>
-    Telphone:
-    <small> {{owner.user.phone|title}}</small>
-  </p>
-  <p>
-    Location:
-    <small> {{owner.location}}</small>
-  </p>
-  <p>
-    Dog:
-    <small class="text-muted"> {{dogs}}</small> <br />
-    {% for dog in dogs %} Name:{{dog.dog_name}} <br />
-    Age: {{dog.dog_age}} Months <br>
-    Gender: {{dog.dog_sex}} <br>
-    Pic:
-    <img src="{{dog.dog_pic.url}}" alt="" class='img-responsive img-fluid'> <br>
-    <a href="/delete_dog/{{ dog.id }}">delete</a>
-    {% endfor %}
-  </p>
-  {% if owner.user.id == request.user.id%}
-  <a
-    href=""
-    class="btn btn-info btn-sm"
-    data-bs-toggle="modal"
-    data-bs-target="#post"
-    >Dog</a
-  >
-  {% endif %}
-</div> -->
 
 <!-- The Dog Modal -->
 <div class="modal-section">
@@ -396,7 +286,7 @@
               </div>
             </div>
 
-            <input type="hidden" name="form_type" value="form" />
+            <input type="hidden" name="form_type" value="dform" />
 
             <button type="submit" class="upload-btn">SUBMIT DOG INFO</button>
           </form>
