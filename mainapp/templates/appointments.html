@@ -21,7 +21,7 @@
               alt="Profile Image"
             />
 
-            <h5>{{trainer.user.username|title}}</h5>
+            <h5>{{trainer.user.first_name|title}} {{trainer.user.last_name|title}}</h5>
             <h6><strong>Dog Trainer</strong></h6>
 
             <p><i class="fas fa-map-marker-alt"></i>{{trainer.location}}</p>
@@ -33,7 +33,7 @@
 
       <div class="col-md-8">
         <div class="header">
-          <h6>Patient Appointments</h6>
+          <h6>Training Appointments</h6>
           <div class="indicator"></div>
         </div>
 
@@ -43,7 +43,7 @@
               <table class="fl-table">
                   <thead>
                   <tr>
-                      <th>Patients</th>
+                      <th>Dog Owners</th>
                       <th>Appt Date</th>
                       <th>Appt Time</th>
                       <th>Booking Date</th>

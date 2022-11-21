@@ -15,7 +15,7 @@
         <div class="trainer-info">
           <img
             class="trainer-image"
-            src="{% static 'images/trainer_3.jpg' %}"
+            src="{{owner.image.url}}"
             alt="Profile Image"
           />
           <h5>{{owner.user.first_name|title}} {{owner.user.last_name | title}}</h5>
@@ -261,28 +261,28 @@
             <div class="form-group">
               <label>Dog Name</label>
               <div class="form-control">
-                {{form.dog_name}}
+                {{dform.dog_name}}
               </div>
             </div>
 
             <div class="form-group">
               <label>Dog Age</label>
               <div class="form-control">
-                {{form.dog_age}}
+                {{dform.dog_age}}
               </div>
             </div>
 
             <div class="form-group">
               <label>Dog Gender</label>
               <div class="form-control">
-                {{form.dog_sex}}
+                {{dform.dog_sex}}
               </div>
             </div>
 
             <div class="form-group">
               <label>Dog Image</label>
               <div class="form-control">
-                {{form.dog_pic}}
+                {{dform.dog_pic}}
               </div>
             </div>
 

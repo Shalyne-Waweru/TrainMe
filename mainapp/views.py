@@ -270,6 +270,7 @@ def booking(request, trainer_id):
 
             messages.success(request, "Booking Added Successfully!")
             return HttpResponseRedirect(request.path_info)
+            # return redirect(owner_profile)
 
         else:
             messages.error(request, "Error! Please Try Again.")

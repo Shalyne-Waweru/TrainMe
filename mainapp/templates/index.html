@@ -11,7 +11,12 @@
                 <h3>Welcome To TrainMe</h3>
                 <h2>Providing <span class="orange-txt">Professional</span> Dog <br> Training The <span class="orange-txt">Fun</span> And <br> <span class="orange-txt">Effective</span> Way</h1>
                 <p>We help dog owners transform their dogs into well-behaved, <br> obedient furry friends.</p>
-                <a href="{% url 'searchPage' %}" class="book-btn">BOOK TRAINING <i class="fas fa-paw"></i></a>
+
+                {% if user.Dog_Owner %}
+                    <a href="{% url 'searchPage' %}" class="book-btn">BOOK TRAINING <i class="fas fa-paw"></i></a>
+                {% else %}
+                    <a href="{% url 'owner_login' %}" class="book-btn">BOOK TRAINING <i class="fas fa-paw"></i></a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -31,8 +36,8 @@
 
             <h2>Dedicated To Transform Your Dog's <br>
                 Behaviours And Your Family’s Life</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime <br> mollitia, molestiae quas vel sint commodi repudiandae consequuntur <br> voluptatum laborum 
-                numquam blanditiis harum quisquam.</p>
+            <p>“A dog is the only thing on earth that loves you more than <br> 
+                you love yourself.” – Josh Billings</p>
             
             <p>We help you and your Dog:-</p>
 
