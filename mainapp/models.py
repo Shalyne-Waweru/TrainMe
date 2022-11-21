@@ -9,7 +9,7 @@ from accounts.choices import *
 
 # Create your models here.
 class Dog(models.Model):
-    user = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='dog')
+    user = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='dogs')
     dog_name = models.CharField(max_length=50)
     dog_age = models.IntegerField()
     dog_pic = CloudinaryField('image')
@@ -114,5 +114,10 @@ class Booking(models.Model):
         
     @classmethod
     def filter_by_trainer(cls, id):
-        bookings = Booking.objects.filter(trainer__pk=id)
+        books = cls.objects.filter(trainer__pk=id)
+        return books
+    
+    @classmethod
+    def filter_by_owner(cls, user):
+        bookings = cls.objects.filter(user__id__icontains=user).all()
         return bookings
