@@ -22,10 +22,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {% if user.is_authenticated %}
-              {% if user.Dog_Trainer%}
+              {% if request.user.is_trainer%}
                 <a class="dropdown-item" href="#">Trainer Dashboard </a>
-                <a class="dropdown-item" href="{% url 'appointments' user.Dog_Trainer.id %}">Appointments</a>
-                <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+                <a class="dropdown-item" href="{% url 'appointments' request.user.Dog_Trainer.id %}">Appointments</a>
+                <a class="dropdown-item" href="{% url 'trainer_profile' request.user.id %}">Profile Settings</a>
               
                 {% else %}
                 <i class="fas fa-times-circle"></i>
@@ -47,10 +47,10 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               {% if user.is_authenticated %}
-                {% if user.Dog_Owner%}
+                {% if request.user.is_owner%}
                   <a class="dropdown-item" href="#">Owner Dashboard </a>
-                  <a class="dropdown-item" href="{% url 'appointments' user.Dog_Owner.id %}">Bookings</a>
-                  <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+                  {% comment %} <a class="dropdown-item" href="{% url 'appointments' user.Dog_Owner.id %}">Bookings</a> {% endcomment %}
+                  <a class="dropdown-item" href="{% url 'owner_profile' request.user.id %}">Profile Settings</a>
                   
                   {% else %}
                     <i class="fas fa-times-circle"></i>
@@ -77,23 +77,24 @@
   
       <!-- If User Is Logged In -->
       {%if user.is_authenticated%}
-        {% if user.Dog_Trainer%}
+        {% if request.user.is_trainer%}
           <div class="logged-info">
-            <p>{{user.username |upper}}</p>
+            <p>{{request.user.username |upper}}</p>
             <div class="dropdown">
               <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src={{user.Dog_Trainer.image.url}} alt="Image">
+                <img src={{request.user.Dog_Trainer.image.url}} alt="Image">
               </button>
       
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="{% url 'trainer_profile' user.id %}">Profile Settings</a>
+                  <a class="dropdown-item" href="{% url 'trainer_profile' request.user.id %}">Profile Settings</a>
                   <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              </div>
               </div>
           </div>
         {% else %}
 
         <div class="logged-info">
-          <p>{{user.username |upper}}</p>
+          <p>{{request.user.username |upper}}</p>
           <div class="dropdown">
             <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% if user.DOG_Owner.image %}
@@ -102,7 +103,7 @@
             </button>
     
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{% url 'owner_profile' user.id %}">Profile Settings</a>
+                <a class="dropdown-item" href="{% url 'owner_profile' request.user.id %}">Profile Settings</a>
                 <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
             </div>
             <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -114,6 +115,7 @@
                 <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
               {% endif %}
             </div> -->
+          </div>
         </div>
         
         {% endif %}
@@ -175,9 +177,9 @@
         </div>
   
       </div>
-
+      {% endif %}
     </div>
-    {% endif %}
+    
   </nav>
   
   {% if messages %}

@@ -5,12 +5,10 @@
 <div class="profile-info">
   <div class="section">
     <div class="overlay">
-      {% if user.is_authenticated %}
-        {% if user.Dog_Trainer %}
+      {% if trainer.user.id == request.user.id %}
         <h2>My Profile Info</h2>
         {% else %}
         <h2>Trainer Profile</h2>
-        {% endif %}
       {% endif %}
     </div>
   </div>
@@ -67,9 +65,7 @@
               {% endfor %}
             </div>
           {% endif %}
-
-          {% if user.is_authenticated %}
-            {% if request.user.Dog_Trainer %}
+          
               {% if clinics %}
                 <p class="trainer-services">Clinics</p>
 
@@ -80,10 +76,11 @@
                       <p><i class="fas fa-clinic-medical"></i> <strong>{{clinic.clinic_name}}</strong></p>
                       <p><i class="fas fa-map-marker-alt"></i> {{clinic.clinic_location}}</p>
                     </div>
-                    
+                    {% if trainer.user.id == request.user.id%}
                     <div class="del-btn">
                       <a href="/delete_clinic/{{ clinic.id }}"><i class="fas fa-trash"></i></a>
                     </div>
+                    {% endif %}
                   </div>
                   <div class="hl"></div>
                   {% endfor %}
@@ -97,18 +94,17 @@
                   {% for hour in hours %}
                   <div class="div">
                     <p><strong>{{hour.day}}</strong> : {{hour.start}} - {{hour.end}}</p>
-
+                    {% if trainer.user.id == request.user.id%}
                     <div class="del-btn">
                       <a href="/delete_hour/{{ hour.id }}"><i class="fas fa-trash"></i></a>
                     </div>
+                    {% endif %}
                     <!-- <div class="stats">{{hour.open_closed}}</div>                -->
                   </div>
                   <div class="hl"></div>
                   {% endfor %}
                 </div>
               {% endif %}
-            {% endif %}
-          {% endif %}
 
           {% if request.user.Dog_Owner %}
           <a class="orange-btn" href="/book/{{trainer.id}}">
@@ -453,12 +449,10 @@
 
                           <div class="more">
                             <p class="description">{{review.description}}</p>
-                            {% if request.user.Dog_Owner %}
                             {% if review.reviewer.id == request.user.id %}
                               <div class="del-btn">
                                 <a href="/delete_review/{{ review.id }}"><i class="fas fa-trash"></i></a>
                               </div>
-                              {% endif %}
                             {% endif %}
                           </div>
                         </div> 
