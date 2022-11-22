@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView
+from django.contrib.messages.views import SuccessMessageMixin
 
 from accounts.forms import *
 from accounts.models import Owner, Trainer, User, UserLogin
@@ -41,21 +42,23 @@ def search(request):
         message = "You haven't searched for any term"
     return render(request, 'search.html', locals())
 
-class TrainerSignUpView(CreateView):
+class TrainerSignUpView(SuccessMessageMixin,CreateView):
     model = User
     form_class = TrainerForm
     template_name = 'auth/trainer_reg.html'
     success_url =reverse_lazy('trainer_login')
+    success_message = '%(username)s Signed Up Successfully!'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'Dog_Trainer'
         return super().get_context_data(**kwargs)
     
-class OwnerSignUpView(CreateView):
+class OwnerSignUpView(SuccessMessageMixin,CreateView):
     model = User
     form_class = OwnerForm
     template_name = 'auth/owner_reg.html'
     success_url =reverse_lazy('owner_login')
+    success_message = '%(username)s Signed Up Successfully!'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'Dog_Owner'
