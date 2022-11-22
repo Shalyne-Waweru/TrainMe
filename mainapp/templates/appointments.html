@@ -9,17 +9,21 @@
     </div>
   </div>
 
-
+  {% if trainer.id == request.user.Dog_Trainer.id %}
   <div class="container">
     <div class="row">
       <div class="col-md-3">
         <div class="profile-info">
           <div class="border-overlay">
+            {% if trainer.image %}
+            <img class="image" src={{trainer.image.url}} alt="Profile Image">
+            {% else %}
             <img
               class="image"
               src="{% static 'images/trainer_2.jpg' %}"
               alt="Profile Image"
             />
+            {% endif %}
 
             <h5>{{trainer.user.username|title}}</h5>
             <h6><strong>Dog Trainer</strong></h6>
@@ -107,5 +111,6 @@
       </div>
     </div>
   </div>
+  {% endif %}
 </div>
 {%endblock%}
