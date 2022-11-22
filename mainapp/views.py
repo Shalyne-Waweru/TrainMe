@@ -16,11 +16,21 @@ from mainapp.models import *
 
 import requests
 from .mpesa import MpesaAccessToken, LipanaMpesaPpassword
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 # Global Views
 def index(request):
     trainers= Trainer.objects.all()
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(trainers, 2)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
     return render(request, 'index.html',locals())
 
 def charts(request):

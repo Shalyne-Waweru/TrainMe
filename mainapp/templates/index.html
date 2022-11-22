@@ -172,8 +172,8 @@
 
         <div class="container">
             <div class="row">
-                {% if trainers %}
-                {% for trainer in trainers %}
+                {% if users %}
+                {% for trainer in users %}
                 <div class="col-md-4">
                     {% if trainer.image %}
                     <img class="trainer-img" src="{{trainer.image.url}}"/>
@@ -238,6 +238,7 @@
                     
                 </div>
                 {% endfor %} 
+                
                 
                 {% else %}
 
@@ -350,7 +351,16 @@
             </div>
         </div>
 
-        <a class="loading" href="#">Load More</a>
+        <center>
+            {%if users.has_previous %} {# whether the previous page exists #}
+                <a class="nav-item nav-link" href="?page={{users.previous_page_number}}">Previous</a> {# link to the prev page #}
+            {% endif %}
+            <span>{{users.number}}</span> {# the current page number #}
+            
+            {%if users.has_next %} {# whether the next page exists #}
+                <a class="nav-item nav-link" href="?page={{users.next_page_number}}">Next</a> {# link to the next page #}
+            {% endif %}
+        </center>
     </div>
 
     <!-- Gallery Section -->
