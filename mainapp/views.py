@@ -4,7 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from accounts.forms import *
 from accounts.models import Owner, Trainer, User, UserLogin
-# from accounts.choices import service
 
 from django.contrib.auth import login,authenticate, logout
 from django.urls import reverse_lazy
@@ -19,29 +18,23 @@ import requests
 from .mpesa import MpesaAccessToken, LipanaMpesaPpassword
 
 # Create your views here.
+# Global Views
 def index(request):
     trainers= Trainer.objects.all()
     return render(request, 'index.html',locals())
 
-def appointments(request, id):
-    trainer = Trainer.objects.get(id=id)
-    appointments=Booking.filter_by_trainer(id=trainer.id)
-    return render(request, 'appointments.html', locals())
-    
-@login_required(login_url='/accounts/login/owner')
-def search(request):
-    trainers= Trainer.objects.all()
-    if 'location' in request.GET and request.GET["location"]:
-        search_term = request.GET.get("location")
-        searched_location = Trainer.search_by_location(search_term)
-        message = f"{search_term}"
+def charts(request):
+    users=User.objects.all()
+    trainers=Trainer.objects.all()
+    owners=Owner.objects.all()
+    return render(request,'charts.html', locals())
 
-        return render(request, 'search.html',locals())
+def logout_user(request):
+    logout(request)
+    messages.success(request,"User Logged Out Successfully!")
+    return redirect(index)
 
-    else:
-        message = "You haven't searched for any term"
-    return render(request, 'search.html', locals())
-
+# Dog Trainer Views
 class TrainerSignUpView(SuccessMessageMixin,CreateView):
     model = User
     form_class = TrainerForm
@@ -52,38 +45,6 @@ class TrainerSignUpView(SuccessMessageMixin,CreateView):
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'Dog_Trainer'
         return super().get_context_data(**kwargs)
-    
-class OwnerSignUpView(SuccessMessageMixin,CreateView):
-    model = User
-    form_class = OwnerForm
-    template_name = 'auth/owner_reg.html'
-    success_url =reverse_lazy('owner_login')
-    success_message = '%(username)s Signed Up Successfully!'
-
-    def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'Dog_Owner'
-        return super().get_context_data(**kwargs)
-
-
-def ownerloginView(request):
-    form=OwnerLoginForm()
-    if request.method=='POST':
-        form=OwnerLoginForm(request.POST)
-        if form.is_valid():
-            username=form.cleaned_data['username']
-            password=form.cleaned_data['password']
-            user=authenticate(request,username=username,password=password)
-            if user is not None:
-                login(request,user)
-                messages.success(request, username + " Logged In Successfully!")
-                return redirect(index)
-            else:
-                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
-                return redirect(ownerloginView)
-        else:
-            return HttpResponse("Form is not Valid")
-    
-    return render(request,'auth/owner_login.html',locals())
 
 def trainerloginView(request):
     form=TrainerLoginForm
@@ -106,57 +67,6 @@ def trainerloginView(request):
             return HttpResponse("Form is Not Valid")
     
     return render(request,'auth/trainer_login.html',locals())
-
-def logout_user(request):
-    logout(request)
-    messages.success(request,"User Logged Out Successfully!")
-    return redirect(index)
-
-@login_required(login_url='/accounts/login/owner')
-def owner_profile(request, id):
-    user=User.objects.filter(id=id).first()
-    owner = Owner.objects.get(user=id)
-    dogs=Dog.filter_by_user(user=owner.id)
-    bookings=Booking.filter_by_owner(user=owner.id)
-    
-    uform=EditUserForm()
-    form = OwnerProfileForm()
-    dform = DogForm()
-    if request.method == 'POST'and request.POST.get('form_type') == 'form':
-        uform=EditUserForm(request.POST, instance=request.user)
-        form=OwnerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Owner)
-        if uform.is_valid() and form.is_valid():
-            user_form = uform.save()
-            profile= form.save(commit=False)
-            profile.user= user_form
-            profile.save()
-
-            messages.success(request, " Profile Updated Successfully!")
-            return HttpResponseRedirect(request.path_info)
-        else:
-            messages.error(request, "Profile Updated Error! Please Try Again.")
-            return HttpResponseRedirect(request.path_info)
-    else:
-        uform=EditUserForm()
-        form=OwnerProfileForm()
-        
-    if request.method == 'POST'and request.POST.get('form_type') == 'dform':
-        dform = DogForm(request.POST, request.FILES)
-        if dform.is_valid():
-            owner= dform.save(commit=False)
-            owner.user= request.user.Dog_Owner
-            owner.save()
-
-            messages.success(request, "Dog Added Successfully!")
-            return HttpResponseRedirect(request.path_info)
-
-        else:
-            messages.error(request, "Error! Please Try Again.")
-            return HttpResponseRedirect(request.path_info)
-
-    else:
-        dform=DogForm()
-    return render(request,'profile/owner_profile.html',locals())
 
 @login_required(login_url='/accounts/login/trainer')
 def trainer_profile(request, id):
@@ -259,6 +169,106 @@ def trainer_profile(request, id):
     
     return render(request,'profile/trainer_profile.html',locals())
 
+@login_required(login_url='/accounts/login/trainer')
+def appointments(request, id):
+    trainer = Trainer.objects.get(id=id)
+    appointments=Booking.filter_by_trainer(id=trainer.id)
+    return render(request, 'appointments.html', locals())
+
+
+# Dog Owner Views    
+class OwnerSignUpView(SuccessMessageMixin,CreateView):
+    model = User
+    form_class = OwnerForm
+    template_name = 'auth/owner_reg.html'
+    success_url =reverse_lazy('owner_login')
+    success_message = '%(username)s Signed Up Successfully!'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'Dog_Owner'
+        return super().get_context_data(**kwargs)
+
+
+def ownerloginView(request):
+    form=OwnerLoginForm()
+    if request.method=='POST':
+        form=OwnerLoginForm(request.POST)
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            password=form.cleaned_data['password']
+            user=authenticate(request,username=username,password=password)
+            if user is not None:
+                login(request,user)
+                messages.success(request, username + " Logged In Successfully!")
+                return redirect(index)
+            else:
+                messages.error(request, "Username or Password is Incorrect. Please Try Again!")
+                return redirect(ownerloginView)
+        else:
+            return HttpResponse("Form is not Valid")
+    
+    return render(request,'auth/owner_login.html',locals())
+
+@login_required(login_url='/accounts/login/owner')
+def owner_profile(request, id):
+    user=User.objects.filter(id=id).first()
+    owner = Owner.objects.get(user=id)
+    dogs=Dog.filter_by_user(user=owner.id)
+    bookings=Booking.filter_by_owner(user=owner.id)
+    
+    uform=EditUserForm()
+    form = OwnerProfileForm()
+    dform = DogForm()
+    if request.method == 'POST'and request.POST.get('form_type') == 'form':
+        uform=EditUserForm(request.POST, instance=request.user)
+        form=OwnerProfileForm(request.POST, request.FILES, instance=request.user.Dog_Owner)
+        if uform.is_valid() and form.is_valid():
+            user_form = uform.save()
+            profile= form.save(commit=False)
+            profile.user= user_form
+            profile.save()
+
+            messages.success(request, " Profile Updated Successfully!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Profile Updated Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+    else:
+        uform=EditUserForm()
+        form=OwnerProfileForm()
+        
+    if request.method == 'POST'and request.POST.get('form_type') == 'dform':
+        dform = DogForm(request.POST, request.FILES)
+        if dform.is_valid():
+            owner= dform.save(commit=False)
+            owner.user= request.user.Dog_Owner
+            owner.save()
+
+            messages.success(request, "Dog Added Successfully!")
+            return HttpResponseRedirect(request.path_info)
+
+        else:
+            messages.error(request, "Error! Please Try Again.")
+            return HttpResponseRedirect(request.path_info)
+
+    else:
+        dform=DogForm()
+    return render(request,'profile/owner_profile.html',locals())
+
+@login_required(login_url='/accounts/login/owner')
+def search(request):
+    trainers= Trainer.objects.all()
+    if 'location' in request.GET and request.GET["location"]:
+        search_term = request.GET.get("location")
+        searched_location = Trainer.search_by_location(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',locals())
+
+    else:
+        message = "You haven't searched for any term"
+    return render(request, 'search.html', locals())
+
 @login_required(login_url='/accounts/login/owner')
 def booking(request, trainer_id):
     current_user= request.user.Dog_Owner
@@ -283,6 +293,7 @@ def booking(request, trainer_id):
             
     return render(request,'booking.html',locals())
 
+# Deletion Views
 @login_required(login_url='/accounts/login/trainer')
 def delete_hour(request, id):
   hour = Hours.objects.get(id=id)
@@ -299,6 +310,14 @@ def delete_post(request, id):
   current_user= request.user
   return redirect(trainer_profile, current_user.id)
 
+@login_required(login_url='/accounts/login/trainer')
+def delete_clinic(request, id):
+  clinic = Clinic.objects.get(id=id)
+  clinic.delete()
+  messages.success(request, "Clinic Deleted Successfully!")
+  current_user= request.user
+  return redirect(trainer_profile, current_user.id)
+
 @login_required(login_url='/accounts/login/owner')
 def delete_review(request, id):
   review = Review.objects.get(id=id)
@@ -307,13 +326,6 @@ def delete_review(request, id):
   current_user= request.user
   return redirect(trainer_profile, current_user.id)
 
-@login_required(login_url='/accounts/login/trainer')
-def delete_clinic(request, id):
-  clinic = Clinic.objects.get(id=id)
-  clinic.delete()
-  messages.success(request, "Clinic Deleted Successfully!")
-  current_user= request.user
-  return redirect(trainer_profile, current_user.id)
 
 @login_required(login_url='/accounts/login/owner')
 def delete_dog(request, id):
@@ -324,7 +336,7 @@ def delete_dog(request, id):
   return redirect(owner_profile, current_user.id)
 
 
-# mpesa
+# mpesa views
 def success(request):
   messages.success(request, "Transaction Successful!")
   current_user= request.user
@@ -362,8 +374,3 @@ def lipa_na_mpesa_online(request, trainer_id):
     else:
         return redirect(unsuccessful)
     
-def charts(request):
-    users=User.objects.all()
-    trainers=Trainer.objects.all()
-    owners=Owner.objects.all()
-    return render(request,'charts.html', locals())

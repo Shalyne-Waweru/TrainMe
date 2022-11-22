@@ -10,11 +10,9 @@ urlpatterns = [
     path('accounts/login/owner', views.ownerloginView, name='owner_login'),
     path('logout/', views.logout_user, name='logout'),
     
+    # Profiles
     path('profile/trainer/<id>', views.trainer_profile, name='trainer_profile'),
     path('profile/owner/<id>', views.owner_profile, name='owner_profile'),
-    
-    
-    path('book/<trainer_id>', views.booking, name='booking_form'),
 
     # Index/Landing Page
     path('', views.index, name='landingPage'),
@@ -22,6 +20,9 @@ urlpatterns = [
     path('search/', views.search, name='searchPage'),
     # Appointments Page
     path('appointments/<id>', views.appointments, name='appointments'),
+    path('book/<trainer_id>', views.booking, name='booking_form'),
+    # Reports Page
+    path('charts', views.charts, name='charts'),
     
     # delete
     path('delete_hour/<id>', views.delete_hour, name='delete_hour'),
@@ -31,10 +32,7 @@ urlpatterns = [
     path('delete_dog/<id>', views.delete_dog, name='delete_dog'),
     
     # mpesa
-    path('lipa/<trainer_id>', views.lipa_na_mpesa_online, name='lipa_na_mpesa'),
-    
+    path('lipa/<trainer_id>', views.lipa_na_mpesa_online, name='lipa_na_mpesa'), 
     path('success', views.success, name='success'),
     path('unsuccessful', views.unsuccessful, name='unsuccessful'),
-    
-    path('charts', views.charts, name='charts')
 ]
