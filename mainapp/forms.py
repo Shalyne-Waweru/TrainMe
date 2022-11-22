@@ -7,9 +7,10 @@ from datetime import datetime
 # Create your forms here.
 class DogForm(forms.ModelForm):
     dog_sex=forms.ChoiceField(choices=gender, label='Sex')
+    dog_breed=forms.ChoiceField(choices=breed)
     class Meta:
         model= Dog
-        fields=['dog_name', 'dog_age','dog_pic','dog_sex']
+        fields=['dog_name','dog_breed', 'dog_age','dog_pic','dog_sex']
 
 class PostForm(forms.ModelForm):
     class Meta:

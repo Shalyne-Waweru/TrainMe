@@ -42,3 +42,16 @@ service=(
     ('Security Program', 'Security Program'),
     ('Separation Anxiety', 'Separation Anxiety'),
 )
+breed=(
+    ('Bulldogs', 'Bulldogs'),
+    ('Boerboel', 'Boerboel'),
+    ('Chihuahua', 'Chihuahua'),
+    ('Doberman', 'Doberman'),
+    ('English Springer Spaniel', 'English Springer Spaniel'),
+    ('German Shepherd', 'German Shepherd'),
+    ('Maltese Terrier', 'Maltese Terrier'),
+    ('Neapolitan Mastiff', 'Neapolitan Mastiff'),
+    ('Retrievers(Labrador)', 'Retrievers(Labrador)'),
+    ('Retrievers(Golden)', 'Retrievers(Golden)'),
+    ('Rottweilers', 'Rottweilers')
+)

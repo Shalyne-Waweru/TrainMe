@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -6,8 +7,8 @@ from cloudinary.models import CloudinaryField
 from .choices import *
 from django.contrib.postgres.fields import ArrayField
 
-from django.contrib.auth.signals import user_logged_in
-from django.utils import timezone
+# from django.contrib.auth.signals import user_logged_in
+# from django.utils import timezone
 
 # Create your models here.
 class User(AbstractUser):
@@ -81,8 +82,16 @@ class UserLogin(models.Model):
 
 
 
-    def update_user_login(sender, user, **kwargs):
-        user.userlogin_set.create(timestamp=timezone.now())
-        user.save()
+    # def update_user_login(sender, user, **kwargs):
+    #     user.userlogin_set.create(timestamp=timezone.now())
+    #     user.save()
 
-    user_logged_in.connect(update_user_login)
+    # user_logged_in.connect(update_user_login)
+    
+    def user_presave(sender, instance, **kwargs):
+        if instance.last_login:
+            old = instance.__class__.objects.get(pk=instance.pk)
+            if instance.last_login != old.last_login:
+                instance.login.create(timestamp=instance.last_login)
+
+    signals.pre_save.connect(user_presave, sender=User)

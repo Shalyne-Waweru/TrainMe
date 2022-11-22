@@ -11,6 +11,7 @@ from accounts.choices import *
 class Dog(models.Model):
     user = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='dogs')
     dog_name = models.CharField(max_length=50)
+    dog_breed= models.CharField(max_length=200, choices=breed)
     dog_age = models.IntegerField()
     dog_pic = CloudinaryField('image')
     dog_sex = models.CharField(max_length=10,choices=gender)
