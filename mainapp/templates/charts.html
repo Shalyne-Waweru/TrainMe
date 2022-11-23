@@ -1,12 +1,28 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<div class="profile-info">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  <div>
-    <h6>Reports</h6>
+<div class="appointments-info">
+  <div class="section">
+    <div class="overlay">
+      <h2>Reports</h2>
+    </div>
   </div>
-  <canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>
-  <canvas id="myChart2" style="width: 100%; max-width: 600px"></canvas>
-  <canvas id="myChart3" style="width: 100%; max-width: 600px"></canvas>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  
+  <div class="row">
+    <div class="col-6" style='border:1px solid black'>
+      <canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>
+    </div>
+    <div class="col-6" style='border:1px solid black'>
+      <canvas id="myChart2" style="width: 100%; max-width: 600px"></canvas>
+    </div>
+  </div>
+  <div class="row" style='border:1px solid black'>
+    <div class="col-6">
+      <canvas id="myChart3" style="width: 100%; max-width: 600px"></canvas>
+    </div>
+    <div class="col-6" style='border:1px solid black'>
+      <canvas id="myChart4" style="width: 100%; max-width: 600px"></canvas>
+    </div>
+  </div>
 
   <script>
     var xValues = [{% for user in users %}
@@ -27,12 +43,23 @@
     var nValues = [{% for user in owners %}
     {{user.bookings.all.count}},
     {% endfor %}];
+    var rValues = ['Bulldogs','Boerboel','Chihuahua','Doberman','English Springer Spaniel','German Shepherd','Maltese Terrier','Neapolitan Mastiff','Retrievers(Labrador)','Retrievers(Golden)','Rottweilers'];
+    var sValues = [
+    {{bu}},{{bo}},{{ch}},{{do}},{{en}},{{ge}},{{ma}},{{ne}},{{rl}},{{rg}},{{ro}}
+    ];
     var barColors = [
       "#b91d47",
       "#00aba9",
       "#2b5797",
       "#e8c3b9",
-      "#1e7145"
+      "#1e7145",
+      '#FFA07A',
+      '#000000',
+      '#FFFF00',
+      '#0000FF',
+      '#FF00FF',
+      '#7f5539',
+      '#ffd500'
     ];
 
     new Chart("myChart", {
@@ -47,42 +74,58 @@
       options: {
         title: {
           display: true,
-          text: "User No. of Logins"
+          text: "All Users --> No. of Logins/user"
         }
       }
     });
     new Chart("myChart2", {
-        type: "doughnut",
-        data: {
-          labels: kValues,
-          datasets: [{
-            backgroundColor: barColors,
-            data: lValues
-          }]
-        },
-        options: {
-          title: {
-            display: true,
-            text: "No. of Appointments"
-          }
+      type: "doughnut",
+      data: {
+        labels: kValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: lValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "All Trainers --> No. of Appointments/trainer"
         }
-      });
-      new Chart("myChart3", {
-        type: "doughnut",
-        data: {
-          labels: mValues,
-          datasets: [{
-            backgroundColor: barColors,
-            data: nValues
-          }]
-        },
-        options: {
-          title: {
-            display: true,
-            text: "User No. of Bookings made"
-          }
+      }
+    });
+    new Chart("myChart3", {
+      type: "doughnut",
+      data: {
+        labels: mValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: nValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "All Owners --> No. of BookingsMade/owner"
         }
-      });
+      }
+    });
+    new Chart("myChart4", {
+      type: "doughnut",
+      data: {
+        labels: rValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: sValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Dog Breeds"
+        }
+      }
+    });
   </script>
 </div>
 {% endblock %}

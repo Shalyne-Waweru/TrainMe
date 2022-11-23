@@ -37,6 +37,17 @@ def charts(request):
     users=User.objects.all()
     trainers=Trainer.objects.all()
     owners=Owner.objects.all()
+    bu=Dog.objects.filter(dog_breed='Bulldogs').count()
+    bo=Dog.objects.filter(dog_breed='Boerboel').count()
+    ch=Dog.objects.filter(dog_breed='Chihuahua').count()
+    do=Dog.objects.filter(dog_breed='Doberman').count()
+    en=Dog.objects.filter(dog_breed='English Springer Spaniel').count()
+    ge=Dog.objects.filter(dog_breed='German Shepherd').count()
+    ma=Dog.objects.filter(dog_breed='Maltese Terrier').count()
+    ne=Dog.objects.filter(dog_breed='Neapolitan Mastiff').count()
+    rl=Dog.objects.filter(dog_breed='Retrievers(Labrador)').count()
+    rg=Dog.objects.filter(dog_breed='Retrievers(Golden)').count()
+    ro=Dog.objects.filter(dog_breed='Rottweilers').count()
     return render(request,'charts.html', locals())
 
 def logout_user(request):

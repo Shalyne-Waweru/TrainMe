@@ -117,7 +117,7 @@
                         <input type="text" name="phone" maxlength="12" required id="id_phone" value="{{owner.user.phone}}">
                       </div>
                     </div>               
-
+                    {% if owner.user.id == request.user.id%}
                     <div class="form-group">
                       <label>Profile Image</label>
                       <input type="file" name="image" required id="id_image">
@@ -125,7 +125,7 @@
 
                     <!-- <input type="hidden" name="form_type" value="tform" /> -->
                     <input type="hidden" name="form_type" value="form" />
-                    {% if owner.user.id == request.user.id%}
+                    
                     <button type="submit" class="save-btn">UPDATE PROFILE</button>
                     {% endif%}
                   </form>
