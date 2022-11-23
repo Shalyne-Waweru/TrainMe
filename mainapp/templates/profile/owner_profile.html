@@ -5,7 +5,11 @@
 <div class="profile-info">
   <div class="section">
     <div class="overlay">
-        <h2>My Profile Info</h2>
+      {% if owner.user.id == request.user.id %}
+      <h2>My Profile Info</h2>
+      {% else %}
+      <h2>{{owner.user.username|title}} Profile Info</h2>
+    {% endif %}
     </div>
   </div>
 
@@ -121,8 +125,9 @@
 
                     <!-- <input type="hidden" name="form_type" value="tform" /> -->
                     <input type="hidden" name="form_type" value="form" />
-
+                    {% if owner.user.id == request.user.id%}
                     <button type="submit" class="save-btn">UPDATE PROFILE</button>
+                    {% endif%}
                   </form>
                 </div>
             </section>
@@ -155,8 +160,9 @@
                         <p class="age">{{dog.dog_age}} years</p>
                         <p class="gender">{{dog.dog_sex|title}}</p>
                       </div>
-
+                      {% if owner.user.id == request.user.id%}
                       <a class="orange-btn" href="/delete_dog/{{ dog.id }}">DELETE</a>
+                      {% endif %}
                     </div>
 
                     {% endfor %}
@@ -173,6 +179,7 @@
 
               <div class="appointments-layout"> 
                 <div class="table-wrapper">
+                  {% if owner.user.id == request.user.id%}
                   {% if bookings %}
                   <table class="fl-table">
                       <thead>
@@ -237,6 +244,9 @@
                   {% else %}
                         <p>There are No Appointments yet!</p>
                   {% endif %}
+                  {% endif %}
+                </div>
+              </div>
             </section>
           </div>
         </div>
