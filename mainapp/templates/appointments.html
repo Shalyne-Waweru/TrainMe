@@ -61,6 +61,7 @@
                     {% for app in appointments %}
                     <tr>
                         <td class="trainer">
+                          <a href="{%url 'owner_profile' app.user.user.id%}">
                           <div class="trainer-deets">
                             {% if app.user.image %}
                             <img class="image" src={{app.user.image.url}} alt="Image">
@@ -73,6 +74,7 @@
                             {% endif %}
                             <p>{{app.user|title}}</p>
                           </div>
+                          </a>
                         </td>
 
                         <td class="appt-date">
