@@ -23,7 +23,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           {% if user.is_authenticated %}
               {% if request.user.is_trainer%}
-                <a class="dropdown-item" href="#">Trainer Dashboard </a>
                 <a class="dropdown-item" href="{% url 'appointments' request.user.Dog_Trainer.id %}">Appointments</a>
                 <a class="dropdown-item" href="{% url 'trainer_profile' request.user.id %}">Profile Settings</a>
               
@@ -34,7 +33,6 @@
               {% endif %}
   
           {% else %}
-            <a class="dropdown-item" href="{% url 'trainer_login' %}">Trainer Dashboard </a>
             <a class="dropdown-item" href="{% url 'trainer_login' %}">Appointments</a>
             <a class="dropdown-item" href="{% url 'trainer_login' %}">Profile Settings</a>
           {% endif %}
@@ -48,7 +46,6 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               {% if user.is_authenticated %}
                 {% if request.user.is_owner%}
-                  <a class="dropdown-item" href="#">Owner Dashboard </a>
                   {% comment %} <a class="dropdown-item" href="{% url 'appointments' user.Dog_Owner.id %}">Bookings</a> {% endcomment %}
                   <a class="dropdown-item" href="{% url 'owner_profile' request.user.id %}">Profile Settings</a>
                   
@@ -59,8 +56,6 @@
                 {% endif %}
   
               {% else %}
-                <a class="dropdown-item" href="{% url 'owner_login' %}">Owner Dashboard </a>
-                <a class="dropdown-item" href="{% url 'owner_login' %}">Bookings</a>
                 <a class="dropdown-item" href="{% url 'owner_login' %}">Profile Settings</a>
   
               {% endif %}
