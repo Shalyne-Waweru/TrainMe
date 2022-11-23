@@ -437,8 +437,8 @@
                   {% if reviews %}
                     {% for review in reviews %}
                       <div class="review">
-                        {% if review.reviewer.image %}
-                        <img class="reviewer-image" src={{review.reviewer.image.url}} alt="Profile Image">
+                        {% if review.reviewer.Dog_Owner.image %}
+                        <img class="reviewer-image" src={{review.reviewer.Dog_Owner.image.url}} alt="Profile Image">
                         {% else %}
                         <img
                           class="reviewer-image"
@@ -449,7 +449,7 @@
 
                         <div class="review-info">
                           <p><strong>{{review.reviewer|title}}</strong></p>
-                          <h6>{{review.date}}</h6>
+                          <h6>{{review.date|date}}</h6>
 
                           <div class="more">
                             <p class="description">{{review.description}}</p>
