@@ -150,30 +150,30 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label>First Name</label>
-                        <input type="text" name="first_name" maxlength="150" id="id_first_name"  placeholder="{{trainer.user.first_name|title}}">
+                        <input type="text" name="first_name" maxlength="150" id="id_first_name"  value="{{trainer.user.first_name|title}}">
                         
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Last Name</label>
-                        <input type="text" name="last_name" maxlength="150" id="id_last_name" placeholder="{{trainer.user.last_name|title}}">
+                        <input type="text" name="last_name" maxlength="150" id="id_last_name" value="{{trainer.user.last_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Username</label>
-                        <input type="text" name="username" maxlength="150" required id="id_username" placeholder="{{trainer.user.username}}">
+                        <input type="text" name="username" maxlength="150" required id="id_username" value="{{trainer.user.username}}">
                         
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Price Charge</label>
-                        <input type="number" name="price_charge" value="1000" required id="id_price_charge" placeholder="{{trainer.price_charge}}">
+                        <input type="number" name="price_charge" value="1000" required id="id_price_charge" value="{{trainer.price_charge}}">
                         
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Phone Number</label>
-                        <input type="text" name="phone" maxlength="12" required id="id_phone"placeholder="{{trainer.user.phone}}">
+                        <input type="text" name="phone" maxlength="12" required id="id_phone"value="{{trainer.user.phone}}">
                         
                       </div>
 
@@ -207,7 +207,7 @@
                         rows="2"
                         required
                         id="id_bio"
-                        placeholder="{{trainer.bio}}"
+                        value="{{trainer.bio}}"
                       ></textarea>
                     </div>
 
@@ -253,7 +253,7 @@
                           maxlength="50"
                           required
                           id="id_clinic_name"
-                          placeholder="Enter clinic name"
+                          value="Enter clinic name"
                         />
                       </div>
     
@@ -437,15 +437,19 @@
                   {% if reviews %}
                     {% for review in reviews %}
                       <div class="review">
+                        {% if review.reviewer.image %}
+                        <img class="reviewer-image" src={{review.reviewer.image.url}} alt="Profile Image">
+                        {% else %}
                         <img
                           class="reviewer-image"
                           src="{% static 'images/trainer_3.jpg' %}"
                           alt="Profile Image"
                         />
+                        {% endif %}
 
                         <div class="review-info">
                           <p><strong>{{review.reviewer|title}}</strong></p>
-                          <h6>Nov 19</h6>
+                          <h6>{{review.date}}</h6>
 
                           <div class="more">
                             <p class="description">{{review.description}}</p>
@@ -539,14 +543,14 @@
             <div class="form-group">
               <label>Review Title</label>
               <div class="form-control">
-                <input type="text" name="title" maxlength="255" required id="id_title" placeholder='Enter Title'>
+                <input type="text" name="title" maxlength="255" required id="id_title" value='Enter Title'>
               </div>
             </div>
 
             <div class="form-group">
               <label>Review Description</label>
               <div class="form-control">
-                <textarea name="description" cols="10" rows="10" required id="id_description" placeholder='Enter Review'></textarea>
+                <textarea name="description" cols="10" rows="10" required id="id_description" value='Enter Review'></textarea>
               </div>
             </div>
 

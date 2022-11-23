@@ -24,7 +24,7 @@ def index(request):
     trainers= Trainer.objects.all()
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(trainers, 2)
+    paginator = Paginator(trainers, 3)
     try:
         users = paginator.page(page)
     except PageNotAnInteger:
@@ -41,7 +41,7 @@ def charts(request):
 
 def logout_user(request):
     logout(request)
-    messages.success(request,"User Logged Out Successfully!")
+    messages.success(request,"Logged Out Successfully!")
     return redirect(index)
 
 # Dog Trainer Views

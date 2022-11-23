@@ -13,11 +13,15 @@
     <div class="row">
       <div class="col-md-3">
         <div class="trainer-info">
+          {% if owner.image %}
+          <img class="trainer-image" src={{owner.image.url}} alt="Profile Image">
+          {% else %}
           <img
             class="trainer-image"
             src="{% static 'images/trainer_3.jpg' %}"
             alt="Profile Image"
           />
+          {% endif %}
           <h5>{{owner.user.first_name|title}} {{owner.user.last_name | title}}</h5>
           <h6><strong>Dog Owner</strong></h6>
 
@@ -81,22 +85,22 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label>First Name</label>
-                        <input type="text" name="first_name" maxlength="150" id="id_first_name" placeholder="{{owner.user.first_name|title}}">
+                        <input type="text" name="first_name" maxlength="150" id="id_first_name" value="{{owner.user.first_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Last Name</label>
-                        <input type="text" name="last_name" maxlength="150" id="id_last_name" placeholder="{{owner.user.last_name|title}}">
+                        <input type="text" name="last_name" maxlength="150" id="id_last_name" value="{{owner.user.last_name|title}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Username</label>
-                        <input type="text" name="username" maxlength="150" required id="id_username" placeholder="{{owner.user.username}}">
+                        <input type="text" name="username" maxlength="150" required id="id_username" value="{{owner.user.username}}">
                       </div>
     
                       <div class="form-group col-md-6">
                         <label>Email</label>
-                        <input type="email" name="email" maxlength="254" id="id_email" placeholder="{{owner.user.email}}">
+                        <input type="email" name="email" maxlength="254" id="id_email" value="{{owner.user.email}}">
                       </div>
     
                       <div class="form-group col-md-6">
@@ -106,7 +110,7 @@
 
                       <div class="form-group col-md-6">
                         <label>Phone Number</label>
-                        <input type="text" name="phone" maxlength="12" required id="id_phone" placeholder="{{owner.user.phone}}">
+                        <input type="text" name="phone" maxlength="12" required id="id_phone" value="{{owner.user.phone}}">
                       </div>
                     </div>               
 
@@ -146,7 +150,7 @@
                       />
 
                       <p class="title"><strong>{{dog.dog_name|title}}</strong></p>
-                      <p class="breed">Dog Breed</p>
+                      <p class="breed">{{dog.dog_breed}}</p>
                       <div class="more-dog-info">
                         <p class="age">{{dog.dog_age}} years</p>
                         <p class="gender">{{dog.dog_sex|title}}</p>

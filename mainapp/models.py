@@ -15,6 +15,7 @@ class Dog(models.Model):
     dog_age = models.IntegerField()
     dog_pic = CloudinaryField('image')
     dog_sex = models.CharField(max_length=10,choices=gender)
+    date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.user.user.username+'s' + ' ' + self.dog_name
@@ -74,6 +75,7 @@ class Review(models.Model):
     description = models.TextField()
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviewer')
     reviewed =models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='reviewed')
+    date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.reviewer.username + ' ' + self.title
@@ -88,6 +90,7 @@ class Post(models.Model):
     video_caption = models.TextField()
     video = CloudinaryField(resource_type='video', blank=True)
     user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='posts')
+    date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.user.user.username + ' ' + self.video_title

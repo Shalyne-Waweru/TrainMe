@@ -97,9 +97,9 @@
           <p>{{request.user.username |upper}}</p>
           <div class="dropdown">
             <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {% if user.DOG_Owner.image %}
+              {% comment %} {% if user.DOG_Owner.image %} {% endcomment %}
               <img src={{user.Dog_Owner.image.url}} alt="Image">
-              {% endif %}
+              {% comment %} {% endif %} {% endcomment %}
             </button>
     
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

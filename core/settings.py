@@ -175,7 +175,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # LOGIN_REDIRECT_URL='core:home'
 
 cloudinary.config( 
-cloud_name = "ddtmsdlip", 
-api_key = "356757256393764", 
-api_secret = "V-68rzwrl7fFATIiLhanN9z8zts" 
+cloud_name = "dnabhh1fv", 
+api_key = "493176918153535", 
+api_secret = "pfrnAHUSI5vOfv0hcD9HqqYY6Y8" 
 )
