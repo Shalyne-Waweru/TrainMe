@@ -40,7 +40,7 @@ class Clinic(models.Model):
         
 class Hours(models.Model):
     user= models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='business_hours')
-    day= models.CharField(max_length=10, choices=DAYS_OF_WEEK, unique=True)
+    day= models.CharField(max_length=10, choices=DAYS_OF_WEEK, unique=False)
     start = models.TimeField(null=True)
     end = models.TimeField(null=True)
     open_closed= models.BooleanField(default=False)

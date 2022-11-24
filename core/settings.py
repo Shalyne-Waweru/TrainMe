@@ -29,10 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 MODE=config("MODE", default="dev")
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY='django-insecure-pmw%l$h^p)7bdgh@$p-_&v%c&33k8-e+lyq_lc-(*r=lju@cu7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG= True
 
 
 # Application definition
@@ -88,28 +88,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'trainme',
+        'USER': 'vic',
+        'PASSWORD': 'sniff',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
-       
 }
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'trainme',
-#         'USER': 'vic',
-#         'PASSWORD': 'sniff',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
 
 
 # DATABASES = {
